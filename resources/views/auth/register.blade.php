@@ -2,7 +2,7 @@
   <x-auth-card>
     <x-slot name="logo">
       <a href="/" class="font-bold text-gray-500" style="font-size: 1.5rem">
-        Magic Pay
+        Fore Pay
       </a>
     </x-slot>
 

@@ -1,4 +1,4 @@
-<div x-data="{ open: false }" @click.outside="open = false" class="ml-3 relative">
+<div x-data="{ open: false }" @click.outside="open = false" {{ $attributes->merge(['class' => 'relative']) }}>
   <div @click="open = !open">
     {{ $trigger }}
   </div>
