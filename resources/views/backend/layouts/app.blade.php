@@ -148,6 +148,9 @@
     const mobile_menu = document.querySelector('.mobile-menu');
 
     sidebar.addEventListener('mouseenter', e => {
+      const window_width = this.innerWidth;
+      if (window_width < 768) return;
+
       if (!e.target.classList.contains('active')) {
         e.target.classList.add('active');
       }
