@@ -1,0 +1,106 @@
+:root {
+  /* == color == */
+  --grey-color: #f2f2f2;
+  --white-color: #fff;
+  --indigo-500: #6366f1;
+
+  /* == width == */
+  --width-sm: 15px;
+  --width-md: 20px;
+  --width-lg: 25px;
+
+  /* == font size == */
+  --text-xs: 0.675rem;
+  --text-sm: 0.875rem;
+  --text-md: 1rem;
+  --text-lg: 1.5rem;
+
+  /* == ring box-shadow == */
+  --box-light-gray: 0 0 0 2px rgb(229 229 229);
+  --box-blue: 0 0 0 2px rgb(64, 82, 215);
+}
+
+body {
+  background-color: var(--grey-color);
+}
+
+/* ======== Utility Cass ============== */
+/* == width utility ==*/
+.m-w-sm {
+  width: var(--width-sm) !important;
+}
+
+.m-w-md {
+  width: var(--width-md) !important;
+}
+
+.m-w-lg {
+  width: var(--width-lg) !important;
+}
+
+/* == border radius utility ==*/
+.m-rounded-sm {
+  border-radius: 0.357rem !important;
+}
+
+.m-rounded-md {
+  border-radius: 0.657rem !important;
+}
+
+.m-rounded-lg {
+  border-radius: 1rem !important;
+}
+
+/* == font size utility ==*/
+.m-text-xs {
+  font-size: var(--text-xs) !important;
+}
+.m-text-sm {
+  font-size: var(--text-sm) !important;
+}
+.m-text-md {
+  font-size: var(--text-md) !important;
+}
+.m-text-lg {
+  font-size: var(--text-lg) !important;
+}
+
+/* == flex utility ==*/
+.m-items-start {
+  align-items: start !important;
+}
+.m-items-center {
+  align-items: center !important;
+}
+.m-items-end {
+  align-items: end !important;
+}
+
+.m-justify-start {
+  justify-content: start !important;
+}
+.m-justify-center {
+  justify-content: center !important;
+}
+.m-justify-end {
+  justify-content: end !important;
+}
+
+/* == Margin utility == */
+.m-mt-1 {
+  margin-top: 1px !important;
+}
+
+/*============== Navbar ============== */
+.nav-link {
+  position: relative;
+}
+
+.nav-link.active::before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  left: 0;
+  bottom: 0;
+  border-bottom: 2px solid var(--indigo-500);
+}
