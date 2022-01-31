@@ -40,7 +40,7 @@
        <h1 class="title text-slate-400 text-base pb-3">Menu</h1>
        <ul class="space-y-4">
          <li>
-           <x-sidebar-link href="{{ route('admin.dashboard') }}" :active="request()->is('admin')">
+           <x-backend.sidebar-link href="{{ route('admin.dashboard') }}" :active="request()->is('admin')">
              <x-slot name="icon">
                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -48,20 +48,20 @@
                </svg>
              </x-slot>
              Dashboard
-           </x-sidebar-link>
+           </x-backend.sidebar-link>
          </li>
          <li>
-           <x-sidebar-link href="#">
+           <x-backend.sidebar-link href="#">
              <x-slot name="icon">
                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z" />
                </svg>
              </x-slot>
              Projects
-           </x-sidebar-link>
+           </x-backend.sidebar-link>
          </li>
          <li>
-           <x-sidebar-link href="#">
+           <x-backend.sidebar-link href="#">
              <x-slot name="icon">
                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -69,7 +69,7 @@
                </svg>
              </x-slot>
              Users
-           </x-sidebar-link>
+           </x-backend.sidebar-link>
          </li>
        </ul>
      </div>

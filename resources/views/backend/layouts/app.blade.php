@@ -138,11 +138,11 @@
   <!-- Over view -->
   <div class="over-view"></div>
   <div class="min-h-screen flex">
-    <x-sidebar />
+    <x-backend.sidebar />
 
     <!-- Main Start -->
     <div class="flex-1">
-      <x-navbar />
+      <x-backend.navbar />
 
       <div class="max-w-7xl mx-auto">
         <!-- Main Content Header -->
