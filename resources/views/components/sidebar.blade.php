@@ -1,5 +1,5 @@
  <!-- Sidebar Start -->
- <div class="side-bar bg-slate-900 overflow-hidden absolute min-h-screen z-40 md:static md:translate-x-0">
+ <div class="side-bar active bg-slate-900 overflow-hidden absolute min-h-screen z-40 md:static md:translate-x-0">
    <!-- Cross -->
    <div class="cross absolute right-1 p-2 text-slate-400 hover:text-sky-400 cursor-pointer z-50">
      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -9,7 +9,7 @@
    <!-- Sidebar Header -->
    <div class="flex items-center relative px-4 h-16">
      <!-- Logo -->
-     <a href="/admin/dashboard" class="flex items-center w-full font-poppins text-xl font-bold text-gray-200 cursor-pointer">
+     <a href="/admin" class="flex items-center w-full font-poppins text-xl font-bold text-gray-200 cursor-pointer">
        <div class="mr-1">
          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-sky-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -35,11 +35,12 @@
        </div>
      </div>
 
+     <!-- Sidebar Links -->
      <div class="pt-4 px-3 md:pt-7">
        <h1 class="title text-slate-400 text-base pb-3">Menu</h1>
        <ul class="space-y-4">
          <li>
-           <x-sidebar-link href="{{ route('admin.dashboard') }}" :active="request()->is('admin/dashboard*')">
+           <x-sidebar-link href="{{ route('admin.dashboard') }}" :active="request()->is('admin')">
              <x-slot name="icon">
                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"

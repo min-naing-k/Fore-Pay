@@ -607,6 +607,10 @@ select{
   border-width: 0;
 }
 
+.fixed{
+  position: fixed;
+}
+
 .absolute{
   position: absolute;
 }
@@ -634,6 +638,10 @@ select{
 
 .left-0{
   left: 0px;
+}
+
+.top-0{
+  top: 0px;
 }
 
 .z-0{
@@ -725,6 +733,22 @@ select{
   margin-right: -0.5rem;
 }
 
+.mr-2{
+  margin-right: 0.5rem;
+}
+
+.mt-8{
+  margin-top: 2rem;
+}
+
+.ml-12{
+  margin-left: 3rem;
+}
+
+.-mt-px{
+  margin-top: -1px;
+}
+
 .block{
   display: block;
 }
@@ -735,6 +759,10 @@ select{
 
 .inline-flex{
   display: inline-flex;
+}
+
+.grid{
+  display: grid;
 }
 
 .hidden{
@@ -831,6 +859,14 @@ select{
   max-width: 20rem;
 }
 
+.max-w-xl{
+  max-width: 36rem;
+}
+
+.max-w-6xl{
+  max-width: 72rem;
+}
+
 .flex-1{
   flex: 1 1 0%;
 }
@@ -875,12 +911,20 @@ select{
   cursor: pointer;
 }
 
+.resize{
+  resize: both;
+}
+
 .list-inside{
   list-style-position: inside;
 }
 
 .list-disc{
   list-style-type: disc;
+}
+
+.grid-cols-1{
+  grid-template-columns: repeat(1, minmax(0, 1fr));
 }
 
 .flex-col{
@@ -977,6 +1021,10 @@ select{
   border-top-width: 1px;
 }
 
+.border-r{
+  border-right-width: 1px;
+}
+
 .border-none{
   border-style: none;
 }
@@ -1005,6 +1053,11 @@ select{
   border-color: rgb(243 244 246 / var(--tw-border-opacity));
 }
 
+.border-gray-400{
+  --tw-border-opacity: 1;
+  border-color: rgb(156 163 175 / var(--tw-border-opacity));
+}
+
 .border-t-gray-500{
   --tw-border-opacity: 1;
   border-top-color: rgb(107 114 128 / var(--tw-border-opacity));
@@ -1018,6 +1071,16 @@ select{
 .border-t-gray-700{
   --tw-border-opacity: 1;
   border-top-color: rgb(55 65 81 / var(--tw-border-opacity));
+}
+
+.border-b-gray-300{
+  --tw-border-opacity: 1;
+  border-bottom-color: rgb(209 213 219 / var(--tw-border-opacity));
+}
+
+.border-b-gray-200{
+  --tw-border-opacity: 1;
+  border-bottom-color: rgb(229 231 235 / var(--tw-border-opacity));
 }
 
 .bg-white{
@@ -1093,6 +1156,10 @@ select{
 
 .p-1{
   padding: 0.25rem;
+}
+
+.p-6{
+  padding: 1.5rem;
 }
 
 .px-4{
@@ -1201,6 +1268,14 @@ select{
   padding-left: 1rem;
 }
 
+.pt-8{
+  padding-top: 2rem;
+}
+
+.text-center{
+  text-align: center;
+}
+
 .font-sans{
   font-family: Nunito, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 }
@@ -1241,12 +1316,24 @@ select{
   font-weight: 700;
 }
 
+.uppercase{
+  text-transform: uppercase;
+}
+
 .capitalize{
   text-transform: capitalize;
 }
 
 .leading-5{
   line-height: 1.25rem;
+}
+
+.leading-7{
+  line-height: 1.75rem;
+}
+
+.tracking-wider{
+  letter-spacing: 0.05em;
 }
 
 .text-gray-500{
@@ -1701,6 +1788,14 @@ select{
 .group:hover .group-hover\:text-slate-100{
   --tw-text-opacity: 1;
   color: rgb(241 245 249 / var(--tw-text-opacity));
+}
+
+@media (prefers-color-scheme: dark){
+
+  .dark\:bg-gray-900{
+    --tw-bg-opacity: 1;
+    background-color: rgb(17 24 39 / var(--tw-bg-opacity));
+  }
 }
 
 @media (min-width: 640px){

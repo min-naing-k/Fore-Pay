@@ -29,12 +29,15 @@
       <x-dropdown2 class="ml-0 md:ml-3">
         <x-slot name="trigger">
           <button type="button"
-            class="flex text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500">
+            class="flex items-center text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500">
             <img class="h-8 w-8 min-w-max rounded-full"
-              src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="">
+              src="https://ui-avatars.com/api/?size=35&background=random&name={{ auth()->guard('admin')->user()->name }}" alt="">
           </button>
         </x-slot>
-
+        <div class="px-4 py-2 flex flex-col border-b border-b-gray-200">
+          <p class="font-medium text-gray-500">{{ ucwords(auth()->guard('admin')->user()->name) }}</p>
+          <small class="text-gray-400">{{ auth()->guard('admin')->user()->email }}</small>
+        </div>
         <x-dropdown2-link href="#">Your Profile</x-dropdown2-link>
         <x-dropdown2-link href="#">Setting</x-dropdown2-link>
         <x-dropdown2-link href="#" class="sign-out-btn">Sign Out</x-dropdown2-link>

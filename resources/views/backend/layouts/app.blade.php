@@ -92,7 +92,7 @@
         display: block;
       }
 
-      .side-bar.active {
+      .side-bar.mobile-active {
         transition: all .4s ease-in-out;
         transform: translateX(0);
       }
@@ -115,6 +115,12 @@
 
       .mobile-menu {
         display: block;
+      }
+    }
+
+    @media (max-width: 500px) {
+      .side-bar {
+        width: 65% !important;
       }
     }
 
@@ -154,6 +160,7 @@
       </div>
     </div><!-- Main Content End -->
   </div>
+
   <script src="{{ asset('js/app.js') }}"></script>
   <script>
     const body = document.querySelector('body');
@@ -161,6 +168,32 @@
     const sidebar = document.querySelector('.side-bar');
     const cross = document.querySelector('.cross');
     const mobile_menu = document.querySelector('.mobile-menu');
+    const sign_out_btn = document.querySelector('.sign-out-btn');
+
+    window.addEventListener('load', e => {
+      const window_width = this.innerWidth;
+      if (window_width > 768) return;
+      sidebar.style.transition = 'none !important';
+      sidebar.classList.remove('active');
+    })
+
+    window.addEventListener('resize', e => {
+      const window_width = this.innerWidth;
+      if (window_width > 768) return;
+      sidebar.classList.remove('active');
+    })
+
+    sign_out_btn.addEventListener('click', e => {
+      e.preventDefault();
+      axios({
+        method: 'POST',
+        url: '/admin/logout',
+      }).then(res => {
+        if (!res.data) return;
+        console.log(res.data);
+        this.location.replace('/admin/login');
+      }).catch(err => console.error(err));
+    })
 
     sidebar.addEventListener('mouseenter', e => {
       const window_width = this.innerWidth;
@@ -172,15 +205,16 @@
     })
 
     cross.addEventListener('click', e => {
-      if (sidebar.classList.contains('active')) {
+      if (sidebar.classList.contains('active') || sidebar.classList.contains('mobile-active')) {
         sidebar.classList.remove('active');
+        sidebar.classList.remove('mobile-active');
         body.classList.remove('active');
       }
     })
 
     mobile_menu.addEventListener('click', e => {
-      if (!sidebar.classList.contains('active')) {
-        sidebar.classList.add('active');
+      if (!sidebar.classList.contains('mobile-active')) {
+        sidebar.classList.add('mobile-active');
         body.classList.add('active');
       }
     })
@@ -189,8 +223,8 @@
       const window_width = this.innerWidth;
       if (window_width > 768) return;
 
-      if (sidebar.classList.contains('active')) {
-        sidebar.classList.remove('active');
+      if (sidebar.classList.contains('mobile-active')) {
+        sidebar.classList.remove('mobile-active');
         body.classList.remove('active');
       }
     })

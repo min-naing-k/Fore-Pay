@@ -20,7 +20,7 @@ class AdminSessionController extends Controller
 
     $request->session()->regenerate();
 
-    return redirect('/admin/dashboard');
+    return redirect('/admin');
   }
 
   public function destroy(Request $request)
@@ -31,6 +31,6 @@ class AdminSessionController extends Controller
 
     $request->session()->regenerateToken();
 
-    return redirect()->route('admin.login');
+    return response()->json(['message' => 'admin logout successfully!']);
   }
 }
