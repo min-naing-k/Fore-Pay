@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>{{ $title ?? 'Fore Pay' }}</title>
+  <title>{{ $title }}</title>
 
   <link rel="stylesheet" href="{{ asset('css/app.css') }}">
 
@@ -36,7 +36,8 @@
     }
 
     .side-bar .logo,
-    .side-bar .cross {
+    .side-bar .cross,
+    .side-bar-title {
       opacity: 0;
       visibility: hidden;
       transition: all .6s ease-in-out;
@@ -53,7 +54,8 @@
     }
 
     .side-bar.active .logo,
-    .side-bar.active .cross {
+    .side-bar.active .cross,
+    .side-bar.active .side-bar-title {
       opacity: 1;
       visibility: visible;
     }
@@ -127,9 +129,9 @@
         <!-- Main Content Header -->
         <div class="flex items-center m-3 md:m-4">
           <div class="mr-5 bg-white text-gray-300 p-4 rounded-lg m-shadow">
-            {{ $main_icon ?? null }}
+            {{ $icon ?? null }}
           </div>
-          <h1 class="text-gray-500 text-xl font-semibold">{{ $main_title ?? null }}</h1>
+          <h1 class="text-gray-500 text-xl font-semibold">{{ $title }}</h1>
         </div>
 
         <!-- Main Content Start -->

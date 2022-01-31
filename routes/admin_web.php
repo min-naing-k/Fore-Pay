@@ -6,8 +6,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::prefix('admin')->name('admin.')->group(function () {
   Route::middleware('guest:admin')->group(function () {
-    Route::get('login', [AdminSessionController::class, 'create'])->name('admin.login');
-    Route::post('login', [AdminSessionController::class, 'store'])->name('admin.login.store');
+    Route::get('login', [AdminSessionController::class, 'create'])->name('login');
+    Route::post('login', [AdminSessionController::class, 'store'])->name('login.store');
   });
 
   Route::middleware('auth:admin')->group(function () {

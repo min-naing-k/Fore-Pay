@@ -6,11 +6,12 @@ use Illuminate\View\Component;
 
 class App extends Component
 {
-  public function __construct()
+  public $title;
+
+  public function __construct($title = 'Fore Pay')
   {
-
+    $this->title = $title;
   }
-
   /**
    * Get the view / contents that represent the component.
    *
