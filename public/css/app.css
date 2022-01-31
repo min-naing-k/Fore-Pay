@@ -827,6 +827,10 @@ select{
   max-width: 80rem;
 }
 
+.max-w-xs{
+  max-width: 20rem;
+}
+
 .flex-1{
   flex: 1 1 0%;
 }
@@ -1735,6 +1739,18 @@ select{
 
   .sm\:hidden{
     display: none;
+  }
+
+  .sm\:w-40{
+    width: 10rem;
+  }
+
+  .sm\:w-60{
+    width: 15rem;
+  }
+
+  .sm\:w-64{
+    width: 16rem;
   }
 
   .sm\:max-w-md{

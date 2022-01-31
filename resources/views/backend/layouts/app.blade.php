@@ -36,11 +36,14 @@
     }
 
     .side-bar .logo,
-    .side-bar .cross,
-    .side-bar-title {
+    .side-bar .cross {
       opacity: 0;
       visibility: hidden;
       transition: all .6s ease-in-out;
+    }
+
+    .side-bar .title {
+      display: none;
     }
 
     .side-bar .divider {
@@ -80,9 +83,13 @@
       .side-bar {
         z-index: 1000 !important;
         position: fixed;
-        width: 85% !important;
+        width: 45% !important;
         transform: translateX(-100%);
         transition: all .4s ease-in-out;
+      }
+
+      .side-bar .title {
+        display: block;
       }
 
       .side-bar.active {
@@ -108,6 +115,12 @@
 
       .mobile-menu {
         display: block;
+      }
+    }
+
+    @media (max-width: 430px) {
+      .side-bar {
+        width: 85% !important;
       }
     }
 

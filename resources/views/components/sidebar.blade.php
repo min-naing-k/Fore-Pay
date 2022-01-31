@@ -25,7 +25,7 @@
    <div>
      <!-- Search For Mobile -->
      <div class="flex px-3 pt-4 md:hidden">
-       <div class="flex w-full bg-slate-800 rounded-lg h-12 border-t border-t-gray-700">
+       <div class="flex w-full max-w-xs bg-slate-800 rounded-lg h-12 border-t border-t-gray-700">
          <label class="flex items-center pl-4" for="search">
            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
@@ -36,7 +36,7 @@
      </div>
 
      <div class="pt-4 px-3 md:pt-7">
-       <h1 class="side-bar-title text-slate-400 text-base pb-3">Menu</h1>
+       <h1 class="title text-slate-400 text-base pb-3">Menu</h1>
        <ul class="space-y-4">
          <li>
            <x-sidebar-link href="{{ route('admin.dashboard') }}" :active="request()->is('admin/dashboard*')">
