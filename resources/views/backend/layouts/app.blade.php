@@ -9,157 +9,37 @@
 
   <link rel="stylesheet" href="{{ asset('css/app.css') }}">
 
-  <style>
-    body {
-      background-color: #f2f2f2;
-    }
+  <!-- Custom Css -->
+  <link rel="stylesheet" href="{{ asset('css/backend/style.css') }}">
 
-    .m-shadow {
-      box-shadow: 0 3px 15px rgba(0, 0, 0, 0.1) !important;
-    }
-
-    .mobile-menu {
-      display: none;
-    }
-
-    .side-bar {
-      width: 57px;
-      transition: width .3s ease-in-out;
-    }
-
-    .side-bar .cross {
-      top: 12px;
-    }
-
-    .side-bar .logo {
-      white-space: nowrap;
-    }
-
-    .side-bar .logo,
-    .side-bar .cross {
-      opacity: 0;
-      visibility: hidden;
-      transition: all .6s ease-in-out;
-    }
-
-    .side-bar .title {
-      display: none;
-    }
-
-    .side-bar .divider {
-      width: 100%;
-      left: -2px;
-    }
-
-    .side-bar.active {
-      transition: width .3s ease-in-out;
-      width: 256px;
-    }
-
-    .side-bar.active .logo,
-    .side-bar.active .cross,
-    .side-bar.active .side-bar-title {
-      opacity: 1;
-      visibility: visible;
-    }
-
-    .over-view {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(0, 0, 0, .1);
-      backdrop-filter: blur(2px);
-      z-index: 10;
-      opacity: 0;
-      visibility: hidden;
-      user-select: none;
-      pointer-events: none;
-      transition: all .4s ease-in-out;
-    }
-
-    @media (max-width: 768px) {
-      .side-bar {
-        z-index: 1000 !important;
-        position: fixed;
-        width: 45% !important;
-        transform: translateX(-100%);
-        transition: all .4s ease-in-out;
-      }
-
-      .side-bar .title {
-        display: block;
-      }
-
-      .side-bar.mobile-active {
-        transition: all .4s ease-in-out;
-        transform: translateX(0);
-      }
-
-      body.active .over-view {
-        opacity: 1;
-        visibility: visible;
-        pointer-events: all;
-      }
-
-      .side-bar .logo,
-      .side-bar .cross {
-        opacity: 1;
-        visibility: visible;
-      }
-
-      .search {
-        display: none;
-      }
-
-      .mobile-menu {
-        display: block;
-      }
-    }
-
-    @media (max-width: 500px) {
-      .side-bar {
-        width: 65% !important;
-      }
-    }
-
-    @media (max-width: 430px) {
-      .side-bar {
-        width: 85% !important;
-      }
-    }
-
-  </style>
   {{ $css ?? null }}
 </head>
 
-<body class="overflow-hidden">
+<body>
   <!-- Over view -->
   <div class="over-view"></div>
-  <div class="min-h-screen flex">
-    <x-backend.sidebar />
 
-    <!-- Main Start -->
-    <div class="flex-1">
-      <x-backend.navbar />
+  <x-backend.sidebar />
 
-      <div class="max-w-7xl mx-auto">
-        <!-- Main Content Header -->
-        <div class="flex items-center m-3 md:m-4">
-          <div class="mr-5 bg-white text-gray-300 p-4 rounded-lg m-shadow">
-            {{ $icon ?? null }}
-          </div>
-          <h1 class="text-gray-500 text-xl font-semibold">{{ $title }}</h1>
+  <!-- Main Start -->
+  <main class="main min-h-screen overflow-hidden">
+    <x-backend.navbar />
+
+    <section class="max-w-7xl mx-auto p-3 md:p-4">
+      <!-- Main Content Header -->
+      <header class="flex items-center mb-4">
+        <div class="mr-5 bg-white text-gray-300 p-4 rounded-lg m-shadow">
+          {{ $icon ?? null }}
         </div>
+        <h1 class="text-gray-500 text-xl font-semibold">{{ $title }}</h1>
+      </header>
 
-        <!-- Main Content Start -->
-        <div class="bg-white m-3 p-4 md:m-4 h-52 rounded-lg overflow-hidden m-shadow">
-          {{ $slot }}
-        </div>
+      <!-- Main Content Start -->
+      <div class="rounded-lg overflow-hidden m-shadow">
+        {{ $slot }}
       </div>
-    </div><!-- Main Content End -->
-  </div>
+    </section>
+  </main><!-- Main Content End -->
 
   <script src="{{ asset('js/app.js') }}"></script>
   <script>

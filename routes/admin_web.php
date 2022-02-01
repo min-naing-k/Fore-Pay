@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminUserController;
 use App\Http\Controllers\Auth\AdminSessionController;
 use App\Http\Controllers\Backend\PageController;
 use Illuminate\Support\Facades\Route;
@@ -13,5 +14,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
   Route::middleware('auth:admin')->group(function () {
     Route::get('/', [PageController::class, 'dashboard'])->name('dashboard');
+
+    Route::resource('admin-user', AdminUserController::class);
   });
 });
