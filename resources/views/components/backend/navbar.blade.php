@@ -23,8 +23,8 @@
         <x-slot name="trigger">
           <button type="button"
             class="flex items-center text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500">
-            <img class="h-8 w-8 min-w-max rounded-full"
-              src="https://ui-avatars.com/api/?size=35&background=random&name={{ auth()->guard('admin')->user()->name }}" alt="">
+            <img class="min-w-max rounded-full"
+              src="https://ui-avatars.com/api/?format=svg&rounded=true&size=35&name={{ auth()->guard('admin')->user()->name }}" alt="">
           </button>
         </x-slot>
         <div class="px-4 py-2 flex flex-col border-b border-b-gray-200">

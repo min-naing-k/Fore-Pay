@@ -9,4 +9,13 @@
   <x-backend.main-panel>
     <x-backend.table :admins="$admins" />
   </x-backend.main-panel>
+
+  <x-slot name="js">
+    <script>
+      const search = document.querySelector('#admin-search input');
+      search.addEventListener('keyup', e => {
+        
+      })
+    </script>
+  </x-slot>
 </x-backend.app>

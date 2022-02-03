@@ -108,6 +108,7 @@ body {
   .side-bar {
     z-index: 1000 !important;
     position: fixed;
+    min-width: 256px;
     width: 40% !important;
     transform: translateX(-100%);
     transition: all 0.4s ease-in-out;
@@ -154,4 +155,86 @@ body {
     min-width: 250px;
     width: 85% !important;
   }
+}
+
+@media (max-width: 390px) {
+  .table-header {
+    flex-direction: column;
+    gap: 1rem;
+  }
+}
+
+/* ============ Select 2 ============= */
+.select2-container .select2-selection--single {
+  border: 1px solid #e5e7eb;
+  border-radius: 0.457rem;
+  min-height: 42px !important;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 0.7rem;
+}
+
+.select2-container--open .select2-selection--single {
+  border-radius: 0.675rem !important;
+  box-shadow: 0 0 0 2px #6366f1 !important;
+}
+
+.select2-container .select2-selection--single .select2-selection__rendered {
+  padding: unset !important;
+}
+
+.select2-container--default
+  .select2-selection--single
+  .select2-selection__arrow
+  b {
+  display: none;
+}
+
+.select2-selection--single .select2-selection__arrow {
+  width: 16px !important;
+  height: 16px !important;
+  display: flex;
+  align-items: center;
+  top: unset !important;
+  background-image: url(./../../images/icons/chevron-down-outline.svg);
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+  position: static !important;
+  transition: all 0.2s ease-in-out;
+}
+
+.select2-container--open .select2-selection__arrow {
+  transform: rotate(180deg) !important;
+}
+
+.select2-container--open .select2-dropdown--below {
+  font-size: 0.875rem !important;
+  border: none !important;
+  margin-top: 0.3rem !important;
+  border-radius: 0.375rem !important;
+  overflow: hidden !important;
+  background: #fff !important;
+  box-shadow: 0 5px 15px rgb(0 0 0 / 20%) !important;
+}
+
+.select2-results__options .select2-results__option {
+  padding: 0.5 1rem !important;
+}
+
+/* ============ Pagination =============== */
+.pagination .link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  padding: 0.5rem 0.975rem;
+  border-radius: 0.375rem;
+  cursor: pointer;
+}
+
+.pagination .active {
+  cursor: pointer;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1), 0 -1px 45px rgba(0, 0, 0, 0.2);
 }

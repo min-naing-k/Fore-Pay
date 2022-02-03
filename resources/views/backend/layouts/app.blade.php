@@ -7,8 +7,11 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>{{ $title }}</title>
 
-  <link rel="stylesheet" href="{{ asset('css/app.css') }}">
 
+  <!-- Select2 Css -->
+  <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+
+  <link rel="stylesheet" href="{{ asset('css/app.css') }}">
   <!-- Custom Css -->
   <link rel="stylesheet" href="{{ asset('css/backend/style.css') }}">
 
@@ -42,6 +45,9 @@
   </main><!-- Main Content End -->
 
   <script src="{{ asset('js/app.js') }}"></script>
+  <script src="{{ asset('js/jquery.js') }}"></script>
+  <!-- Select 2 -->
+  <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
   <script>
     const body = document.querySelector('body');
     const over_view = document.querySelector('.over-view');
@@ -49,6 +55,12 @@
     const cross = document.querySelector('.cross');
     const mobile_menu = document.querySelector('.mobile-menu');
     const sign_out_btn = document.querySelector('.sign-out-btn');
+
+    $(document).ready(function() {
+      $('.single-select').select2({
+        minimumResultsForSearch: -1
+      });
+    });
 
     window.addEventListener('load', e => {
       const window_width = this.innerWidth;

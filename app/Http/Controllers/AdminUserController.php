@@ -9,7 +9,9 @@ class AdminUserController extends Controller
 {
   public function index()
   {
-    $admins = Admin::orderBy('id', 'asc')->paginate(10);
+    $admins = Admin::orderBy('id', 'asc')
+      ->paginate(10)
+      ->withQueryString();
     return view('backend.admin-user.index', compact('admins'));
   }
 
