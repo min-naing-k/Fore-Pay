@@ -120,6 +120,16 @@
         body.classList.remove('active');
       }
     })
+
+    const debounce = (fn, delay) => {
+      let id;
+      return () => {
+        if (id) clearTimeout(id);
+        id = setTimeout(() => {
+          fn();
+        }, delay);
+      }
+    }
   </script>
   {{ $js ?? null }}
 </body>

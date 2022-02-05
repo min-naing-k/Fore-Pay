@@ -7,15 +7,128 @@
   </x-slot>
 
   <x-backend.main-panel>
-    <x-backend.table :admins="$admins" />
+    <!-- header -->
+    <div class="table-header flex items-center justify-between">
+      <div>
+        <select class="single-select" id="limit" name="limit">
+          <option value="5">5</option>
+          <option value="10">10</option>
+          <option value="25">25</option>
+          <option value="100">100</option>
+        </select>
+      </div>
+      <x-search id="admin-search" />
+    </div>
+    <div id="admin-table"></div>
   </x-backend.main-panel>
 
   <x-slot name="js">
     <script>
+      const admin_table = document.querySelector('#admin-table');
+      const limit = document.querySelector('#limit');
       const search = document.querySelector('#admin-search input');
-      search.addEventListener('keyup', e => {
-        
+      let direction;
+
+      initAdminTable();
+      // limit
+      $(document).ready(function() {
+        $('#limit').on('change', function(e) {
+          const value = e.target.value;
+          const search_value = search.value;
+          const field = document.querySelector('#old-field').value;
+          const direction = document.querySelector('#direction').value;
+
+          let url = `/admin/admin-user-table?limit=${value}`;
+          if (search_value) {
+            url += `&search=${search_value}`;
+          }
+          if (field) {
+            url += `&field=${field}`;
+          }
+          if (direction) {
+            url += `&direction=${direction}`;
+          }
+          axios({
+            method: 'GET',
+            url
+          }).then(res => {
+            if (!res.data) return;
+            admin_table.innerHTML = res.data;
+          }).catch(err => console.error(err));
+        });
       })
+
+      // search
+      search.addEventListener('keyup', debounce(() => {
+        const field = document.querySelector('#old-field').value;
+        const direction = document.querySelector('#direction').value;
+        let url = `/admin/admin-user-table?limit=${limit.value}&search=${search.value}`;
+        if (field) {
+          url += `&field=${field}`;
+        }
+        if (direction) {
+          url += `&direction=${direction}`;
+        }
+        axios({
+            method: 'GET',
+            url
+          }).then(res => {
+            if (!res.data) return;
+            admin_table.innerHTML = res.data;
+          })
+          .catch(err => console.error(err))
+      }, 300));
+
+      // sort
+      document.addEventListener('click', e => {
+        if (e.target.dataset.field) {
+          const old_field = document.querySelector('#old-field').value;
+          const field = e.target.dataset.field;
+          if (field != old_field) {
+            direction = null;
+          }
+          direction = direction === 'asc' ? 'desc' : 'asc';
+          let url = `/admin/admin-user-table?limit=${limit.value}&field=${field}&direction=${direction}`;
+          if (search.value) {
+            url += `&search=${search.value}`;
+          }
+          axios({
+            method: 'GET',
+            url
+          }).then(res => {
+            if (!res.data) return;
+            admin_table.innerHTML = res.data;
+          }).catch(err => console.error(err))
+        }
+      })
+
+      // pagination
+      document.addEventListener('click', e => {
+        if (e.target.classList.contains('page-link')) {
+          e.preventDefault();
+          if (!e.target.href) return;
+
+          let url = e.target.href;
+          axios({
+            method: 'GET',
+            url
+          }).then(res => {
+            if (!res.data) return;
+            admin_table.innerHTML = res.data;
+          }).catch(err => console.error(err))
+        }
+      })
+
+      function initAdminTable() {
+        axios({
+            method: 'GET',
+            url: '/admin/admin-user-table'
+          }).then(res => {
+            if (!res.data) return;
+            admin_table.innerHTML = res.data;
+          })
+          .catch(err => console.error(err))
+      }
     </script>
   </x-slot>
 </x-backend.app>

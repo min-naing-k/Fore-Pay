@@ -1,26 +1,41 @@
-@props(['admins'])
-<!-- header -->
-<div class="table-header flex items-center justify-between">
-  <div>
-    <select class="single-select" name="limit">
-      <option value="10">5</option>
-      <option value="10">10</option>
-      <option value="25">25</option>
-      <option value="100">100</option>
-    </select>
-  </div>
-  <x-search id="admin-search" />
-</div>
 <!-- table -->
 <div class="my-4 overflow-hidden overflow-x-auto scrollbar-thin scrollbar-thumb-slate-300 scrollbar-track-gray-100 scrollbar-thumb-rounded-full scrollbar-track-rounded-full shadow rounded-lg">
+  <input id="old-field" type="hidden" value="{{ $field }}">
+  <input id="direction" type="hidden" value="{{ $direction }}">
   <table class="w-full divide-y divide-gray-200">
     <thead class="bg-gray-100">
       <tr>
-        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-          Name
+        <th scope="col" data-field="name" class="cursor-pointer px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+          <div class="flex items-center justify-between pointer-events-none">
+            <span>Name</span>
+            <div class="flex">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 -mr-1 text-sm {{ $field === 'name' && $direction === 'asc' ? 'text-gray-700' : 'text-gray-300' }}" viewBox="0 0 20 20"
+                fill="currentColor">
+                <path fill-rule="evenodd" d="M5.293 7.707a1 1 0 010-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 01-1.414 1.414L11 5.414V17a1 1 0 11-2 0V5.414L6.707 7.707a1 1 0 01-1.414 0z"
+                  clip-rule="evenodd" />
+              </svg>
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 {{ $field === 'name' && $direction === 'desc' ? 'text-gray-700' : 'text-gray-300' }}" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M14.707 12.293a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 111.414-1.414L9 14.586V3a1 1 0 012 0v11.586l2.293-2.293a1 1 0 011.414 0z"
+                  clip-rule="evenodd" />
+              </svg>
+            </div>
+          </div>
         </th>
-        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-          Phone
+        <th scope="col" data-field="phone" class="cursor-pointer px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+          <div class="flex items-center justify-between pointer-events-none">
+            <span>Phone</span>
+            <div class="flex items-center">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 -mr-1 text-sm {{ $field === 'phone' && $direction === 'asc' ? 'text-gray-700' : 'text-gray-300' }}" viewBox="0 0 20 20"
+                fill="currentColor">
+                <path fill-rule="evenodd" d="M5.293 7.707a1 1 0 010-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 01-1.414 1.414L11 5.414V17a1 1 0 11-2 0V5.414L6.707 7.707a1 1 0 01-1.414 0z"
+                  clip-rule="evenodd" />
+              </svg>
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 {{ $field === 'phone' && $direction === 'desc' ? 'text-gray-700' : 'text-gray-300' }}" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M14.707 12.293a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 111.414-1.414L9 14.586V3a1 1 0 012 0v11.586l2.293-2.293a1 1 0 011.414 0z"
+                  clip-rule="evenodd" />
+              </svg>
+            </div>
+          </div>
         </th>
         <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
           Status
@@ -34,7 +49,7 @@
       </tr>
     </thead>
     <tbody class="bg-white divide-y divide-gray-200">
-      @foreach ($admins as $admin)
+      @forelse ($admins as $admin)
         <tr class="bg-white even:bg-gray-100">
           <td class="px-6 py-4 whitespace-nowrap">
             <div class="flex items-center">
@@ -87,11 +102,17 @@
             </div>
           </td>
         </tr>
-      @endforeach
+      @empty
+        <tr>
+          <td colspan="5">
+            <p class="text-center text-gray-400 text-sm py-4 px-3">No Data Found...</p>
+          </td>
+        </tr>
+      @endforelse
     </tbody>
   </table>
 </div>
-<!-- footer -->
+<!-- Pagination -->
 <div>
   {{ $admins->links('vendor.pagination.custom-pagination') }}
 </div>

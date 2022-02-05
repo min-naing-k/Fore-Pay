@@ -9,10 +9,19 @@ class AdminUserController extends Controller
 {
   public function index()
   {
-    $admins = Admin::orderBy('id', 'asc')
-      ->paginate(10)
+    return view('backend.admin-user.index');
+  }
+
+  public function showAllAdmins()
+  {
+    $limit = request('limit', 5);
+    $field = request('field', 'id');
+    $direction = request('direction', null);
+    $admins = Admin::orderBy($field, $direction ?? 'asc')
+      ->filter(request(['search']))
+      ->paginate($limit)
       ->withQueryString();
-    return view('backend.admin-user.index', compact('admins'));
+    return view('components.backend.table', compact('admins', 'field', 'direction'))->render();
   }
 
   public function create()

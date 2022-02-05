@@ -16,5 +16,6 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::get('/', [PageController::class, 'dashboard'])->name('dashboard');
 
     Route::resource('admin-user', AdminUserController::class);
+    Route::get('admin-user-table', [AdminUserController::class, 'showAllAdmins']);
   });
 });

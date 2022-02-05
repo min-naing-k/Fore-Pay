@@ -25,4 +25,13 @@ class Admin extends Authenticatable
   protected $casts = [
     'email_verified_at' => 'datetime',
   ];
+
+  public function scopeFilter($query, array $filters)
+  {
+    $query->when($filters['search'] ?? false, function ($query, $search) {
+      $query->orWhere('name', 'like', "%$search%")
+        ->orWhere('email', 'like', "%$search%")
+        ->orWhere('phone', 'like', "%$search%");
+    });
+  }
 }
