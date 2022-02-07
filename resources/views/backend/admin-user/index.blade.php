@@ -11,7 +11,7 @@
     <div class="table-header flex flex-wrap gap-4 items-center justify-between">
       <div class="flex items-center">
         <div class="mr-3">
-          <select class="single-select" id="limit" name="limit">
+          <select class="single-select" id="limit" name="limit" style="outline: none">
             <option value="5">5</option>
             <option value="10">10</option>
             <option value="25">25</option>
