@@ -169,13 +169,13 @@ body {
 /* ============ Select 2 ============= */
 .select2-container *:focus {
   outline: none;
-  border-radius: 0.675rem !important;
+  border-radius: 0.575rem !important;
   box-shadow: 0 0 0 2px #6366f1 !important;
 }
 
 .select2-container .select2-selection--single {
   border: 1px solid #e5e7eb;
-  border-radius: 0.457rem;
+  border-radius: 0.575rem;
   min-height: 42px !important;
   display: flex;
   align-items: center;
@@ -185,7 +185,7 @@ body {
 
 .select2-container--open.select2-container--above .select2-selection--single,
 .select2-container--open.select2-container--below .select2-selection--single {
-  border-radius: 0.457rem !important;
+  border-radius: 0.575rem !important;
 }
 
 .select2-container .select2-selection--single .select2-selection__rendered {
