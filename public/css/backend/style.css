@@ -183,6 +183,11 @@ body {
   padding: 0 0.7rem;
 }
 
+.select2-container--open.select2-container--above .select2-selection--single,
+.select2-container--open.select2-container--below .select2-selection--single {
+  border-radius: 0.457rem !important;
+}
+
 .select2-container .select2-selection--single .select2-selection__rendered {
   padding: unset !important;
 }
@@ -224,7 +229,7 @@ body {
 
 .select2-container--open .select2-dropdown--above {
   position: absolute !important;
-  top: -0.7rem !important;
+  top: -0.8rem !important;
   font-size: 0.875rem !important;
   border: none !important;
   margin-top: 0.3rem !important;
