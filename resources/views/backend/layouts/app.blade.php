@@ -11,7 +11,11 @@
   <!-- Select2 Css -->
   <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 
+  <!-- Flowbite Tailwind Css Component -->
+  <link rel="stylesheet" href="https://unpkg.com/flowbite@1.3.2/dist/flowbite.min.css" />
+
   <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+
   <!-- Custom Css -->
   <link rel="stylesheet" href="{{ asset('css/backend/style.css') }}">
 
@@ -44,10 +48,14 @@
     </section>
   </main><!-- Main Content End -->
 
+  <!-- Flowbite Tailwind Css Component -->
+  <script src="https://unpkg.com/flowbite@1.3.2/dist/flowbite.js"></script>
   <script src="{{ asset('js/app.js') }}"></script>
   <script src="{{ asset('js/jquery.js') }}"></script>
   <!-- Select 2 -->
   <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+  <!-- Sweet Alert 2 -->
+  <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script>
     const body = document.querySelector('body');
     const over_view = document.querySelector('.over-view');
@@ -78,11 +86,10 @@
     sign_out_btn.addEventListener('click', e => {
       e.preventDefault();
       axios({
-        method: 'POST',
+        method: 'GET',
         url: '/admin/logout',
       }).then(res => {
         if (!res.data) return;
-        console.log(res.data);
         this.location.replace('/admin/login');
       }).catch(err => console.error(err));
     })

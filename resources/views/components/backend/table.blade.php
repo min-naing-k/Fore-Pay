@@ -1,36 +1,48 @@
 <!-- table -->
-<div class="my-4 overflow-hidden overflow-x-auto scrollbar-thin scrollbar-thumb-slate-300 scrollbar-track-gray-100 scrollbar-thumb-rounded-full scrollbar-track-rounded-full shadow rounded-lg">
+<div class="my-3 overflow-hidden overflow-x-auto scrollbar-thin scrollbar-thumb-slate-300 scrollbar-track-gray-100 scrollbar-thumb-rounded-full scrollbar-track-rounded-full shadow rounded-lg">
   <input id="old-field" type="hidden" value="{{ $field }}">
   <input id="direction" type="hidden" value="{{ $direction }}">
   <table class="w-full divide-y divide-gray-200">
     <thead class="bg-gray-100">
       <tr>
-        <th scope="col" data-field="name" class="cursor-pointer px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-          <div class="flex items-center justify-between pointer-events-none">
-            <span>Name</span>
+        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+          <div class="flex items-center justify-between">
             <div class="flex">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 -mr-1 text-sm {{ $field === 'name' && $direction === 'asc' ? 'text-gray-700' : 'text-gray-300' }}" viewBox="0 0 20 20"
+              @php
+                $minus_class = array_intersect($admins->pluck('id')->toArray(), $selected_admins_id) && array_diff($admins->pluck('id')->toArray(), $selected_admins_id) ? 'minus' : '';
+                $checked = !count(array_diff($admins->pluck('id')->toArray(), $selected_admins_id)) ? 'checked' : '';
+              @endphp
+              <input {{ $checked }} type="checkbox" id="global-checkbox" class="border-gray-300 cursor-pointer {{ $minus_class }}"
+                style="border-radius: .275rem">
+            </div>
+            <span data-field="name" class="cursor-pointer flex-1 pl-3">Name</span>
+            <div data-field="name" class="flex cursor-pointer">
+              <svg xmlns="http://www.w3.org/2000/svg" class="pointer-events-none h-3 w-3 -mr-1 text-sm {{ $field === 'name' && $direction === 'asc' ? 'text-gray-700' : 'text-gray-300' }}"
+                viewBox="0 0 20 20"
                 fill="currentColor">
                 <path fill-rule="evenodd" d="M5.293 7.707a1 1 0 010-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 01-1.414 1.414L11 5.414V17a1 1 0 11-2 0V5.414L6.707 7.707a1 1 0 01-1.414 0z"
                   clip-rule="evenodd" />
               </svg>
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 {{ $field === 'name' && $direction === 'desc' ? 'text-gray-700' : 'text-gray-300' }}" viewBox="0 0 20 20" fill="currentColor">
+              <svg xmlns="http://www.w3.org/2000/svg" class="pointer-events-none h-3 w-3 {{ $field === 'name' && $direction === 'desc' ? 'text-gray-700' : 'text-gray-300' }}" viewBox="0 0 20 20"
+                fill="currentColor">
                 <path fill-rule="evenodd" d="M14.707 12.293a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 111.414-1.414L9 14.586V3a1 1 0 012 0v11.586l2.293-2.293a1 1 0 011.414 0z"
                   clip-rule="evenodd" />
               </svg>
             </div>
           </div>
         </th>
-        <th scope="col" data-field="phone" class="cursor-pointer px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-          <div class="flex items-center justify-between pointer-events-none">
-            <span>Phone</span>
-            <div class="flex items-center">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 -mr-1 text-sm {{ $field === 'phone' && $direction === 'asc' ? 'text-gray-700' : 'text-gray-300' }}" viewBox="0 0 20 20"
+        <th scope="col" class="cursor-pointer px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+          <div class="flex items-center justify-between">
+            <span data-field="phone" class="flex-1 cursor-pointer">Phone</span>
+            <div data-field="phone" class="flex items-center cursor-pointer">
+              <svg xmlns="http://www.w3.org/2000/svg" class="pointer-events-none h-3 w-3 -mr-1 text-sm {{ $field === 'phone' && $direction === 'asc' ? 'text-gray-700' : 'text-gray-300' }}"
+                viewBox="0 0 20 20"
                 fill="currentColor">
                 <path fill-rule="evenodd" d="M5.293 7.707a1 1 0 010-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 01-1.414 1.414L11 5.414V17a1 1 0 11-2 0V5.414L6.707 7.707a1 1 0 01-1.414 0z"
                   clip-rule="evenodd" />
               </svg>
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 {{ $field === 'phone' && $direction === 'desc' ? 'text-gray-700' : 'text-gray-300' }}" viewBox="0 0 20 20" fill="currentColor">
+              <svg xmlns="http://www.w3.org/2000/svg" class="pointer-events-none h-3 w-3 {{ $field === 'phone' && $direction === 'desc' ? 'text-gray-700' : 'text-gray-300' }}" viewBox="0 0 20 20"
+                fill="currentColor">
                 <path fill-rule="evenodd" d="M14.707 12.293a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 111.414-1.414L9 14.586V3a1 1 0 012 0v11.586l2.293-2.293a1 1 0 011.414 0z"
                   clip-rule="evenodd" />
               </svg>
@@ -48,11 +60,15 @@
         </th>
       </tr>
     </thead>
-    <tbody class="bg-white divide-y divide-gray-200">
+    <tbody id="admin-user-table" class="bg-white divide-y divide-gray-200">
       @forelse ($admins as $admin)
         <tr class="bg-white even:bg-gray-100">
           <td class="px-6 py-4 whitespace-nowrap">
             <div class="flex items-center">
+              <div class="flex items-center mr-3">
+                <input {{ collect($selected_admins_id)->contains($admin->id) ? 'checked' : '' }} type="checkbox" data-id="{{ $admin->id }}" class="local-checkbox cursor-pointer border-gray-300"
+                  style="border-radius: .275rem">
+              </div>
               <div class="flex-shrink-0 h-10 w-10">
                 <img class="min-w-max rounded-full"
                   src="https://ui-avatars.com/api/?format=svg&rounded=true&size=35&name={{ $admin->name }}" alt="">

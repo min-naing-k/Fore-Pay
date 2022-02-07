@@ -1,4 +1,4 @@
-<div x-data="{ open: false }" @click.outside="open = false" {{ $attributes->merge(['class' => 'relative z-50']) }}>
+<div x-data="{ open: false }" @click.outside="open = false" {{ $attributes->merge(['class' => 'relative z-50 border-none ring-white']) }}>
   <div @click="open = !open">
     {{ $trigger }}
   </div>
@@ -11,8 +11,7 @@
     x-transition:leave-end="transform opacity-0 scale-95"
     class="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu"
     aria-orientation="vertical"
-    aria-labelledby="user-menu-button" tabindex="-1" style="display: none"
-    @click="open = false">
+    aria-labelledby="user-menu-button" tabindex="-1" style="display: none">
     {{ $slot }}
   </div>
 </div>

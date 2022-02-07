@@ -157,9 +157,11 @@ body {
   }
 }
 
-@media (max-width: 390px) {
+@media (max-width: 440px) {
   .table-header {
     flex-direction: column;
+    justify-content: start;
+    align-items: start;
     gap: 1rem;
   }
 }
@@ -223,13 +225,36 @@ body {
   padding: 0.5 1rem !important;
 }
 
+.select2-results__options::-webkit-scrollbar {
+  width: 6px;
+}
+.select2-results__options::-webkit-scrollbar-track {
+  background-color: #f4f4f4;
+  height: 5px;
+  border-right: 10px solid rgba(0, 0, 0, 0);
+  border-top: 10px solid rgba(0, 0, 0, 0);
+  border-bottom: 10px solid rgba(0, 0, 0, 0);
+}
+
+.select2-results__options::-webkit-scrollbar-thumb {
+  background-color: #aaa;
+  border-right: 10px solid rgba(0, 0, 0, 0);
+  border-top: 10px solid rgba(0, 0, 0, 0);
+  border-bottom: 10px solid rgba(0, 0, 0, 0);
+  border-radius: 1rem;
+}
+
+.select2-results__options::-webkit-scrollbar-button {
+  display: none;
+}
+
 /* ============ Pagination =============== */
 .pagination .link {
   display: flex;
   align-items: center;
   justify-content: center;
   height: 100%;
-  padding: 0.5rem 0.975rem;
+  padding: 0.5rem 0.875rem;
   border-radius: 0.375rem;
   cursor: pointer;
 }
@@ -237,4 +262,27 @@ body {
 .pagination .active {
   cursor: pointer;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1), 0 -1px 45px rgba(0, 0, 0, 0.2);
+  background-color: #0ea5e9;
+  color: #fff;
+}
+
+/* ========== Checkbox ============ */
+#global-checkbox {
+  position: relative;
+}
+
+#global-checkbox.minus::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 120%;
+  height: 120%;
+  background-color: #6366f1;
+  background-image: url(./../../images/icons/minus.svg);
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+  border-radius: 0.275rem;
 }

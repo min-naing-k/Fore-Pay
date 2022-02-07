@@ -14,14 +14,20 @@ class AdminUserController extends Controller
 
   public function showAllAdmins()
   {
-    $limit = request('limit', 5);
-    $field = request('field', 'id');
-    $direction = request('direction', null);
-    $admins = Admin::orderBy($field, $direction ?? 'asc')
-      ->filter(request(['search']))
-      ->paginate($limit)
-      ->withQueryString();
-    return view('components.backend.table', compact('admins', 'field', 'direction'))->render();
+    if (request()->ajax()) {
+      $selected_admins_id = request('selected_admins_id');
+      $selected_admins_id = $selected_admins_id ? explode(',', $selected_admins_id) : [];
+      $limit = request('limit', 5);
+      $field = request('field', 'id');
+      $direction = request('direction', null);
+      $admins = Admin::orderBy($field, $direction ?? 'asc')
+        ->filter(request(['search']))
+        ->paginate($limit);
+      $admins->appends(request()->except(['selected_admins_id']));
+      return view('components.backend.table', compact('admins', 'field', 'direction', 'selected_admins_id'))->render();
+    }
+
+    return back();
   }
 
   public function create()

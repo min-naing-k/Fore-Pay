@@ -25,12 +25,15 @@ class AdminSessionController extends Controller
 
   public function destroy(Request $request)
   {
-    Auth::guard('admin')->logout();
+    if ($request->ajax()) {
+      Auth::guard('admin')->logout();
 
-    $request->session()->invalidate();
+      $request->session()->invalidate();
 
-    $request->session()->regenerateToken();
+      $request->session()->regenerateToken();
 
-    return response()->json(['message' => 'admin logout successfully!']);
+      return response()->json(['message' => 'admin logout successfully!']);
+    }
+    return back();
   }
 }
