@@ -60,7 +60,7 @@
         </th>
       </tr>
     </thead>
-    <tbody id="admin-user-table" class="bg-white divide-y divide-gray-200">
+    <tbody class="bg-white divide-y divide-gray-200">
       @forelse ($admins as $admin)
         <tr class="bg-white even:bg-gray-100">
           <td class="px-6 py-4 whitespace-nowrap">

@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Backend;
 
+use App\Http\Controllers\Controller;
 use App\Models\Admin;
 use Illuminate\Http\Request;
 
@@ -22,8 +23,8 @@ class AdminUserController extends Controller
       $direction = request('direction', null);
       $admins = Admin::orderBy($field, $direction ?? 'asc')
         ->filter(request(['search']))
-        ->paginate($limit);
-      $admins->appends(request()->except(['selected_admins_id']));
+        ->paginate($limit)
+        ->withQueryString();
       return view('components.backend.table', compact('admins', 'field', 'direction', 'selected_admins_id'))->render();
     }
 
@@ -57,6 +58,21 @@ class AdminUserController extends Controller
 
   public function destroy($id)
   {
-    //
+
+  }
+
+  public function destroySelected($selected_admins_id)
+  {
+    $selected_admins_id = $selected_admins_id ? explode(',', $selected_admins_id) : [];
+    foreach ($selected_admins_id as $id) {
+      $admin = Admin::find($id);
+      if (!$admin) {
+        return response()->json('Admin User Not Found');
+      }
+
+      $admin->delete();
+    }
+
+    return response()->json('Admin User Deleted Successfully!');
   }
 }

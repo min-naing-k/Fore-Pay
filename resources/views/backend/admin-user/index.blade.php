@@ -18,11 +18,11 @@
             <option value="100">100</option>
           </select>
         </div>
-        <div class="options-selected hidden space-x-2">
+        <div class="options-selected-bar hidden space-x-2">
           <!-- options-selected unselect btn -->
           <div class="flex">
-            <button id="options-selected-unselect-btn" data-tooltip-target="unselected" data-tooltip-style="light" type="button"
-              class="hover:bg-gray-200 hover:text-red-500 flex items-center justify-center w-9 h-9 rounded-full bg-gray-100 text-red-400">
+            <button id="unselect-all-btn" data-tooltip-target="unselected" data-tooltip-style="light" type="button"
+              class="hover:bg-gray-200 hover:text-red-500 focus:outline-none flex items-center justify-center w-9 h-9 rounded-full bg-gray-100 text-red-400">
               <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 12H6" />
               </svg>
@@ -35,8 +35,8 @@
           </div>
           <!-- options-selected delete btn -->
           <div class="flex">
-            <button id="options-selected-delete-btn" data-tooltip-target="delete-selected" data-tooltip-style="light" type="button"
-              class="hover:bg-gray-200 hover:text-red-500 flex items-center justify-center w-9 h-9 rounded-full bg-gray-100 text-red-400">
+            <button id="delete-all-btn" data-tooltip-target="delete-selected" data-tooltip-style="light" type="button"
+              class="hover:bg-gray-200 hover:text-red-500 focus:outline-none flex items-center justify-center w-9 h-9 rounded-full bg-gray-100 text-red-400">
               <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
                 <path fill-rule="evenodd"
                   d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
@@ -51,8 +51,8 @@
           </div>
           <!-- options-selected archive btn -->
           <div class="flex">
-            <button id="options-selected-archive-btn" data-tooltip-target="archive-selected" data-tooltip-style="light" type="button"
-              class="hover:bg-gray-200 hover:text-orange-500 flex items-center justify-center w-9 h-9 rounded-full bg-gray-100 text-orange-400">
+            <button id="archive-btn" data-tooltip-target="archive-selected" data-tooltip-style="light" type="button"
+              class="hover:bg-gray-200 hover:text-orange-500 focus:outline-none flex items-center justify-center w-9 h-9 rounded-full bg-gray-100 text-orange-400">
               <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
                 <path d="M4 3a2 2 0 100 4h12a2 2 0 100-4H4z" />
                 <path fill-rule="evenodd" d="M3 8h14v7a2 2 0 01-2 2H5a2 2 0 01-2-2V8zm5 3a1 1 0 011-1h2a1 1 0 110 2H9a1 1 0 01-1-1z" clip-rule="evenodd" />
@@ -77,14 +77,26 @@
       const admin_table = document.querySelector('#admin-table');
       const limit = document.querySelector('#limit');
       const search = document.querySelector('#admin-search input');
-      const options_selected = document.querySelector('.options-selected');
-      const options_selected_delete_btn = document.querySelector('#options-selected-delete-btn');
-      const options_selected_archive_btn = document.querySelector('#options-selected-archive-btn');
-      const options_selected_unselected_btn = document.querySelector('#options-selected-unselect-btn');
+      const options_selected_bar = document.querySelector('.options-selected-bar');
+      const delete_all_btn = document.querySelector('#delete-all-btn');
+      const archive_btn = document.querySelector('#archive-btn');
+      const unselect_all_btn = document.querySelector('#unselect-all-btn');
       const total_selected = document.querySelector('#total-selected');
       const storage_key = 'ADMINS_ID';
       let direction;
       let admins_id = [];
+      const sweet_alert_settings = {
+        title: 'Title',
+        text: 'description',
+        showCancelButton: true,
+        reverseButtons: true,
+        focusConfirm: false,
+        confirmButtonText: 'Ok',
+        cancelButtonText: 'Cancel',
+        customClass: {
+          confirmButton: ''
+        }
+      }
 
       initAdminTable();
 
@@ -181,7 +193,6 @@
           if (admins_id) {
             url += `&selected_admins_id=${admins_id}`
           }
-          console.log(url);
           axios({
             method: 'GET',
             url
@@ -252,33 +263,44 @@
         }
       })
 
-      // options selected unselected btn
-      options_selected_unselected_btn.addEventListener('click', e => {
+      // unselecte all btn
+      unselect_all_btn.addEventListener('click', e => {
         const global_checkbox = document.querySelector('#global-checkbox');
         const local_checkboxs = document.querySelectorAll('.local-checkbox');
         admins_id = [];
         global_checkbox.checked = false;
         global_checkbox.classList.remove('minus');
         local_checkboxs.forEach(checkbox => checkbox.checked = false);
-        options_selected.style.display = 'none';
+        options_selected_bar.style.display = 'none';
         total_selected.innerHTML = '';
       })
 
-      // options selected delete btn
-      options_selected_delete_btn.addEventListener('click', e => {
-        Swal.fire({
-          text: 'Are you sure to delete?',
-          confirmButtonText: 'Cool'
+      // delete selected btn
+      delete_all_btn.addEventListener('click', e => {
+        sweet_alert_settings.title = `Are you sure to delete ${admins_id.length} selected records?`;
+        sweet_alert_settings.text = 'Once you delete this record, you will not get back!';
+        sweet_alert_settings.confirmButtonText = 'Delete';
+        sweet_alert_settings.customClass.confirmButton = 'swal2-delete-btn';
+        Swal.fire(sweet_alert_settings).then(res => {
+          if (res.isConfirmed) {
+            axios({
+                method: 'DELETE',
+                url: `/admin/selected-admin-user/${admins_id}`
+              }).then(res => {
+                if (res.data) {
+                  clearAdminsId();
+                  initAdminTable();
+                  renderSuccessMessage(res.data);
+                }
+              })
+              .catch(err => console.error(err))
+          }
         })
-        const local_checkboxs = document.querySelectorAll('.local-checkbox');
-        const selected_admins_id = [];
-        local_checkboxs.forEach(checkbox => {
-          checkbox.checked && selected_admins_id.push(checkbox.dataset.id);
-        })
+
       })
 
-      // options selected archive btn
-      options_selected_archive_btn.addEventListener('click', e => {
+      // archive selected btn
+      archive_btn.addEventListener('click', e => {
         console.log('archive');
       })
 
@@ -300,11 +322,25 @@
             ${admins_id.length} selected
             </p>
             `;
-          options_selected.style.display = 'flex';
+          options_selected_bar.style.display = 'flex';
         } else {
           total_selected.innerHTML = '';
-          options_selected.style.display = 'none';
+          options_selected_bar.style.display = 'none';
         }
+      }
+
+      function renderSuccessMessage(message) {
+        Swal.fire(
+          'Deleted!',
+          message,
+          'success'
+        )
+      }
+
+      function clearAdminsId() {
+        admins_id = [];
+        options_selected_bar.style.display = 'none';
+        total_selected.innerHTML = '';
       }
     </script>
   </x-slot>
