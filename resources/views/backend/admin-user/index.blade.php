@@ -9,7 +9,7 @@
   <x-backend.main-panel>
     <!-- header -->
     <div class="table-header flex flex-wrap gap-4 items-center justify-between">
-      <div class="flex items-center">
+      <div class="flex items-center flex-wrap" style="row-gap: 0.5em">
         <div class="mr-3">
           <select class="single-select" id="limit" name="limit" style="outline: none">
             <option value="5">5</option>
@@ -95,6 +95,18 @@
         cancelButtonText: 'Cancel',
         customClass: {
           confirmButton: ''
+        }
+      }
+      const sweet_alert_delete_settings = {
+        title: `Are you sure to delete?`,
+        text: 'Once you delete this record, you will not get back!',
+        showCancelButton: true,
+        reverseButtons: true,
+        focusConfirm: false,
+        confirmButtonText: 'Delete',
+        cancelButtonText: 'Cancel',
+        customClass: {
+          confirmButton: 'swal2-delete-btn'
         }
       }
 
@@ -261,6 +273,26 @@
             global_checkbox.checked = true;
           }
         }
+
+        // delete single
+        if (e.target.id === 'delete-single') {
+          const delete_single = e.target;
+          sweet_alert_delete_settings.title = `Are you sure to delete ${delete_single.dataset.name}?`;
+          Swal.fire(sweet_alert_delete_settings).then(result => {
+            if (result.isConfirmed) {
+              axios({
+                method: 'DELETE',
+                url: `/admin/admin-user/${delete_single.dataset.admin_id}`
+              }).then(res => {
+                if (res.data) {
+                  clearAdminsId();
+                  initAdminTable();
+                  renderSuccessMessage(res.data);
+                }
+              })
+            }
+          });
+        }
       })
 
       // unselecte all btn
@@ -277,11 +309,8 @@
 
       // delete selected btn
       delete_all_btn.addEventListener('click', e => {
-        sweet_alert_settings.title = `Are you sure to delete ${admins_id.length} selected records?`;
-        sweet_alert_settings.text = 'Once you delete this record, you will not get back!';
-        sweet_alert_settings.confirmButtonText = 'Delete';
-        sweet_alert_settings.customClass.confirmButton = 'swal2-delete-btn';
-        Swal.fire(sweet_alert_settings).then(res => {
+        sweet_alert_delete_settings.title = `Are you sure to delete ${admins_id.length} selected records?`;
+        Swal.fire(sweet_alert_delete_settings).then(res => {
           if (res.isConfirmed) {
             axios({
                 method: 'DELETE',
@@ -329,10 +358,10 @@
         }
       }
 
-      function renderSuccessMessage(message) {
+      function renderSuccessMessage(response) {
         Swal.fire(
-          'Deleted!',
-          message,
+          response.status || 'Success!!',
+          response.message || 'Completed.',
           'success'
         )
       }

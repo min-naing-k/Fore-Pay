@@ -16,6 +16,10 @@ body {
   overflow-x: hidden;
 }
 
+.z-100 {
+  z-index: 100 !important;
+}
+
 .m-shadow {
   box-shadow: 0 3px 15px rgba(0, 0, 0, 0.1) !important;
 }
@@ -318,6 +322,8 @@ body {
 .swal2-styled.swal2-cancel {
   font-size: 0.875em !important;
   border-radius: 0.5em !important;
+  padding-top: 10px !important;
+  border-radius: 0.6em !important;
 }
 
 .swal2-styled.swal2-cancel {

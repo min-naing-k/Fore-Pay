@@ -26,6 +26,11 @@ class Admin extends Authenticatable
     'email_verified_at' => 'datetime',
   ];
 
+  public function getNameAttribute($name)
+  {
+    return ucwords($name);
+  }
+
   public function scopeFilter($query, array $filters)
   {
     $query->when($filters['search'] ?? false, function ($query, $search) {

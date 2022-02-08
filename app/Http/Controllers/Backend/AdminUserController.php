@@ -58,7 +58,13 @@ class AdminUserController extends Controller
 
   public function destroy($id)
   {
+    $admin = Admin::find($id);
+    if (!$admin) {
+      return response()->json('Admin User Not Found!');
+    }
 
+    $admin->delete();
+    return response()->json(['status' => 'Success', 'message' => 'Admin User is deleted Successfully!']);
   }
 
   public function destroySelected($selected_admins_id)
@@ -73,6 +79,6 @@ class AdminUserController extends Controller
       $admin->delete();
     }
 
-    return response()->json('Admin User Deleted Successfully!');
+    return response()->json(['status' => 'Success', 'message' => 'Admin User is deleted Successfully!']);
   }
 }
