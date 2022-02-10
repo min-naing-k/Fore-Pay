@@ -164,14 +164,14 @@
   <div class="flex items-center justify-between md:hidden">
     {{-- Previous Page Link --}}
     @if ($paginator->onFirstPage())
-      <span class="page-link w-20 flex items-center justify-center px-3 py-2 border border-gray-200 rounded-lg bg-white text-gray-300 text-sm cursor-not-allowed">
-        Previous
+      <span class="page-link flex items-center justify-center px-3 py-2 border border-gray-200 rounded-lg bg-white text-gray-300 text-sm cursor-not-allowed">
+        Prev
       </span>
     @else
       <a
-        class="page-link w-20 flex items-center justify-center px-3 py-2 border border-gray-200 rounded-lg bg-white text-gray-500 text-sm focus:ring-2 ring-indigo-500 ring-offset-2"
+        class="page-link flex items-center justify-center px-3 py-2 border border-gray-200 rounded-lg bg-white text-gray-500 text-sm focus:ring-2 ring-indigo-500 ring-offset-2"
         href="{{ $paginator->previousPageUrl() }}" rel="prev">
-        Previous
+        Prev
       </a>
     @endif
 
@@ -181,11 +181,11 @@
 
     {{-- Next Page Link --}}
     @if ($paginator->onLastPage())
-      <span class="page-link w-20 flex items-center justify-center px-3 py-2 border border-gray-200 rounded-lg bg-white text-gray-300 text-sm cursor-not-allowed">
+      <span class="page-link flex items-center justify-center px-3 py-2 border border-gray-200 rounded-lg bg-white text-gray-300 text-sm cursor-not-allowed">
         Next
       </span>
     @else
-      <a class="page-link w-20 flex items-center justify-center px-3 py-2 border border-gray-200 rounded-lg bg-white text-gray-500 text-sm focus:ring-2 ring-indigo-500 ring-offset-2"
+      <a class="page-link flex items-center justify-center px-3 py-2 border border-gray-200 rounded-lg bg-white text-gray-500 text-sm focus:ring-2 ring-indigo-500 ring-offset-2"
         href="{{ $paginator->nextPageUrl() }}" rel="prev">
         Next
       </a>

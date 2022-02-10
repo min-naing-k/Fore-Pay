@@ -40,4 +40,13 @@ class Admin extends Authenticatable
         ->orWhere('phone', 'like', "%$search%");
     });
   }
+
+  public function profileImage()
+  {
+    if ($this->image) {
+      return asset('storage/' . $this->image);
+    }
+
+    return null;
+  }
 }

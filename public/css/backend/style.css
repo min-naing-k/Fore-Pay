@@ -22,7 +22,7 @@ body {
 
 .btn,
 .btn-primary {
-  padding: 0.6rem 1rem;
+  padding: 0.7rem 1rem;
 }
 
 .error {
@@ -33,6 +33,25 @@ body {
   outline: none !important;
   border-color: var(--red-500) !important;
   box-shadow: 0 0 0 1px var(--red-500) !important;
+}
+
+.preview-cross {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(20px);
+  cursor: pointer;
+}
+
+.preview-cross:hover {
+  background: rgba(255, 255, 255, 0.5);
 }
 
 .z-100 {

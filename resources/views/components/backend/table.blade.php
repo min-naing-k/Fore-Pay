@@ -10,7 +10,7 @@
             <div class="flex">
               @php
                 $minus_class = array_intersect($admins->pluck('id')->toArray(), $selected_admins_id) && array_diff($admins->pluck('id')->toArray(), $selected_admins_id) ? 'minus' : '';
-                $checked = !count(array_diff($admins->pluck('id')->toArray(), $selected_admins_id)) ? 'checked' : '';
+                $checked = array_intersect($admins->pluck('id')->toArray(), $selected_admins_id) && !count(array_diff($admins->pluck('id')->toArray(), $selected_admins_id)) ? 'checked' : '';
               @endphp
               <input {{ $checked }} type="checkbox" id="global-checkbox" class="border-gray-300 cursor-pointer {{ $minus_class }}"
                 style="border-radius: .275rem">
@@ -111,7 +111,7 @@
           </td>
           <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
             <div class="flex items-center justify-end flex-nowrap gap-x-1">
-              <a href="#" class="text-indigo-600 hover:text-indigo-900 flex items-center mr-1">
+              <a href="{{ route('admin.admin-user.edit', $admin->id) }}" class="text-indigo-600 hover:text-indigo-900 flex items-center mr-1">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                     d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />

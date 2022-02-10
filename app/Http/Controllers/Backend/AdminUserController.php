@@ -39,6 +39,9 @@ class AdminUserController extends Controller
   public function store(StoreAdmin $request)
   {
     $attributes = $request->validated();
+    if ($request->hasFile('image')) {
+      $attributes['image'] = $request->file('image')->store('admin/profile');
+    }
     $admin = Admin::create($attributes);
     return redirect()->route('admin.admin-user.index')->with('create', "New Admin ($admin->name) is Created");
   }
@@ -50,7 +53,8 @@ class AdminUserController extends Controller
 
   public function edit($id)
   {
-    //
+    $admin = Admin::findOrFail($id);
+    return view('backend.admin-user.edit', compact('admin'));
   }
 
   public function update($id)
