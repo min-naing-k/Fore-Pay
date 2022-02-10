@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreAdmin;
 use App\Models\Admin;
-use Illuminate\Http\Request;
 
 class AdminUserController extends Controller
 {
@@ -21,7 +21,7 @@ class AdminUserController extends Controller
       $limit = request('limit', 5);
       $field = request('field', 'id');
       $direction = request('direction', null);
-      $admins = Admin::orderBy($field, $direction ?? 'asc')
+      $admins = Admin::orderBy($field, $direction ?? 'desc')
         ->filter(request(['search']))
         ->paginate($limit)
         ->withQueryString();
@@ -33,12 +33,14 @@ class AdminUserController extends Controller
 
   public function create()
   {
-    //
+    return view('backend.admin-user.create');
   }
 
-  public function store(Request $request)
+  public function store(StoreAdmin $request)
   {
-    //
+    $attributes = $request->validated();
+    $admin = Admin::create($attributes);
+    return redirect()->route('admin.admin-user.index')->with('create', "New Admin ($admin->name) is Created");
   }
 
   public function show($id)
@@ -51,7 +53,7 @@ class AdminUserController extends Controller
     //
   }
 
-  public function update(Request $request, $id)
+  public function update($id)
   {
     //
   }

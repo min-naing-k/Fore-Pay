@@ -11,11 +11,7 @@ class Admin extends Authenticatable
 {
   use HasApiTokens, HasFactory, Notifiable;
 
-  protected $fillable = [
-    'name',
-    'email',
-    'password',
-  ];
+  protected $guarded = ['id'];
 
   protected $hidden = [
     'password',
@@ -29,6 +25,11 @@ class Admin extends Authenticatable
   public function getNameAttribute($name)
   {
     return ucwords($name);
+  }
+
+  public function setPasswordAttribute($password)
+  {
+    $this->attributes['password'] = bcrypt($password);
   }
 
   public function scopeFilter($query, array $filters)

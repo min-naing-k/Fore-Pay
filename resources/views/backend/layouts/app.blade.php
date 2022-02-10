@@ -35,7 +35,7 @@
     <section class="max-w-7xl mx-auto p-3 md:p-4">
       <!-- Main Content Header -->
       <header class="flex items-center mb-4">
-        <div class="mr-5 bg-white text-gray-300 p-4 rounded-lg m-shadow">
+        <div class="mr-5 bg-white text-gray-300 w-11 h-11 flex items-center justify-center rounded-lg m-shadow">
           {{ $icon ?? null }}
         </div>
         <h1 class="text-gray-500 text-xl font-semibold">{{ $title }}</h1>
@@ -63,6 +63,27 @@
     const cross = document.querySelector('.cross');
     const mobile_menu = document.querySelector('.mobile-menu');
     const sign_out_btn = document.querySelector('.sign-out-btn');
+    const Toast = Swal.mixin({
+      toast: true,
+      position: 'top-end',
+      showConfirmButton: false,
+      timer: 3000,
+      timerProgressBar: true,
+      customClass: {
+        timerProgressBar: 'success-progress-bar'
+      },
+      didOpen: (toast) => {
+        toast.addEventListener('mouseenter', Swal.stopTimer)
+        toast.addEventListener('mouseleave', Swal.resumeTimer)
+      }
+    })
+
+    @if (session('create'))
+      Toast.fire({
+      icon: 'success',
+      title: '{{ session('create') }}'
+      })
+    @endif
 
     $(document).ready(function() {
       $('.single-select').select2({

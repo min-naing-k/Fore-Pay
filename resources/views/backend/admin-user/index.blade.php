@@ -1,12 +1,20 @@
 <x-backend.app title="Admin User Management">
   <x-slot name="icon">
-    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
         d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
     </svg>
   </x-slot>
 
   <x-backend.main-panel>
+    <div class="mb-3">
+      <a href="{{ route('admin.admin-user.create') }}" class="btn-primary">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" viewBox="0 0 20 20" fill="currentColor">
+          <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z" clip-rule="evenodd" />
+        </svg>
+        Create Admin
+      </a>
+    </div>
     <!-- header -->
     <div class="table-header flex flex-wrap gap-4 items-center justify-between">
       <div class="flex items-center flex-wrap" style="row-gap: 0.5em">
@@ -98,17 +106,14 @@
         }
       }
       const sweet_alert_delete_settings = {
+        ...sweet_alert_settings,
         title: `Are you sure to delete?`,
-        text: 'Once you delete this record, you will not get back!',
-        showCancelButton: true,
-        reverseButtons: true,
-        focusConfirm: false,
-        confirmButtonText: 'Delete',
-        cancelButtonText: 'Cancel',
+        text: "Once you delete this record, you will not get back!",
+        confirmButtonText: "Delete",
         customClass: {
-          confirmButton: 'swal2-delete-btn'
-        }
-      }
+          confirmButton: "swal2-delete-btn",
+        },
+      };
 
       initAdminTable();
 
@@ -307,7 +312,7 @@
         total_selected.innerHTML = '';
       })
 
-      // delete selected btn
+      // delete all selected btn
       delete_all_btn.addEventListener('click', e => {
         sweet_alert_delete_settings.title = `Are you sure to delete ${admins_id.length} selected records?`;
         Swal.fire(sweet_alert_delete_settings).then(res => {

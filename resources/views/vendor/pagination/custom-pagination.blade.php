@@ -1,6 +1,6 @@
 @if ($paginator->hasPages())
   {{-- Desktop View --}}
-  <div class="pagination-wrapper hidden md:flex items-center justify-between flex-wrap gap-y-2">
+  <div class="pagination-wrapper hidden md:flex items-center justify-between flex-wrap gap-y-3">
     <div class="flex-shrink-0">
       <p class="text-gray-500 text-sm">Showing {{ $paginator->firstItem() }} to {{ $paginator->lastItem() }} of {{ $paginator->total() }} Admins</p>
     </div>

@@ -55,7 +55,7 @@
         <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
           Role
         </th>
-        <th scope="col" class="relative px-6 py-3 hidden lg:block">
+        <th scope="col" class="relative px-6 py-3">
           <span class="sr-only">Edit</span>
         </th>
       </tr>
@@ -109,7 +109,7 @@
           <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
             Admin
           </td>
-          <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium hidden lg:block">
+          <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
             <div class="flex items-center justify-end flex-nowrap gap-x-1">
               <a href="#" class="text-indigo-600 hover:text-indigo-900 flex items-center mr-1">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
