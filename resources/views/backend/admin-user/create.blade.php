@@ -17,7 +17,7 @@
               <path d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z" />
             </svg>
           </div>
-          <input id="image-file" name="image" type="file" hidden accept="image/.png,.jpg,.jpeg">
+          <input id="image-file" name="image" type="file" hidden accept="image/png,image/jpg,image/jpeg">
           <button id="choose-image-btn" type="button" class="btn ml-4">Choose</button>
         </div>
         @error('image')
@@ -62,6 +62,7 @@
         </div>
       </div>
       <div class="flex justify-end mt-3">
+        <a href="{{ route('admin.admin-user.index') }}" class="btn mr-4">Cancel</a>
         <button type="submit" class="btn-primary">Create</button>
       </div>
     </form>
@@ -81,7 +82,7 @@
         if (preview_profile_image.children.length > 1) return;
         image_file.click();
       });
-      
+
       image_file.addEventListener('change', e => previewImage(e.target.files));
 
       document.addEventListener('click', e => {

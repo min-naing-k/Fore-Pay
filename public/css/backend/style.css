@@ -22,7 +22,7 @@ body {
 
 .btn,
 .btn-primary {
-  padding: 0.7rem 1rem;
+  padding: 0.6rem 1rem;
 }
 
 .error {
@@ -35,7 +35,8 @@ body {
   box-shadow: 0 0 0 1px var(--red-500) !important;
 }
 
-.preview-cross {
+.preview-cross,
+.delete-profile-image-btn {
   position: absolute;
   top: 0;
   right: 0;

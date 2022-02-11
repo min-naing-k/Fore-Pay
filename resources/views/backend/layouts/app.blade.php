@@ -85,6 +85,13 @@
       })
     @endif
 
+    @if (session('update'))
+      Toast.fire({
+      icon: 'success',
+      title: '{{ session('update') }}'
+      })
+    @endif
+
     $(document).ready(function() {
       $('.single-select').select2({
         minimumResultsForSearch: -1

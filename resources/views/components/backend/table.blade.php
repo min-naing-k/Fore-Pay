@@ -84,9 +84,14 @@
                 <x-dropdown2-link href="#">View</x-dropdown2-link>
                 <x-dropdown2-link href="#">Delete</x-dropdown2-link>
               </x-dropdown2>
-              <div class="flex-shrink-0 h-10 w-10">
-                <img class="min-w-max rounded-full"
-                  src="https://ui-avatars.com/api/?format=svg&rounded=true&size=35&name={{ $admin->name }}" alt="">
+              <div class="flex-shrink-0 h-10 w-10 overflow-hidden">
+                @if ($admin->image)
+                  <img class="w-full h-full object-cover rounded-full"
+                    src="{{ $admin->profileImage() }}" alt="{{ $admin->name }}">
+                @else
+                  <img class="min-w-max rounded-full"
+                    src="https://ui-avatars.com/api/?format=svg&rounded=true&size=35&name={{ $admin->name }}" alt="{{ $admin->name }}">
+                @endif
               </div>
               <div class="ml-4">
                 <div class="text-sm font-medium text-gray-900">

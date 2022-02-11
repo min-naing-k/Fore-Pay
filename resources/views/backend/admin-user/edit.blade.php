@@ -13,10 +13,11 @@
         <label class="form-label">Profile Image</label>
         <div class="mt-1 flex items-center">
           {{-- Preview Profile Image --}}
+          <input type="hidden" name="delete_profile_image" id="delete-profile-image" />
           <div id="preview-profile-image">
             @if ($admin->image)
               <div class="relative">
-                <div class="preview-cross">
+                <div class="delete-profile-image-btn">
                   <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 pointer-events-none" viewBox="0 0 20 20" fill="currentColor">
                     <path fill-rule="evenodd"
                       d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
@@ -24,14 +25,16 @@
                   </svg>
                 </div>
               </div>
-              <img src="{{ $admin->profileImage() }}" alt="{{ $admin->name }}" class="w-16 h-16 object-cover rounded-full overflow-hidden">
+              <img src="{{ $admin->profileImage() }}" alt="{{ $admin->name }}"
+                data-image_path="{{ $admin->image }}"
+                class="w-16 h-16 object-cover rounded-full overflow-hidden">
             @else
               <svg id="default-profile" class="inline-block h-16 w-16 rounded-full overflow-hidden bg-gray-100 text-gray-300" fill="currentColor" viewBox="0 0 24 24">
                 <path d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z" />
               </svg>
             @endif
           </div>
-          <input id="image-file" name="image" type="file" hidden accept="image/.png,.jpg,.jpeg">
+          <input id="image-file" name="image" type="file" hidden accept="image/png,image/jpg,image/jpeg">
           <button id="choose-image-btn" type="button" class="btn ml-4">Choose</button>
         </div>
         @error('image')
@@ -76,6 +79,7 @@
         </div>
       </div>
       <div class="flex justify-end mt-3">
+        <a href="{{ route('admin.admin-user.index') }}" class="btn mr-4">Cancel</a>
         <button type="submit" class="btn-primary">Save Changes</button>
       </div>
     </form>
@@ -100,6 +104,13 @@
 
       document.addEventListener('click', e => {
         if (e.target.classList.contains('preview-cross')) {
+          removePreviewImage();
+        }
+
+        if (e.target.classList.contains('delete-profile-image-btn')) {
+          const delete_profile_image_el = document.querySelector('#delete-profile-image');
+          const image_path = e.target.parentElement.nextElementSibling.dataset.image_path;
+          delete_profile_image_el.value = image_path;
           removePreviewImage();
         }
       })
