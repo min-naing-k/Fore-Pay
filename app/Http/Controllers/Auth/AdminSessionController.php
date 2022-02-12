@@ -18,6 +18,11 @@ class AdminSessionController extends Controller
   {
     $request->authenticate('admin');
 
+    $admin = auth()->guard('admin')->user();
+    $admin->ip = $request->ip();
+    $admin->user_agent = $request->server('HTTP_USER_AGENT');
+    $admin->update();
+
     $request->session()->regenerate();
 
     return redirect('/admin');

@@ -50,10 +50,13 @@
           </div>
         </th>
         <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-          Status
+          IP
         </th>
         <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-          Role
+          User Agent
+        </th>
+        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+          Status
         </th>
         <th scope="col" class="relative px-6 py-3">
           <span class="sr-only">Edit</span>
@@ -107,12 +110,38 @@
             <div class="text-sm text-gray-900">{{ $admin->phone }}</div>
           </td>
           <td class="px-6 py-4 whitespace-nowrap">
-            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-              Active
-            </span>
+            {!! $admin->ip ?? '<span class="text-center text-xs text-gray-400 tracking-wide">No ip yet.. </span>' !!}
+          </td>
+          <td class="px-6 py-4 whitespace-nowrap text-center">
+            @php
+              if ($admin->user_agent) {
+                  $agent = new Jenssegers\Agent\Agent();
+                  $agent->setUserAgent($admin->user_agent);
+              }
+            @endphp
+            @if ($admin->user_agent)
+              <div class="border border-gray-200 shadow overflow-hidden overflow-x-auto rounded-lg">
+                <table class="w-full">
+                  <thead class="bg-gray-50 text-sm bg-50 border-b border-gray-200">
+                    <th class="px-3 py-2 text-gray-500 font-medium">Device</th>
+                    <th class="px-3 py-2 text-gray-500 font-medium">Platform</th>
+                    <th class="px-3 py-2 text-gray-500 font-medium">Browser</th>
+                  </thead>
+                  <tbody>
+                    <tr class="text-sm">
+                      <td class="px-3 py-2">{{ $agent->device() }}</td>
+                      <td class="px-3 py-2">{{ $agent->platform() }}</td>
+                      <td class="px-3 py-2">{{ $agent->browser() }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            @else
+              <span class="text-center text-xs text-gray-400 tracking-wide">No user agent yet.. </span>
+            @endif
           </td>
           <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-            Admin
+            <span class="badge-success">Active</span>
           </td>
           <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
             <div class="flex items-center justify-end flex-nowrap gap-x-1">

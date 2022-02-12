@@ -21,7 +21,7 @@ class AdminUserController extends Controller
       $selected_admins_id = request('selected_admins_id');
       $selected_admins_id = $selected_admins_id ? explode(',', $selected_admins_id) : [];
       $limit = request('limit', 5);
-      $field = request('field', 'id');
+      $field = request('field', 'updated_at');
       $direction = request('direction', null);
       $admins = Admin::orderBy($field, $direction ?? 'desc')
         ->filter(request(['search']))
