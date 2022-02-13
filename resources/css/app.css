@@ -5,11 +5,11 @@
 @import "tailwindcss/utilities";
 
 .btn {
-  @apply hover:bg-gray-50 disabled:opacity-25 active:bg-gray-50 focus:outline-none focus:ring-2 ring-indigo-500 ring-offset-2 shadow-sm inline-flex items-center justify-center border border-gray-300 bg-white text-gray-700 text-sm leading-4 tracking-wide rounded-lg;
+  @apply hover:bg-gray-50 disabled:opacity-25 active:bg-gray-50 focus:outline-none focus:ring-2 ring-indigo-500 ring-offset-2 shadow-sm inline-flex items-center justify-center border border-gray-300 bg-white text-gray-700 text-sm leading-4 rounded-md transition duration-100 ease-in-out;
 }
 
 .btn-primary {
-  @apply hover:bg-indigo-600 disabled:opacity-25 active:bg-indigo-600 focus:outline-none focus:ring-2 ring-indigo-300 ring-offset-2 inline-flex items-center justify-center bg-indigo-500 text-white text-sm tracking-wide leading-4 rounded-lg transition duration-100 ease-in-out;
+  @apply hover:bg-indigo-600 disabled:opacity-25 active:bg-indigo-600 focus:outline-none focus:ring-2 ring-indigo-300 ring-offset-2 inline-flex items-center justify-center bg-indigo-500 text-white text-sm font-medium leading-4 rounded-md transition duration-100 ease-in-out;
 }
 
 .form-control {

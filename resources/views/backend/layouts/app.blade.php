@@ -81,14 +81,40 @@
     @if (session('create'))
       Toast.fire({
       icon: 'success',
-      title: '{{ session('create') }}'
+      title: '{{ session('create') }}',
+      customClass: {
+      timerProgressBar: 'success-progress'
+      }
       })
     @endif
 
     @if (session('update'))
       Toast.fire({
       icon: 'success',
-      title: '{{ session('update') }}'
+      title: '{{ session('update') }}',
+      customClass: {
+      timerProgressBar: 'success-progress'
+      }
+      })
+    @endif
+
+    @if (session('warning'))
+      Toast.fire({
+      icon: 'warning',
+      title: '{{ session('warning') }}',
+      customClass: {
+      timerProgressBar: 'warning-progress'
+      }
+      })
+    @endif
+
+    @if (session('error'))
+      Toast.fire({
+      icon: 'error',
+      title: '{{ session('error') }}',
+      customClass: {
+      timerProgressBar: 'error-progress'
+      }
       })
     @endif
 

@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Admin;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -14,8 +15,9 @@ class DatabaseSeeder extends Seeder
    */
   public function run()
   {
-    // \App\Models\User::factory(10)->create();
     Admin::truncate();
+    User::truncate();
     Admin::factory(100)->create();
+    User::factory(100)->create();
   }
 }

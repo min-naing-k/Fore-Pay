@@ -20,7 +20,7 @@
 
 
   {{-- custom css --}}
-  <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+  <link rel="stylesheet" href="{{ asset('css/frontend/style.css') }}">
 
   {{ $css ?? null }}
 </head>
@@ -76,7 +76,7 @@
           </div>
         </div>
         <div class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-          <button type="button" class="p-1 rounded-full text-gray-400 hover:text-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-indigo-500 focus:ring-white">
+          <button type="button" class="p-1 mr-2 rounded-full text-gray-400 hover:text-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-indigo-500 focus:ring-white">
             <!-- Heroicon name: outline/bell -->
             <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -92,11 +92,19 @@
                 id="user-menu-button"
                 aria-expanded="false" aria-haspopup="true">
                 <span class="sr-only">Open user menu</span>
-                <img class="h-8 w-8 rounded-full"
-                  src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="">
+                @if (auth()->user()->image)
+                  <img src="{{ auth()->user()->profileImage() }}" class="w-8 h-8 rounded-full object-cover" style="width: 35px;height: 35px;"
+                    alt="{{ auth()->user()->name }}">
+                @else
+                  <img class="w-8 h-8 object-cover rounded-full"
+                    src="https://ui-avatars.com/api/?format=svg&rounded=true&size=35&name={{ auth()->user()->name }}" alt="{{ auth()->guard('admin')->user()->name }}">
+                @endif
               </button>
             </x-slot>
-
+            <div class="px-4 py-2 flex flex-col border-b border-b-gray-200">
+              <p class="font-medium text-gray-500">{{ auth()->user()->name }}</p>
+              <small class="text-gray-400">{{ auth()->user()->email }}</small>
+            </div>
             <x-dropdown2-link href="#">Your Profile</x-dropdown2-link>
             <x-dropdown2-link href="#">Setting</x-dropdown2-link>
             <x-dropdown2-link href="#" class="sign-out-btn">Sign Out</x-dropdown2-link>

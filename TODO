@@ -1,4 +1,7 @@
 
 Todo:
-  ☐ create, edit, update admin-user
-  ☐ insert user_agent, ip after admin login
+  ✔ create, edit, update admin-user @done(22-02-12 22:19)
+  ✔ insert user_agent, ip after admin login @done(22-02-12 22:20)
+  ✔ crud user, (when create,update user, create also wallet use DB::transition) @done(22-02-13 15:39)
+  ✔ create helper function UUIDGenerate class for generate accountNumber (UUIDGenerate::accountNumber()) @done(22-02-13 15:39)
+  ✔ update ip, user_agent when user login @done(22-02-13 15:52)

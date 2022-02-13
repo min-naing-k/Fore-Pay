@@ -1,18 +1,17 @@
-<x-backend.app title="Admin User Management">
+<x-backend.app title="User Management">
   <x-slot name="icon">
     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-        d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
     </svg>
   </x-slot>
 
   <x-backend.main-panel>
     <div class="mb-3">
-      <a href="{{ route('admin.admin-user.create') }}" class="btn-primary">
+      <a href="{{ route('admin.user.create') }}" class="btn-primary">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" viewBox="0 0 20 20" fill="currentColor">
           <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z" clip-rule="evenodd" />
         </svg>
-        Create Admin
+        Create User
       </a>
     </div>
     <!-- header -->
@@ -75,24 +74,23 @@
         </div>
         <div id="total-selected"></div>
       </div>
-      <x-search id="admin-search" placeholder="Search Admin..." />
+      <x-search id="user-search" placeholder="Search User..." />
     </div>
-    <div id="admin-table"></div>
+    <div id="user-table"></div>
   </x-backend.main-panel>
 
   <x-slot name="js">
     <script>
-      const admin_table = document.querySelector('#admin-table');
+      const user_table = document.querySelector('#user-table');
       const limit = document.querySelector('#limit');
-      const search = document.querySelector('#admin-search input');
+      const search = document.querySelector('#user-search input');
       const options_selected_bar = document.querySelector('.options-selected-bar');
       const delete_all_btn = document.querySelector('#delete-all-btn');
       const archive_btn = document.querySelector('#archive-btn');
       const unselect_all_btn = document.querySelector('#unselect-all-btn');
       const total_selected = document.querySelector('#total-selected');
-      const storage_key = 'ADMINS_ID';
       let direction;
-      let admins_id = [];
+      let id = [];
       const sweet_alert_settings = {
         title: 'Title',
         text: 'description',
@@ -115,7 +113,7 @@
         },
       };
 
-      initAdminTable();
+      initTable();
 
       // JQuery
       // limit
@@ -126,7 +124,7 @@
           const field = document.querySelector('#old-field').value;
           const direction = document.querySelector('#direction').value;
 
-          let url = `/admin/admin-user-table?limit=${value}`;
+          let url = `/admin/user-table?limit=${value}`;
           if (search_value) {
             url += `&search=${search_value}`;
           }
@@ -136,15 +134,15 @@
           if (direction) {
             url += `&direction=${direction}`;
           }
-          if (admins_id) {
-            url += `&selected_admins_id=${admins_id}`;
+          if (id) {
+            url += `&selected_users_id=${id}`;
           }
           axios({
             method: 'GET',
             url
           }).then(res => {
             if (!res.data) return;
-            admin_table.innerHTML = res.data;
+            user_table.innerHTML = res.data;
           }).catch(err => console.error(err));
         });
       })
@@ -153,22 +151,22 @@
       search.addEventListener('keyup', debounce(() => {
         const field = document.querySelector('#old-field').value;
         const direction = document.querySelector('#direction').value;
-        let url = `/admin/admin-user-table?limit=${limit.value}&search=${search.value}`;
+        let url = `/admin/user-table?limit=${limit.value}&search=${search.value}`;
         if (field) {
           url += `&field=${field}`;
         }
         if (direction) {
           url += `&direction=${direction}`;
         }
-        if (admins_id) {
-          url += `&selected_admins_id=${admins_id}`;
+        if (id) {
+          url += `&selected_users_id=${id}`;
         }
         axios({
             method: 'GET',
             url
           }).then(res => {
             if (!res.data) return;
-            admin_table.innerHTML = res.data;
+            user_table.innerHTML = res.data;
           })
           .catch(err => console.error(err))
       }, 300));
@@ -185,19 +183,19 @@
             direction = null;
           }
           direction = direction === 'asc' ? 'desc' : 'asc';
-          let url = `/admin/admin-user-table?limit=${limit.value}&field=${field}&direction=${direction}`;
+          let url = `/admin/user-table?limit=${limit.value}&field=${field}&direction=${direction}`;
           if (search.value) {
             url += `&search=${search.value}`;
           }
-          if (admins_id) {
-            url += `&selected_admins_id=${admins_id}`
+          if (id) {
+            url += `&selected_users_id=${id}`
           }
           axios({
             method: 'GET',
             url
           }).then(res => {
             if (!res.data) return;
-            admin_table.innerHTML = res.data;
+            user_table.innerHTML = res.data;
           }).catch(err => console.error(err))
         }
 
@@ -207,15 +205,15 @@
           if (!e.target.href) return;
 
           let url = e.target.href;
-          if (admins_id) {
-            url += `&selected_admins_id=${admins_id}`
+          if (id) {
+            url += `&selected_users_id=${id}`
           }
           axios({
             method: 'GET',
             url
           }).then(res => {
             if (!res.data) return;
-            admin_table.innerHTML = res.data;
+            user_table.innerHTML = res.data;
           }).catch(err => console.error(err))
         }
 
@@ -228,7 +226,7 @@
             local_checkboxs.forEach(checkbox => {
               if (checkbox.checked) {
                 checkbox.checked = false;
-                admins_id = admins_id.filter(id => id != checkbox.dataset.id);
+                id = id.filter(id => id != checkbox.dataset.id);
               }
             })
             renderOptionsBar();
@@ -237,14 +235,14 @@
             if (global_checkbox.checked) {
               local_checkboxs.forEach(checkbox => {
                 checkbox.checked = true;
-                admins_id.push(checkbox.dataset.id);
+                id.push(checkbox.dataset.id);
               });
               renderOptionsBar();
             } else {
               // global checked is false
               local_checkboxs.forEach(checkbox => {
                 if (checkbox.checked) {
-                  admins_id = admins_id.filter(id => id != checkbox.dataset.id);
+                  id = id.filter(id => id != checkbox.dataset.id);
                 }
                 checkbox.checked = false;
               });
@@ -255,22 +253,22 @@
 
         // local checkbox
         if (e.target.classList.contains('local-checkbox')) {
-          const selected_admins_id = [];
+          const selected_id = [];
           if (e.target.checked) {
-            admins_id.push(e.target.dataset.id);
+            id.push(e.target.dataset.id);
           } else {
-            admins_id = admins_id.filter(id => id != e.target.dataset.id);
+            id = id.filter(id => id != e.target.dataset.id);
           }
           renderOptionsBar();
 
           local_checkboxs.forEach(checkbox => {
             if (checkbox.checked) {
-              selected_admins_id.push(checkbox.dataset.id);
+              selected_id.push(checkbox.dataset.id);
             }
           });
-          if (selected_admins_id.length > 0 && selected_admins_id.length !== local_checkboxs.length) {
+          if (selected_id.length > 0 && selected_id.length !== local_checkboxs.length) {
             global_checkbox.classList.add('minus');
-          } else if (selected_admins_id.length <= 0) {
+          } else if (selected_id.length <= 0) {
             global_checkbox.classList.remove('minus');
             global_checkbox.checked = false;
           } else {
@@ -296,7 +294,7 @@
       unselect_all_btn.addEventListener('click', e => {
         const global_checkbox = document.querySelector('#global-checkbox');
         const local_checkboxs = document.querySelectorAll('.local-checkbox');
-        admins_id = [];
+        id = [];
         global_checkbox.checked = false;
         global_checkbox.classList.remove('minus');
         local_checkboxs.forEach(checkbox => checkbox.checked = false);
@@ -306,16 +304,16 @@
 
       // delete all selected btn
       delete_all_btn.addEventListener('click', e => {
-        sweet_alert_delete_settings.title = `Are you sure to delete ${admins_id.length} selected records?`;
+        sweet_alert_delete_settings.title = `Are you sure to delete ${id.length} selected records?`;
         Swal.fire(sweet_alert_delete_settings).then(res => {
           if (res.isConfirmed) {
             axios({
                 method: 'DELETE',
-                url: `/admin/selected-admin-user/${admins_id}`
+                url: `/admin/selected-user/${id}`
               }).then(res => {
                 if (res.data) {
-                  clearAdminsId();
-                  initAdminTable();
+                  clearId();
+                  initTable();
                   renderSuccessMessage(res.data);
                 }
               })
@@ -330,22 +328,22 @@
         console.log('archive');
       })
 
-      function initAdminTable() {
+      function initTable() {
         axios({
             method: 'GET',
-            url: '/admin/admin-user-table'
+            url: '/admin/user-table'
           }).then(res => {
             if (!res.data) return;
-            admin_table.innerHTML = res.data;
+            user_table.innerHTML = res.data;
           })
           .catch(err => console.error(err))
       }
 
       function renderOptionsBar() {
-        if (admins_id.length) {
+        if (id.length) {
           total_selected.innerHTML =
             `<p class="ml-3 text-gray-500 text-sm">
-            ${admins_id.length} selected
+            ${id.length} selected
             </p>
             `;
           options_selected_bar.style.display = 'flex';
@@ -363,8 +361,8 @@
         )
       }
 
-      function clearAdminsId() {
-        admins_id = [];
+      function clearId() {
+        id = [];
         options_selected_bar.style.display = 'none';
         total_selected.innerHTML = '';
       }
@@ -375,11 +373,11 @@
           if (result.isConfirmed) {
             axios({
               method: 'DELETE',
-              url: `/admin/admin-user/${button.dataset.id}`
+              url: `/admin/user/${button.dataset.id}`
             }).then(res => {
               if (res.data) {
-                clearAdminsId();
-                initAdminTable();
+                clearId();
+                initTable();
                 renderSuccessMessage(res.data);
               }
             })

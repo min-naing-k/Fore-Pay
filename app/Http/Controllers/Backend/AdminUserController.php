@@ -27,7 +27,7 @@ class AdminUserController extends Controller
         ->filter(request(['search']))
         ->paginate($limit)
         ->withQueryString();
-      return view('components.backend.table', compact('admins', 'field', 'direction', 'selected_admins_id'))->render();
+      return view('components.backend.admin-table', compact('admins', 'field', 'direction', 'selected_admins_id'))->render();
     }
 
     return back();
@@ -99,6 +99,10 @@ class AdminUserController extends Controller
       return response()->json('Admin User Not Found!');
     }
 
+    if ($admin->image && file_exists('storage/' . $admin->image)) {
+      Storage::disk('public')->delete($admin->image);
+    }
+
     $admin->delete();
     return response()->json(['status' => 'Success', 'message' => 'Admin User is deleted Successfully!']);
   }
@@ -110,6 +114,10 @@ class AdminUserController extends Controller
       $admin = Admin::find($id);
       if (!$admin) {
         return response()->json('Admin User Not Found');
+      }
+
+      if ($admin->image && file_exists('storage/' . $admin->image)) {
+        Storage::disk('public')->delete($admin->image);
       }
 
       $admin->delete();

@@ -67,138 +67,18 @@ body {
   box-shadow: 0 3px 15px rgba(0, 0, 0, 0.1) !important;
 }
 
-.mobile-menu {
-  display: none;
+/* ============ Navbar =============== */
+.nav-link {
+  position: relative;
 }
 
-.side-bar {
-  width: 57px;
-  transition: width 0.3s ease-in-out;
-}
-
-.side-bar .cross {
-  top: 12px;
-}
-
-.side-bar .logo {
-  white-space: nowrap;
-}
-
-.side-bar .logo,
-.side-bar .cross {
-  opacity: 0;
-  visibility: hidden;
-  transition: all 0.6s ease-in-out;
-}
-
-.side-bar .title {
-  display: none;
-}
-
-.side-bar .divider {
-  width: 100%;
-  left: -2px;
-}
-
-.side-bar.active {
-  transition: width 0.3s ease-in-out;
-  width: 256px;
-}
-
-.side-bar.active .logo,
-.side-bar.active .cross,
-.side-bar.active .side-bar-title {
-  opacity: 1;
-  visibility: visible;
-}
-
-.over-view {
+.nav-link.active::before {
+  content: "";
   position: absolute;
-  top: 0;
-  left: 0;
   width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.1);
-  backdrop-filter: blur(2px);
-  z-index: 10;
-  opacity: 0;
-  visibility: hidden;
-  user-select: none;
-  pointer-events: none;
-  transition: all 0.4s ease-in-out;
-}
-
-@media (min-width: 768px) {
-  .main {
-    padding-left: 52px;
-    transition: all 0.3s ease-in-out;
-  }
-
-  .side-bar.active ~ .main {
-    padding-left: 256px;
-  }
-}
-
-@media (max-width: 768px) {
-  .side-bar {
-    z-index: 1000 !important;
-    position: fixed;
-    min-width: 256px;
-    width: 40% !important;
-    transform: translateX(-100%);
-    transition: all 0.4s ease-in-out;
-  }
-
-  .side-bar .title {
-    display: block;
-  }
-
-  .side-bar.mobile-active {
-    transition: all 0.4s ease-in-out;
-    transform: translateX(0);
-  }
-
-  .main {
-    padding: unset;
-  }
-
-  body.active .over-view {
-    opacity: 1;
-    visibility: visible;
-    pointer-events: all;
-  }
-
-  .side-bar .logo,
-  .side-bar .cross {
-    opacity: 1;
-    visibility: visible;
-  }
-
-  .mobile-menu {
-    display: block;
-  }
-}
-
-@media (max-width: 500px) {
-  .side-bar {
-    width: 85% !important;
-  }
-}
-
-@media (max-width: 430px) {
-  .side-bar {
-    min-width: 250px;
-    width: 85% !important;
-  }
-}
-
-@media (max-width: 440px) {
-  .table-header {
-    flex-direction: column;
-    justify-content: start;
-    align-items: start;
-    gap: 1rem;
-  }
+  left: 0;
+  bottom: 0;
+  border-bottom: 2px solid var(--indigo-500);
 }
 
 /* ============ Select 2 ============= */

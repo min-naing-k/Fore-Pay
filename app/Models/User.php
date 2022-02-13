@@ -11,11 +11,7 @@ class User extends Authenticatable
 {
   use HasApiTokens, HasFactory, Notifiable;
 
-  protected $fillable = [
-    'name',
-    'email',
-    'password',
-  ];
+  protected $guarded = ['id'];
 
   protected $hidden = [
     'password',
@@ -26,4 +22,37 @@ class User extends Authenticatable
   protected $casts = [
     'email_verified_at' => 'datetime',
   ];
+
+  public function wallet()
+  {
+    return $this->hasOne(Wallet::class, 'user_id', 'id');
+  }
+
+  public function getNameAttribute($name)
+  {
+    return ucwords($name);
+  }
+
+  public function setPasswordAttribute($password)
+  {
+    $this->attributes['password'] = bcrypt($password);
+  }
+
+  public function scopeFilter($query, array $filters)
+  {
+    $query->when($filters['search'] ?? false, function ($query, $search) {
+      $query->orWhere('name', 'like', "%$search%")
+        ->orWhere('email', 'like', "%$search%")
+        ->orWhere('phone', 'like', "%$search%");
+    });
+  }
+
+  public function profileImage()
+  {
+    if ($this->image) {
+      return asset('storage/' . $this->image);
+    }
+
+    return null;
+  }
 }

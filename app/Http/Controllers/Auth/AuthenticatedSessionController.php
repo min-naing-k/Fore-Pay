@@ -29,6 +29,12 @@ class AuthenticatedSessionController extends Controller
   {
     $request->authenticate();
 
+    $user = auth()->user();
+    $user->ip = $request->ip();
+    $user->user_agent = $request->server('HTTP_USER_AGENT');
+    $user->login_at = now();
+    $user->update();
+
     $request->session()->regenerate();
 
     return redirect('/');
