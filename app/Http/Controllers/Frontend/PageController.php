@@ -10,4 +10,9 @@ class PageController extends Controller
   {
     return view('frontend.home');
   }
+
+  public function profile()
+  {
+    return view('frontend.profile');
+  }
 }

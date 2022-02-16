@@ -209,7 +209,7 @@ body {
 }
 
 .select2-container .select2-selection--single {
-  border: 1px solid var(--gray-300);
+  border: 1px solid var(--gray-200);
   border-radius: 0.575rem;
   min-height: 42px !important;
   display: flex;

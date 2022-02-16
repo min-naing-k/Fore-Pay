@@ -1,6 +1,13 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap");
 
 :root {
+  --theme-color: #4a46ff;
+  --light-blue: #c6c5ff;
+  --light-green: #60e69d;
+  --light-red: #fe6850;
+  --light-sky: #009cff;
+  --dark-blue: #7080b1;
   --gray-200: #e5e7eb;
   --gray-300: #d1d5db;
   --indigo-500: #6366f1;
@@ -16,12 +23,23 @@
   --font-medium: 500;
   --font-semibold: 600;
   --font-bold: 700;
+
+  /* ==== Font ==== */
+  --font-open-sans: "Open Sans", sans-serif;
+  --font-sans: "Nunito", sans-serif;
+  --font-light: 300;
+  --font-regular: 400;
+  --font-medium: 500;
+  --font-semibold: 600;
+  --font-bold: 700;
+  --font-extrabold: 800;
 }
 
 body {
   background-color: #f2f2f2;
   overflow-x: hidden;
   padding-right: 0 !important;
+  font-family: var(--font-sans);
 }
 
 .btn,
@@ -67,6 +85,38 @@ body {
   box-shadow: 0 3px 15px rgba(0, 0, 0, 0.1) !important;
 }
 
+.m-rounded {
+  border-radius: 0.625rem;
+}
+
+.bg-theme {
+  background-color: var(--theme-color);
+}
+
+.text-light-blue {
+  color: var(--light-blue);
+}
+
+.text-dark-blue {
+  color: var(--dark-blue);
+}
+
+.font-open-sans {
+  font-family: var(--font-open-sans);
+}
+
+.bg-light-green {
+  background-color: var(--light-green);
+}
+
+.bg-light-red {
+  background-color: var(--light-red);
+}
+
+.bg-light-sky {
+  background-color: var(--light-sky);
+}
+
 /* ============ Navbar =============== */
 .nav-link {
   position: relative;
@@ -81,6 +131,52 @@ body {
   border-bottom: 2px solid var(--indigo-500);
 }
 
+.money-image {
+  width: 250px;
+  height: 250px;
+  top: -53px;
+  right: -67px;
+  user-select: none;
+}
+
+.icon-wrapper {
+  width: 40px;
+  height: 40px;
+  border-radius: 15px;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.icon {
+  width: 17px;
+  height: 17px;
+}
+
+.scan-wrapper {
+  top: -60%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: var(--gray-200);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3px;
+}
+
+.scan-wrapper a {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 /* ============ Select 2 ============= */
 .select2-container *:focus {
   outline: none;

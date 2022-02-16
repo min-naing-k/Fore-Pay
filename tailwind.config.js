@@ -14,7 +14,12 @@ module.exports = {
         poppins: ["Poppins"],
       },
       colors: {
-        darkblue: "#0f172a",
+        theme: "#4a46ff",
+        lightblue: "#c6c5ff",
+        lightgreen: "#60e69d",
+        lightred: "#fe6850",
+        lightsky: "#009cff",
+        darkblue: "#7080b1",
       },
     },
   },

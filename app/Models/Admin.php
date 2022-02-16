@@ -35,7 +35,7 @@ class Admin extends Authenticatable
   public function scopeFilter($query, array $filters)
   {
     $query->when($filters['search'] ?? false, function ($query, $search) {
-      $query->orWhere('name', 'like', "%$search%")
+      $query->where('name', 'like', "%$search%")
         ->orWhere('email', 'like', "%$search%")
         ->orWhere('phone', 'like', "%$search%");
     });
