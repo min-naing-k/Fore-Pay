@@ -7,7 +7,7 @@
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16l-4-4m0 0l4-4m-4 4h18" />
           </svg>
         </a>
-        <h1 class="flex-1 text-center font-semibold">Update Password</h1>
+        <h1 class="flex-1 text-center font-semibold">Change Password</h1>
       </section>
       <section>
         <div class="flex items-center justify-center">

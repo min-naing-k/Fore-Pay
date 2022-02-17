@@ -81,4 +81,9 @@ class PageController extends Controller
 
     return redirect()->route('profile')->with('update', 'Password is Change.');
   }
+
+  public function transfer()
+  {
+    return view('frontend.transfer');
+  }
 }

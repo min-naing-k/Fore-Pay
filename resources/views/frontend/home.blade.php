@@ -9,7 +9,7 @@
     </section>
     <section class="flex flex-wrap gap-3 mt-4">
       <x-card class="flex flex-1 flex-col items-center justify-center">
-        <a href="#" class="flex flex-col items-center">
+        <a href="{{ route('transfer') }}" class="flex flex-col items-center">
           <div class="icon-wrapper bg-lightgreen mb-2">
             <img src="{{ asset('images/send.png') }}" alt="send" class="icon" style="margin-right: 1px;margin-top: 1px" />
           </div>

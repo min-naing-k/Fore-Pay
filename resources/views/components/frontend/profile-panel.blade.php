@@ -1,43 +1,25 @@
 <x-app title="Profile">
   <!-- Profile Header -->
-  <section class="relative w-full h-32 bg-gray-200 flex items-center justify-center">
-    <div class="cover-image-preview absolute w-full h-full">
+  <section class="w-full h-32 bg-gray-200 flex items-center justify-center">
+    <!-- Cover Image -->
+    <div class="cover-image-preview w-full h-full">
       @if (auth()->user()->cover_image)
-        @if (request()->is('profile/edit'))
-          <x-frontend.container class="absolute w-full h-full" style="margin-top: 0">
-            <div
-              class="delete-cover-image-btn cursor-pointer absolute top-2 md:top-2 lg:top-2 right-5 md:right-10 xl:right-2 flex items-center justify-center w-7 h-7 rounded-full bg-white text-red-400 bg-opacity-30">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 pointer-events-none" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                  d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-              </svg>
-            </div>
-          </x-frontend.container>
-        @endif
         <img src="{{ auth()->user()->coverImage() }}"
-          id="cover-image"
+          id="{{ !request()->is('profile/edit') ? 'cover-image' : '' }}"
           alt="cover image"
           class="w-full h-full object-cover object-left cursor-pointer" />
+      @else
+        <div class="w-full h-full flex items-center justify-center">
+          <p class="text-gray-300 font-medium select-none">Cover Photo</p>
+        </div>
       @endif
     </div>
-    <p class="text-gray-300 font-medium select-none">Cover Photo</p>
-    @if (!request()->is('profile/edit'))
-      <!-- Profile Image -->
-      <div class="profile-image-preview lg:hidden absolute left-2 sm:left-4 lg:left-8 -bottom-9 w-20 h-20 p-1 bg-white overflow-hidden rounded-full shadow">
-        @if (auth()->user()->image)
-          <img src="{{ auth()->user()->profileImage() }}" alt="{{ auth()->user()->name }}"
-            class="profile-image cursor-pointer w-full h-full rounded-full object-cover" />
-        @else
-          <img class="w-full h-full object-cover rounded-full"
-            src="https://ui-avatars.com/api/?format=svg&rounded=true&size=35&name={{ auth()->user()->name }}" alt="{{ auth()->user()->name }}">
-        @endif
-      </div>
-    @endif
   </section>
   <x-frontend.container class="mb-20 sm:mb-0">
-    @if (!request()->is('profile/edit'))
-      <section class="relative" style="padding-left: 5.5rem;margin-top: -5px">
-        <div class="profile-image-preview hidden lg:block absolute left-0 -top-14 w-20 h-20 p-1 bg-white overflow-hidden rounded-full shadow">
+    <section class="relative" style="min-height: 34px;margin-top: -5px">
+      <!-- Profile Image -->
+      <div class="relative">
+        <div class="profile-image-preview absolute left-0 -top-10 w-20 h-20 p-1 bg-white rounded-full shadow">
           @if (auth()->user()->image)
             <img src="{{ auth()->user()->profileImage() }}" alt="{{ auth()->user()->name }}"
               class="profile-image cursor-pointer w-full h-full rounded-full object-cover" />
@@ -46,47 +28,48 @@
               src="https://ui-avatars.com/api/?format=svg&rounded=true&size=35&name={{ auth()->user()->name }}" alt="{{ auth()->user()->name }}">
           @endif
         </div>
-        <p class="text-gray-700 font-semibold leading-4">{{ auth()->user()->name }}</p>
-        <small class="text-gray-500 text-xs my-1">{{ auth()->user()->email }} , {{ auth()->user()->phone }}</small>
-      </section>
-    @else
-      <section class="relative">
-        <!-- Profile Image -->
-        <div class="profile-image-preview flex items-center justify-center absolute left-0 -top-28 w-20 h-20 p-1 bg-white rounded-full shadow">
-          @if (auth()->user()->image)
-            <div
-              class="delete-profile-image-btn text-red-400" style="top: 5px;right: -5px;width: 25px;height: 25px;">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 pointer-events-none" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                  d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+        @if (request()->is('profile/edit'))
+          {{-- Change Profile Image Btn --}}
+          <x-dropdown2 class="top-2 left-14" style="position: absolute" direction="left">
+            <x-slot name="trigger">
+              <button type="button"
+                class="profile-image-btn border border-gray-200 text-gray-500 w-7 h-7 rounded-full m-blur cursor-pointer flex items-center justify-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 pointer-events-none" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
+                </svg>
+              </button>
+            </x-slot>
+            <x-dropdown2-link href="#" id="delete-profile">Delete Profile</x-dropdown2-link>
+            <x-dropdown2-link href="#" id="upload-profile">Upload Profile</x-dropdown2-link>
+          </x-dropdown2>
+        @endif
+      </div>
+      @if (request()->is('profile/edit'))
+        {{-- Change Cover Photo Btn --}}
+        <x-dropdown2 class="-top-8 right-0" contentClasses="top: 2.5rem;" style="position: absolute">
+          <x-slot name="trigger">
+            <button type="button"
+              class="cover-image-btn hover:text-stone-500 w-10 h-10 m-blur text-gray-300 rounded-full flex items-center justify-center cursor-pointer shadow-xl transition ease-in-out duration-150">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 pointer-events-none" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd"
+                  d="M4 5a2 2 0 00-2 2v8a2 2 0 002 2h12a2 2 0 002-2V7a2 2 0 00-2-2h-1.586a1 1 0 01-.707-.293l-1.121-1.121A2 2 0 0011.172 3H8.828a2 2 0 00-1.414.586L6.293 4.707A1 1 0 015.586 5H4zm6 9a3 3 0 100-6 3 3 0 000 6z"
+                  clip-rule="evenodd" />
               </svg>
-            </div>
-            <img src="{{ auth()->user()->profileImage() }}" alt="{{ auth()->user()->name }}"
-              class="w-full h-full rounded-full object-cover" />
-          @else
-            <img class="w-full h-full object-cover rounded-full"
-              src="https://ui-avatars.com/api/?format=svg&rounded=true&size=35&name={{ auth()->user()->name }}" alt="{{ auth()->user()->name }}">
-          @endif
-          <div class="profile-image-btn absolute z-10 w-7 h-7 rounded-full m-blur cursor-pointer flex items-center justify-center top-12 -right-1">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 pointer-events-none" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
-            </svg>
-          </div>
+            </button>
+          </x-slot>
+          <x-dropdown2-link href="#" id="delete-cover-image">Delete Cover Photo</x-dropdown2-link>
+          <x-dropdown2-link href="#" id="upload-cover-image">Upload Cover Photo</x-dropdown2-link>
+        </x-dropdown2>
+      @endif
+      @if (!request()->is('profile/edit'))
+        <div style="padding-left: 5.5rem">
+          <p class="text-gray-700 font-semibold leading-4">{{ auth()->user()->name }}</p>
+          <small class="text-gray-500 text-xs my-1">{{ auth()->user()->email }} , {{ auth()->user()->phone }}</small>
         </div>
-        <!-- Cover Image Btn -->
-        <div
-          class="cover-image-btn hover:text-stone-500 w-10 h-10 absolute right-4 m-blur text-gray-300 rounded-full flex items-center justify-center cursor-pointer m-shadow transition ease-in-out duration-150"
-          style="margin-top: -5.5rem">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 pointer-events-none" viewBox="0 0 20 20" fill="currentColor">
-            <path fill-rule="evenodd"
-              d="M4 5a2 2 0 00-2 2v8a2 2 0 002 2h12a2 2 0 002-2V7a2 2 0 00-2-2h-1.586a1 1 0 01-.707-.293l-1.121-1.121A2 2 0 0011.172 3H8.828a2 2 0 00-1.414.586L6.293 4.707A1 1 0 015.586 5H4zm6 9a3 3 0 100-6 3 3 0 000 6z"
-              clip-rule="evenodd" />
-          </svg>
-        </div>
-      </section>
-    @endif
+      @endif
+    </section>
 
     {{ $slot }}
   </x-frontend.container>
@@ -94,180 +77,150 @@
   <x-slot name="js">
     <script>
       const cover_image_preview = document.querySelector('.cover-image-preview');
-      const cover_image_btn = document.querySelector('.cover-image-btn');
+      const upload_cover_image = document.querySelector('#upload-cover-image');
+      const delete_cover_image = document.querySelector('#delete-cover-image');
       const cover_image_file = document.querySelector('.cover-image-file');
-      const delete_cover_image_btn = document.querySelector('.delete-cover-image-btn');
       const delete_cover_image_file = document.querySelector('.delete-cover-image-file');
-      const profile_images = document.querySelectorAll('.profile-image');
       const profile_image_preview = document.querySelector('.profile-image-preview');
-      const profile_image_btn = document.querySelector('.profile-image-btn');
+      const upload_profile = document.querySelector('#upload-profile');
+      const delete_profile = document.querySelector('#delete-profile');
       const profile_image_file = document.querySelector('.profile-image-file');
       const delete_profile_image_file = document.querySelector('.delete-profile-image-file');
 
-      // cover image function
-      // # add new cover image
-      if (cover_image_btn) {
-        cover_image_btn.addEventListener('click', e => {
-          cover_image_file && cover_image_file.click();
+      //== upload cover photo
+      // # click the cover_image_file
+      if (upload_cover_image) {
+        upload_cover_image.addEventListener('click', e => {
+          cover_image_file.click();
         });
       }
-
+      // # change event of cover_image_file
       if (cover_image_file) {
         cover_image_file.addEventListener('change', e => {
           const file = e.target.files[0];
-          cover_image_preview.innerHTML = "";
-          const imgEle = document.createElement('img');
-          const divEle = document.createElement('div');
-          divEle.className = 'absolute w-full h-full'
-          divEle.innerHTML = `
-          <div class="preview-cross" style="top: 6%;right: 6%;">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 pointer-events-none" viewBox="0 0 20 20" fill="currentColor">
-              <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
-            </svg>
-          </div>
-          `;
-          imgEle.className = 'w-full h-full object-cover';
-          imgEle.src = URL.createObjectURL(file);
-          cover_image_preview.appendChild(divEle);
-          cover_image_preview.appendChild(imgEle);
-        })
-      }
-
-      cover_image_preview.addEventListener('click', e => {
-        // # delete old cover image
-        if (e.target.classList.contains('delete-cover-image-btn')) {
-          const path = '{{ auth()->user()->cover_image }}' || null;
-          cover_image_preview.innerHTML = "";
-          delete_cover_image_file.value = path;
-        }
-
-        if (e.target.classList.contains('preview-cross')) {
-          let content = '';
-          if ('{{ auth()->user()->cover_image }}') {
-            content = `
-            <div class="m-container absolute w-full h-full" style="margin-top: 0">
-              <div
-                class="delete-cover-image-btn cursor-pointer absolute top-2 md:top-2 lg:top-2 right-5 md:right-10 xl:right-4 flex items-center justify-center w-7 h-7 rounded-full bg-white text-red-400 bg-opacity-30">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 pointer-events-none" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                </svg>
-              </div>
+          if (file) {
+            cover_image_preview.innerHTML = "";
+            const img_el = document.createElement('img');
+            const div_el = document.createElement('div');
+            div_el.className = 'absolute h-10';
+            div_el.style.marginTop = '0';
+            div_el.style.left = '50%';
+            div_el.style.transform = 'translateX(-50%)';
+            div_el.style.maxWidth = '76.2rem';
+            div_el.style.width = '95%';
+            div_el.innerHTML = `
+            <div class="remove-cover-image preview-cross" style="top: 5px">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 pointer-events-none" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
+              </svg>
             </div>
+            `;
+            img_el.className = 'w-full h-full object-cover';
+            img_el.src = URL.createObjectURL(file);
+            cover_image_preview.appendChild(div_el);
+            cover_image_preview.appendChild(img_el);
+          }
+        });
+      }
+      // # remove new cover image
+      cover_image_preview.addEventListener('click', e => {
+        if (e.target.classList.contains('remove-cover-image')) {
+          cover_image_preview.innerHTML = "";
+          if ('{{ auth()->user()->cover_image }}') {
+            cover_image_preview.innerHTML = `
             <img src="{{ auth()->user()->coverImage() }}"
+              id="{{ !request()->is('profile/edit') ? 'cover-image' : '' }}"
               alt="cover image"
-              class="w-full h-full object-cover object-left" />
+              class="w-full h-full object-cover object-left cursor-pointer" />
+            `;
+          } else {
+            cover_image_preview.innerHTML = `
+            <div class="w-full h-full flex items-center justify-center">
+              <p class="text-gray-300 font-medium select-none">Cover Photo</p>
+            </div>
             `;
           }
-          cover_image_preview.innerHTML = content;
           cover_image_file.value = "";
         }
       })
-
-      // profile image function
-      // # upload new profile image
-      if (profile_image_btn) {
-        profile_image_btn.addEventListener('click', e => {
-          profile_image_file.click();
+      // # delete cover photo
+      if (delete_cover_image) {
+        delete_cover_image.addEventListener('click', e => {
+          cover_image_preview.innerHTML = "";
+          cover_image_preview.innerHTML = `
+          <div class="w-full h-full flex items-center justify-center">
+            <p class="text-gray-300 font-medium select-none">Cover Photo</p>
+          </div>
+            `;
+          delete_cover_image_file.value = '{{ auth()->user()->cover_image }}' || null;
         });
       }
 
+      //== upload profile photo
+      // # click the profile_image_file
+      if (upload_profile) {
+        upload_profile.addEventListener('click', e => {
+          profile_image_file.click();
+        });
+      }
+      // # change event of profile_image_file
       if (profile_image_file) {
         profile_image_file.addEventListener('change', e => {
           const file = e.target.files[0];
-          profile_image_preview.querySelector('.delete-profile-image-btn') && profile_image_preview.querySelector('.delete-profile-image-btn').remove();
-          profile_image_preview.querySelector('img').remove();
-          profile_image_preview.querySelector('.preview-cross-wrapper') && profile_image_preview.querySelector('.preview-cross-wrapper').remove();
-          const imgEle = document.createElement('img');
-          const divEle = document.createElement('div');
-          divEle.className = 'relative preview-cross-wrapper'
-          divEle.innerHTML = `
-          <div class="preview-cross" style="top: -2.5rem;right: -4.5rem">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 pointer-events-none" viewBox="0 0 20 20" fill="currentColor">
-              <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
-            </svg>
-          </div>
-          `;
-          imgEle.className = 'profile-image w-full h-full rounded-full object-cover';
-          imgEle.src = URL.createObjectURL(file);
-          profile_image_preview.appendChild(divEle);
-          profile_image_preview.appendChild(imgEle);
-        })
-      }
-
-      profile_image_preview.addEventListener('click', e => {
-        // # delete old profile image
-        if (e.target.classList.contains('delete-profile-image-btn')) {
-          profile_image_preview.querySelector('.profile-image') && profile_image_preview.querySelector('.profile-image').remove();
-          profile_image_preview.querySelector('.preview-cross-wrapper') && profile_image_preview.querySelector('.preview-cross-wrapper').remove();
-          profile_image_preview.innerHTML = `
-          <img class="w-full h-full object-cover rounded-full"
-              src="https://ui-avatars.com/api/?format=svg&rounded=true&size=35&name={{ auth()->user()->name }}" alt="{{ auth()->user()->name }}">
-          <div class="profile-image-btn absolute z-10 w-7 h-7 rounded-full m-blur cursor-pointer flex items-center justify-center top-12 -right-1">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 pointer-events-none" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
-            </svg>
-          </div>
-          `;
-          delete_profile_image_file.value = '{{ auth()->user()->image }}' || null;
-        }
-
-        // # upload new profile image
-        if (e.target.classList.contains('preview-cross')) {
-          let img_el;
-          profile_image_preview.querySelector('.profile-image') && profile_image_preview.querySelector('.profile-image').remove();
-          profile_image_preview.querySelector('.preview-cross-wrapper') && profile_image_preview.querySelector('.preview-cross-wrapper').remove();
-          if ('{{ auth()->user()->image }}') {
-            img_el = `
-            <div
-              class="delete-profile-image-btn text-red-400" style="top: 5px;right: -5px;width: 25px;height: 25px;">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 pointer-events-none" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                  d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+          if (file) {
+            profile_image_preview.innerHTML = "";
+            const img_el = document.createElement('img');
+            const div_el = document.createElement('div');
+            div_el.className = 'absolute h-10';
+            div_el.style.marginTop = '0';
+            div_el.style.left = '50%';
+            div_el.style.transform = 'translateX(-50%)';
+            div_el.style.maxWidth = '76.2rem';
+            div_el.style.width = '95%';
+            div_el.innerHTML = `
+            <div class="remove-profile-image preview-cross" style="top: 5px">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 pointer-events-none" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
               </svg>
             </div>
-            <img src="{{ auth()->user()->profileImage() }}" alt="{{ auth()->user()->name }}"
-              class="w-full h-full rounded-full object-cover" />
+            `;
+            img_el.className = 'w-full h-full rounded-full object-cover';
+            img_el.src = URL.createObjectURL(file);
+            profile_image_preview.appendChild(div_el);
+            profile_image_preview.appendChild(img_el);
+          }
+        });
+      }
+      // # remove new profile image
+      profile_image_preview.addEventListener('click', e => {
+        if (e.target.classList.contains('remove-profile-image')) {
+          profile_image_preview.innerHTML = "";
+          if ('{{ auth()->user()->image }}') {
+            profile_image_preview.innerHTML = `
+            <img src="{{ auth()->user()->profileImage() }}"
+              id="{{ !request()->is('profile/edit') ? 'profile-image' : '' }}"
+              alt="profile image"
+              class="w-full h-full rounded-full object-cover object-left cursor-pointer" />
             `;
           } else {
-            img_el = `
+            cover_image_preview.innerHTML = `
             <img class="w-full h-full object-cover rounded-full"
               src="https://ui-avatars.com/api/?format=svg&rounded=true&size=35&name={{ auth()->user()->name }}" alt="{{ auth()->user()->name }}">
             `;
           }
-          profile_image_preview.innerHTML = `
-          ${img_el}
-          <div class="profile-image-btn absolute z-10 w-7 h-7 rounded-full m-blur cursor-pointer flex items-center justify-center top-12 -right-1">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 pointer-events-none" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
-            </svg>
-          </div>
-          `;
-          profile_image_file.value = '';
+          cover_image_file.value = "";
         }
       })
-
-      // image viewer
-      if (document.querySelector('#cover-image')) {
-        new Viewer(document.querySelector('#cover-image'), {
-          navbar: false,
-          toolbar: false,
-          title: false,
+      // # delete cover photo
+      if (delete_profile) {
+        delete_profile.addEventListener('click', e => {
+          profile_image_preview.innerHTML = "";
+          profile_image_preview.innerHTML = `
+          <img class="w-full h-full object-cover rounded-full"
+            src="https://ui-avatars.com/api/?format=svg&rounded=true&size=35&name={{ auth()->user()->name }}" alt="{{ auth()->user()->name }}">
+          `;
+          delete_profile_image_file.value = '{{ auth()->user()->image }}' || null;
         });
-      }
-
-      if (profile_images.length) {
-        profile_images.forEach(img => {
-          new Viewer(img, {
-            navbar: false,
-            toolbar: false,
-            title: false
-          })
-        })
       }
     </script>
   </x-slot>

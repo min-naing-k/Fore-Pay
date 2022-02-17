@@ -23,4 +23,6 @@ Route::middleware('auth')->group(function () {
 
   Route::get('edit-password', [PageController::class, 'editPassword'])->name('password.edit');
   Route::post('update-password/{user_id}', [PageController::class, 'updatePassword'])->name('password.update');
+
+  Route::get('transfer', [PageController::class, 'transfer'])->name('transfer');
 });

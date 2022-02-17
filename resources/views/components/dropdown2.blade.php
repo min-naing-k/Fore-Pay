@@ -1,4 +1,4 @@
-@props(['direction' => 'right', 'position' => ''])
+@props(['direction' => 'right', 'position' => '', 'contentClasses' => ''])
 
 <div x-data="{ open: false }" @click.outside="open = false" {{ $attributes->merge(['class' => 'relative border-none ring-white']) }}>
   <div @click="open = !open">
@@ -14,7 +14,7 @@
     class="origin-top-right absolute z-50 {{ $direction }}-0 {{ $position }} mt-2 min-w-max w-48 rounded-lg m-shadow py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
     role="menu"
     aria-orientation="vertical"
-    aria-labelledby="user-menu-button" tabindex="-1" style="display: none;z-index: 100;">
+    aria-labelledby="user-menu-button" tabindex="-1" style="display: none;z-index: 100;{{ $contentClasses }}">
     {{ $slot }}
   </div>
 </div>
