@@ -20,4 +20,7 @@ Route::middleware('auth')->group(function () {
   Route::get('profile', [PageController::class, 'profile'])->name('profile');
   Route::get('profile/edit', [PageController::class, 'profileEdit'])->name('profile.edit');
   Route::patch('profile/edit/{user_id}', [PageController::class, 'profileUpdate'])->name('profile.edit.update');
+
+  Route::get('edit-password', [PageController::class, 'editPassword'])->name('password.edit');
+  Route::post('update-password/{user_id}', [PageController::class, 'updatePassword'])->name('password.update');
 });

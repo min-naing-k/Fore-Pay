@@ -48,7 +48,7 @@
       </div>
     </a>
     <div class="my-5 bg-gray-100 w-full" style="height: 1px"></div>
-    <a href="#" class="flex items-center justify-between mb-4">
+    <a href="{{ route('password.edit') }}" class="flex items-center justify-between mb-4">
       <div class="flex items-center gap-3">
         <div class="profile-icon">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\UpdatePassword;
 use App\Http\Requests\UpdateProfile;
 use App\Models\User;
 use Illuminate\Support\Facades\Storage;
@@ -64,5 +65,20 @@ class PageController extends Controller
     $user->update($attributes);
 
     return redirect()->route('profile')->with('update', 'Profile is updated successfully!');
+  }
+
+  public function editPassword()
+  {
+    return view('frontend.edit-password');
+  }
+
+  public function updatePassword(UpdatePassword $request, $id)
+  {
+    $user = User::findOrFail($id);
+    $user->update([
+      'password' => $request->password,
+    ]);
+
+    return redirect()->route('profile')->with('update', 'Password is Change.');
   }
 }
