@@ -394,3 +394,26 @@ body {
 .error-progress {
   background-color: var(--red-400) !important;
 }
+
+/* ========== Viewer.js =========== */
+.viewer-button {
+  border-radius: 12px !important;
+  height: 35px !important;
+  width: 35px !important;
+  left: 92% !important;
+  top: 5% !important;
+  transform: translate(-50%, -50%) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.viewer-button::before {
+  position: relative !important;
+  bottom: 0 !important;
+  left: 0 !important;
+}
+
+.viewer-canvas > img {
+  border-radius: 12px !important;
+}

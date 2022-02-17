@@ -13,6 +13,10 @@
 
   <link rel="stylesheet" href="{{ asset('css/app.css') }}">
 
+  <!-- Image Viewer -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/viewerjs/1.10.4/viewer.min.css"
+    integrity="sha512-OgbWuZ8OyVQxlWHea0T9Bdy1oDhs380WxLMaLZbuitQ/mdntHBPnApxbTebB9N5KoHZd3VMkk3G2cTY563nu5w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
   <!-- Custom Css -->
   <link rel="stylesheet" href="{{ asset('css/frontend/style.css') }}">
 
@@ -35,6 +39,9 @@
 
   <!-- Sweet Alert 2 -->
   <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+  <!-- Image Viewer -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/viewerjs/1.10.4/viewer.min.js"></script>
 
   <!-- Custom Js -->
   <script>

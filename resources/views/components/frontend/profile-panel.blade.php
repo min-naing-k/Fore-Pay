@@ -6,7 +6,7 @@
         @if (request()->is('profile/edit'))
           <x-frontend.container class="absolute w-full h-full" style="margin-top: 0">
             <div
-              class="delete-cover-image-btn cursor-pointer absolute top-2 md:top-2 lg:top-2 right-5 md:right-10 xl:right-4 flex items-center justify-center w-7 h-7 rounded-full bg-white text-red-400 bg-opacity-30">
+              class="delete-cover-image-btn cursor-pointer absolute top-2 md:top-2 lg:top-2 right-5 md:right-10 xl:right-2 flex items-center justify-center w-7 h-7 rounded-full bg-white text-red-400 bg-opacity-30">
               <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 pointer-events-none" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                   d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
@@ -15,8 +15,9 @@
           </x-frontend.container>
         @endif
         <img src="{{ auth()->user()->coverImage() }}"
+          id="cover-image"
           alt="cover image"
-          class="w-full h-full object-cover object-left" />
+          class="w-full h-full object-cover object-left cursor-pointer" />
       @endif
     </div>
     <p class="text-gray-300 font-medium select-none">Cover Photo</p>
@@ -25,7 +26,7 @@
       <div class="profile-image-preview lg:hidden absolute left-2 sm:left-4 lg:left-8 -bottom-9 w-20 h-20 p-1 bg-white overflow-hidden rounded-full shadow">
         @if (auth()->user()->image)
           <img src="{{ auth()->user()->profileImage() }}" alt="{{ auth()->user()->name }}"
-            class="w-full h-full rounded-full object-cover" />
+            class="profile-image cursor-pointer w-full h-full rounded-full object-cover" />
         @else
           <img class="w-full h-full object-cover rounded-full"
             src="https://ui-avatars.com/api/?format=svg&rounded=true&size=35&name={{ auth()->user()->name }}" alt="{{ auth()->user()->name }}">
@@ -39,7 +40,7 @@
         <div class="profile-image-preview hidden lg:block absolute left-0 -top-14 w-20 h-20 p-1 bg-white overflow-hidden rounded-full shadow">
           @if (auth()->user()->image)
             <img src="{{ auth()->user()->profileImage() }}" alt="{{ auth()->user()->name }}"
-              class="w-full h-full rounded-full object-cover" />
+              class="profile-image cursor-pointer w-full h-full rounded-full object-cover" />
           @else
             <img class="w-full h-full object-cover rounded-full"
               src="https://ui-avatars.com/api/?format=svg&rounded=true&size=35&name={{ auth()->user()->name }}" alt="{{ auth()->user()->name }}">
@@ -97,6 +98,7 @@
       const cover_image_file = document.querySelector('.cover-image-file');
       const delete_cover_image_btn = document.querySelector('.delete-cover-image-btn');
       const delete_cover_image_file = document.querySelector('.delete-cover-image-file');
+      const profile_images = document.querySelectorAll('.profile-image');
       const profile_image_preview = document.querySelector('.profile-image-preview');
       const profile_image_btn = document.querySelector('.profile-image-btn');
       const profile_image_file = document.querySelector('.profile-image-file');
@@ -116,9 +118,9 @@
           cover_image_preview.innerHTML = "";
           const imgEle = document.createElement('img');
           const divEle = document.createElement('div');
-          divEle.className = 'relative'
+          divEle.className = 'absolute w-full h-full'
           divEle.innerHTML = `
-          <div class="preview-cross" style="top: 5px;right: 5px">
+          <div class="preview-cross" style="top: 6%;right: 6%;">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 pointer-events-none" viewBox="0 0 20 20" fill="currentColor">
               <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
             </svg>
@@ -248,6 +250,25 @@
           profile_image_file.value = '';
         }
       })
+
+      // image viewer
+      if (document.querySelector('#cover-image')) {
+        new Viewer(document.querySelector('#cover-image'), {
+          navbar: false,
+          toolbar: false,
+          title: false,
+        });
+      }
+
+      if (profile_images.length) {
+        profile_images.forEach(img => {
+          new Viewer(img, {
+            navbar: false,
+            toolbar: false,
+            title: false
+          })
+        })
+      }
     </script>
   </x-slot>
 </x-app>
