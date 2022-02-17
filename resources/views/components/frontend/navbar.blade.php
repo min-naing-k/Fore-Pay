@@ -11,7 +11,7 @@
             <x-frontend.nav-link href="/" :active="request()->is('/')">Home</x-frontend.nav-link>
             <x-frontend.nav-link href="#">Wallet</x-frontend.nav-link>
             <x-frontend.nav-link href="#">Transition</x-frontend.nav-link>
-            <x-frontend.nav-link href="#">Profile</x-frontend.nav-link>
+            <x-frontend.nav-link href="{{ route('profile') }}" :active="request()->is('profile*')">Profile</x-frontend.nav-link>
           </div>
         </div>
       </div>
@@ -37,7 +37,7 @@
                   alt="{{ auth()->user()->name }}">
               @else
                 <img class="w-8 h-8 object-cover rounded-full"
-                  src="https://ui-avatars.com/api/?format=svg&rounded=true&size=35&name={{ auth()->user()->name }}" alt="{{ auth()->guard('admin')->user()->name }}">
+                  src="https://ui-avatars.com/api/?format=svg&rounded=true&size=35&name={{ auth()->user()->name }}" alt="{{ auth()->user()->name }}">
               @endif
             </button>
           </x-slot>
@@ -47,7 +47,7 @@
               <small class="block text-gray-400">{{ auth()->user()->email }}</small>
             </p>
           </div>
-          <x-dropdown2-link href="#">Your Profile</x-dropdown2-link>
+          <x-dropdown2-link href="{{ route('profile') }}" :active="request()->is('profile*')">Your Profile</x-dropdown2-link>
           <x-dropdown2-link href="#">Setting</x-dropdown2-link>
           <x-dropdown2-link href="#" class="sign-out-btn">Sign Out</x-dropdown2-link>
         </x-dropdown2>

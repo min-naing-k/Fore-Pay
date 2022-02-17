@@ -24,7 +24,7 @@
   <x-frontend.navbar />
 
   <!-- Main -->
-  <main class="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8 mt-4">
+  <main>
     {{ $slot }}
   </main>
 
@@ -33,9 +33,83 @@
 
   <script src="{{ asset('js/app.js') }}"></script>
 
+  <!-- Sweet Alert 2 -->
+  <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
   <!-- Custom Js -->
   <script>
     const sign_out_btn = document.querySelector('.sign-out-btn');
+    const log_out_btn = document.querySelector('.log-out-btn');
+    const sweet_alert_settings = {
+      showCancelButton: true,
+      reverseButtons: true,
+      focusConfirm: false,
+      confirmButtonText: 'Ok',
+      customClass: {}
+    }
+    const sweet_alert_delete_settings = {
+      ...sweet_alert_settings,
+      title: `Are you sure to?`,
+      text: "Once you delete this record, you will not get back!",
+      confirmButtonText: "Delete",
+      customClass: {
+        confirmButton: "swal2-delete-btn",
+      },
+    };
+    const Toast = Swal.mixin({
+      toast: true,
+      position: 'top-end',
+      showConfirmButton: false,
+      timer: 3000,
+      timerProgressBar: true,
+      customClass: {
+        timerProgressBar: 'success-progress-bar'
+      },
+      didOpen: (toast) => {
+        toast.addEventListener('mouseenter', Swal.stopTimer)
+        toast.addEventListener('mouseleave', Swal.resumeTimer)
+      }
+    })
+
+    @if (session('create'))
+      Toast.fire({
+      icon: 'success',
+      title: '{{ session('create') }}',
+      customClass: {
+      timerProgressBar: 'success-progress'
+      }
+      })
+    @endif
+
+    @if (session('update'))
+      Toast.fire({
+      icon: 'success',
+      title: '{{ session('update') }}',
+      customClass: {
+      timerProgressBar: 'success-progress'
+      }
+      })
+    @endif
+
+    @if (session('warning'))
+      Toast.fire({
+      icon: 'warning',
+      title: '{{ session('warning') }}',
+      customClass: {
+      timerProgressBar: 'warning-progress'
+      }
+      })
+    @endif
+
+    @if (session('error'))
+      Toast.fire({
+      icon: 'error',
+      title: '{{ session('error') }}',
+      customClass: {
+      timerProgressBar: 'error-progress'
+      }
+      })
+    @endif
 
     sign_out_btn.addEventListener('click', e => {
       e.preventDefault();
@@ -49,6 +123,28 @@
         })
         .catch(err => console.error(err));
     })
+
+    if (log_out_btn) {
+      log_out_btn.addEventListener('click', e => {
+        e.preventDefault();
+        sweet_alert_settings.title = `Are you sure to logout?`;
+        sweet_alert_settings.confirmButtonText = 'Confirm';
+        sweet_alert_settings.customClass.confirmButton = 'swal2-confirm-btn';
+        Swal.fire(sweet_alert_settings).then(result => {
+          if (result.isConfirmed) {
+            axios({
+                method: 'POST',
+                url: '/logout',
+              }).then(res => {
+                if (res.data) {
+                  window.location.replace('/login');
+                }
+              })
+              .catch(err => console.error(err));
+          }
+        });
+      })
+    }
   </script>
 
   {{ $js ?? null }}

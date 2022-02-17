@@ -18,4 +18,6 @@ Route::middleware('auth')->group(function () {
   Route::get('/', [PageController::class, 'home'])->name('home');
 
   Route::get('profile', [PageController::class, 'profile'])->name('profile');
+  Route::get('profile/edit', [PageController::class, 'profileEdit'])->name('profile.edit');
+  Route::patch('profile/edit/{user_id}', [PageController::class, 'profileUpdate'])->name('profile.edit.update');
 });

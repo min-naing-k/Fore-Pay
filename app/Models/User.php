@@ -55,4 +55,13 @@ class User extends Authenticatable
 
     return null;
   }
+
+  public function coverImage()
+  {
+    if ($this->cover_image) {
+      return asset('storage/' . $this->cover_image);
+    }
+
+    return null;
+  }
 }

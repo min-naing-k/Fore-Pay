@@ -4,12 +4,16 @@
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
 
+.m-container {
+  @apply max-w-7xl mx-auto px-2 sm:px-6 lg:px-8 mt-4;
+}
+
 .btn {
-  @apply hover:bg-gray-50 disabled:opacity-25 active:bg-gray-50 focus:outline-none focus:ring-2 ring-indigo-500 ring-offset-2 shadow-sm inline-flex items-center justify-center border border-gray-300 bg-white text-gray-700 text-sm leading-4 rounded-md transition duration-100 ease-in-out;
+  @apply hover:bg-gray-50 disabled:opacity-25 active:bg-gray-50 focus:outline-none focus:ring-2 ring-indigo-500 ring-offset-2 shadow-sm inline-flex items-center justify-center border border-gray-300 bg-white text-gray-700 text-sm leading-4 rounded-lg transition duration-100 ease-in-out;
 }
 
 .btn-primary {
-  @apply hover:bg-indigo-600 disabled:opacity-25 active:bg-indigo-600 focus:outline-none focus:ring-2 ring-indigo-300 ring-offset-2 inline-flex items-center justify-center bg-indigo-500 text-white text-sm font-medium leading-4 rounded-md transition duration-100 ease-in-out;
+  @apply hover:bg-indigo-600 disabled:opacity-25 active:bg-indigo-600 focus:outline-none focus:ring-2 ring-indigo-300 ring-offset-2 inline-flex items-center justify-center bg-indigo-500 text-white text-sm leading-4 rounded-lg transition duration-100 ease-in-out;
 }
 
 .form-control {
@@ -22,4 +26,8 @@
 
 .badge-success {
   @apply px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800;
+}
+
+.profile-icon {
+  @apply flex items-center justify-center w-10 h-10 rounded-xl bg-gray-100 text-gray-600;
 }
