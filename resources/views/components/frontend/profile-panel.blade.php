@@ -203,7 +203,7 @@
               class="w-full h-full rounded-full object-cover object-left cursor-pointer" />
             `;
           } else {
-            cover_image_preview.innerHTML = `
+            profile_image_preview.innerHTML = `
             <img class="w-full h-full object-cover rounded-full"
               src="https://ui-avatars.com/api/?format=svg&rounded=true&size=35&name={{ auth()->user()->name }}" alt="{{ auth()->user()->name }}">
             `;

@@ -50,12 +50,16 @@
 
   <!-- Flowbite Tailwind Css Component -->
   <script src="https://unpkg.com/flowbite@1.3.2/dist/flowbite.js"></script>
+
   <script src="{{ asset('js/app.js') }}"></script>
   <script src="{{ asset('js/jquery.js') }}"></script>
+
   <!-- Select 2 -->
   <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
   <!-- Sweet Alert 2 -->
   <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
   <script>
     const body = document.querySelector('body');
     const over_view = document.querySelector('.over-view');

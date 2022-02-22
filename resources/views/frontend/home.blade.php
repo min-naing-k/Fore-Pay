@@ -4,7 +4,9 @@
       <x-card class="bg-theme relative flex flex-col justify-center overflow-hidden" style="height: 120px">
         <img src="{{ asset('images/money.png') }}" alt="money" class="absolute money-image">
         <span class="text-lightblue text-xs mb-2">Total Balance</span>
-        <h1 class="text-white text-2xl font-semibold relative flex flex-wrap items-end gap-1 leading-5" style="max-width: 185px">123,456 <small class="text-xs leading-3">MMK</small></h1>
+        <h1 class="text-white text-2xl font-semibold relative flex flex-wrap items-end gap-1 leading-5" style="max-width: 185px">
+          {{ auth()->user()->wallet ? number_format(auth()->user()->wallet->amount, 2) : '0' }} <small class="text-xs leading-3">MMK</small>
+        </h1>
       </x-card>
     </section>
     <section class="flex flex-wrap gap-3 mt-4">
@@ -25,7 +27,7 @@
         </a>
       </x-card>
       <x-card class="flex flex-1 flex-col items-center justify-center">
-        <a href="#" class="flex flex-col items-center">
+        <a href="{{ route('transactions.index') }}" class="flex flex-col items-center">
           <div class="icon-wrapper bg-lightsky mb-2">
             <img src="{{ asset('images/history.png') }}" alt="send" class="icon" />
           </div>

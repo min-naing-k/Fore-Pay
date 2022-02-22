@@ -47,9 +47,9 @@
               <small class="block text-gray-400">{{ auth()->user()->email }}</small>
             </p>
           </div>
-          <x-dropdown2-link href="{{ route('profile') }}" :active="request()->is('profile*')">Your Profile</x-dropdown2-link>
+          <x-dropdown2-link href="{{ route('profile') }}" :active="request()->routeIs('profile')">Your Profile</x-dropdown2-link>
           <x-dropdown2-link href="#">Setting</x-dropdown2-link>
-          <x-dropdown2-link href="#" class="sign-out-btn">Sign Out</x-dropdown2-link>
+          <x-dropdown2-link href="#" class="sign-out-btn">Log Out</x-dropdown2-link>
         </x-dropdown2>
       </div>
     </div>

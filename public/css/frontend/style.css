@@ -138,6 +138,19 @@ body {
   animation: spinner 1s linear infinite;
 }
 
+/* ============= Clear Number Input Arrow ================== */
+/* Chrome, Safari, Edge, Opera */
+#phone::-webkit-outer-spin-button,
+#phone::-webkit-inner-spin-button {
+  -webkit-appearance: none !important;
+  margin: 0 !important;
+}
+
+/* Firefox */
+#phone {
+  -moz-appearance: textfield !important;
+}
+
 /* ============ Navbar =============== */
 .nav-link {
   position: relative;

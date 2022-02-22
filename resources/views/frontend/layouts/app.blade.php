@@ -11,11 +11,14 @@
   <!-- Fonts -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">
 
-  <link rel="stylesheet" href="{{ asset('css/app.css') }}">
-
   <!-- Image Viewer -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/viewerjs/1.10.4/viewer.min.css"
     integrity="sha512-OgbWuZ8OyVQxlWHea0T9Bdy1oDhs380WxLMaLZbuitQ/mdntHBPnApxbTebB9N5KoHZd3VMkk3G2cTY563nu5w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  <!-- Flowbite Tailwind Css Component -->
+  <link rel="stylesheet" href="https://unpkg.com/flowbite@1.3.2/dist/flowbite.min.css" />
+
+  <link rel="stylesheet" href="{{ asset('css/app.css') }}">
 
   <!-- Custom Css -->
   <link rel="stylesheet" href="{{ asset('css/frontend/style.css') }}">
@@ -23,7 +26,7 @@
   {{ $css ?? null }}
 </head>
 
-<body class="bg-gray-100">
+<body class="bg-gray-100 font-open-sans">
   <!-- Navbar -->
   <x-frontend.navbar />
 
@@ -34,6 +37,9 @@
 
   <!-- Footer -->
   <x-frontend.footer />
+
+  <!-- Flowbite Tailwind Css Component -->
+  <script src="https://unpkg.com/flowbite@1.3.2/dist/flowbite.js"></script>
 
   <script src="{{ asset('js/app.js') }}"></script>
 
@@ -76,7 +82,17 @@
         toast.addEventListener('mouseenter', Swal.stopTimer)
         toast.addEventListener('mouseleave', Swal.resumeTimer)
       }
-    })
+    });
+
+    const debounce = (fn, delay) => {
+      let id;
+      return (...args) => {
+        if (id) clearTimeout(id);
+        id = setTimeout(() => {
+          fn(...args);
+        }, delay);
+      }
+    }
 
     @if (session('create'))
       Toast.fire({
@@ -92,6 +108,16 @@
       Toast.fire({
       icon: 'success',
       title: '{{ session('update') }}',
+      customClass: {
+      timerProgressBar: 'success-progress'
+      }
+      })
+    @endif
+
+    @if (session('success'))
+      Toast.fire({
+      icon: 'success',
+      title: '{{ session('success') }}',
       customClass: {
       timerProgressBar: 'success-progress'
       }
