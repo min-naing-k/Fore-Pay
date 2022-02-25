@@ -35,6 +35,10 @@
   --font-extrabold: 800;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   background-color: #f2f2f2;
   overflow-x: hidden;
@@ -212,29 +216,47 @@ body {
   justify-content: center;
 }
 /* ============ Select 2 ============= */
+.select2-container {
+  min-width: 100px !important;
+}
+
 .select2-container *:focus {
   outline: none;
-  border-radius: 0.575rem !important;
-  box-shadow: 0 0 0 2px var(--indigo-500) !important;
+  border-radius: 0.375rem !important;
+  box-shadow: 0 0 0 1px var(--indigo-500) !important;
 }
 
 .select2-container .select2-selection--single {
   border: 1px solid var(--gray-300);
-  border-radius: 0.575rem;
-  min-height: 42px !important;
+  border-radius: 0.375rem;
+  min-height: 40px !important;
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 0 0.7rem;
 }
 
+.select2-selection--single:focus {
+  border-color: var(--indigo-500) !important;
+}
+
 .select2-container--open.select2-container--above .select2-selection--single,
 .select2-container--open.select2-container--below .select2-selection--single {
-  border-radius: 0.575rem !important;
+  border-radius: 0.375rem !important;
 }
 
 .select2-container .select2-selection--single .select2-selection__rendered {
   padding: unset !important;
+  font-size: 0.875rem !important;
+}
+
+.select2-container--default
+  .select2-results__option--highlighted.select2-results__option--selectable {
+  background-color: var(--indigo-500) !important;
+}
+
+.select2-container--default .select2-results__option--selected {
+  background-color: var(--gray-200) !important;
 }
 
 .select2-container--default
@@ -291,6 +313,7 @@ body {
 .select2-results__options::-webkit-scrollbar {
   width: 6px;
 }
+
 .select2-results__options::-webkit-scrollbar-track {
   background-color: #f4f4f4;
   height: 5px;
@@ -453,4 +476,53 @@ body {
 
 .viewer-canvas > img {
   border-radius: 12px !important;
+}
+
+/* ============== Daterangepicker ================== */
+.daterangepicker {
+  border-radius: 0.625rem !important;
+  border: none !important;
+  box-shadow: 0px 10px 70px rgb(0, 0, 0, 0.15);
+}
+
+.daterangepicker td.active {
+  background-color: var(--theme-color) !important;
+  border-radius: 5px !important;
+}
+
+.daterangepicker .calendar-table td {
+  height: 32px !important;
+  line-height: 26px !important;
+  border-radius: 5px !important;
+}
+
+.daterangepicker select.monthselect,
+.daterangepicker select.yearselect {
+  border: 1px solid #ddd !important;
+  border-radius: 5px !important;
+  padding-left: 10px !important;
+}
+
+.daterangepicker.openscenter:before,
+.daterangepicker.openscenter:after {
+  display: none;
+}
+
+/* ======== Desktop ================= */
+@media (min-width: 640px) {
+}
+
+/* ======== Mobile Phone ============ */
+@media (max-width: 382px) {
+  .search-wrapper {
+    flex-wrap: wrap;
+  }
+
+  .search-date-wrapper {
+    margin-top: 0.6rem;
+  }
+
+  .search-date {
+    width: 19rem;
+  }
 }

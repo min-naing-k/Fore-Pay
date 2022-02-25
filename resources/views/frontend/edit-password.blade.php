@@ -15,7 +15,7 @@
         </div>
       </section>
       <section>
-        <form action="{{ route('password.update', auth()->id()) }}" method="POST" class="space-y-4">
+        <form action="{{ route('password.change', auth()->id()) }}" method="POST" class="space-y-4">
           @csrf
           <div style="margin-top: 0">
             <label for="current_password" class="form-label">Current Password</label>

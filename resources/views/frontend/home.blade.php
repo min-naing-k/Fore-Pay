@@ -55,7 +55,7 @@
     </section>
     <section class="mt-4">
       <x-card>
-        <a href="#" class="flex items-center justify-between">
+        <a href="{{ route('transactions.index') }}" class="flex items-center justify-between">
           <span class="flex gap-3 items-center">
             <img src="{{ asset('images/transaction.png') }}" alt="transaction" class="w-6 h-6">
             <span class="text-sm text-gray-600 font-semibold whitespace-nowrap">Transaction</span>
