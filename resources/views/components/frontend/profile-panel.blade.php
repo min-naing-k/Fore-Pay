@@ -7,7 +7,7 @@
         <img src="{{ auth()->user()->coverImage() }}"
           id="{{ !request()->is('profile/edit') ? 'cover-image' : '' }}"
           alt="cover image"
-          class="w-full h-full object-cover object-left cursor-pointer" />
+          class="w-full h-full object-cover object-left {{ !request()->is('profile/edit') ? 'cursor-pointer' : '' }}" />
       @else
         <div class="w-full h-full flex items-center justify-center">
           <p class="text-gray-300 font-medium select-none">Cover Photo</p>
@@ -22,7 +22,8 @@
         <div class="profile-image-preview absolute left-0 -top-10 w-20 h-20 p-1 bg-white rounded-full shadow">
           @if (auth()->user()->image)
             <img src="{{ auth()->user()->profileImage() }}" alt="{{ auth()->user()->name }}"
-              class="profile-image cursor-pointer w-full h-full rounded-full object-cover" />
+              id="{{ !request()->is('profile/edit') ? 'profile-image' : '' }}"
+              class="{{ !request()->is('profile/edit') ? 'cursor-pointer' : '' }} profile-image w-full h-full rounded-full object-cover" />
           @else
             <img class="w-full h-full object-cover rounded-full"
               src="https://ui-avatars.com/api/?format=svg&rounded=true&size=35&name={{ auth()->user()->name }}" alt="{{ auth()->user()->name }}">
@@ -86,6 +87,20 @@
       const delete_profile = document.querySelector('#delete-profile');
       const profile_image_file = document.querySelector('.profile-image-file');
       const delete_profile_image_file = document.querySelector('.delete-profile-image-file');
+      const viewerjs_settings = {
+        navbar: false,
+        title: false,
+        toolbar: false,
+        button: false,
+      }
+
+      // preview image with viewer.js
+      if (document.querySelector('#cover-image')) {
+        new Viewer(document.querySelector('#cover-image'), viewerjs_settings);
+      }
+      if (document.querySelector('#profile-image')) {
+        new Viewer(document.querySelector('#profile-image'), viewerjs_settings);
+      }
 
       //== upload cover photo
       // # click the cover_image_file

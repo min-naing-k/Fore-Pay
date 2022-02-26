@@ -2,7 +2,7 @@
   <h1 class="text-gray-500 font-semibold">{{ $month }}</h1>
   @foreach ($transactions_data as $transaction)
     <x-card>
-      <a href="#" class="hover:underline text-gray-700 text-sm font-semibold">#{{ $transaction->trx_id }}</a>
+      <a href="{{ route('transactions.show', $transaction->trx_id) }}" class="hover:underline text-gray-700 text-sm font-semibold">#{{ $transaction->trx_id }}</a>
       <div class="flex justify-between items-start">
         <div>
           <p class="text-xs text-gray-400">

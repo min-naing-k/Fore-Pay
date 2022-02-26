@@ -11,11 +11,7 @@ class TransactionController extends Controller
   public function index()
   {
     $query = Transaction::with('source')
-      ->where('user_id', auth()->id())
-      ->whereBetween('created_at', [
-        Carbon::parse(now())->subMonth(1)->format('Y-m-d'),
-        Carbon::parse(now())->format('Y-m-d'),
-      ]);
+      ->where('user_id', auth()->id());
 
     if (request('type')) {
       $query->where('type', request('type'));
@@ -27,6 +23,11 @@ class TransactionController extends Controller
       $query->whereBetween('created_at', [
         $start_date,
         Carbon::parse($end_date)->endOfDay(),
+      ]);
+    } else {
+      $query->whereBetween('created_at', [
+        Carbon::parse(now())->subMonth(1)->format('Y-m-d'),
+        Carbon::parse(now())->format('Y-m-d'),
       ]);
     }
 
@@ -51,5 +52,14 @@ class TransactionController extends Controller
     }
 
     return view('frontend.transactions.index', compact('transactions'));
+  }
+
+  public function show($id)
+  {
+    $transaction = Transaction::where('trx_id', $id)->where('user_id', auth()->id())->first();
+    if (!$transaction) {
+      abort(404);
+    }
+    return view('frontend.transactions.show', compact('transaction'));
   }
 }

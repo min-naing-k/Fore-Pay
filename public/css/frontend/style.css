@@ -456,7 +456,7 @@ body {
 }
 
 /* ========== Viewer.js =========== */
-.viewer-button {
+/* .viewer-button {
   border-radius: 12px !important;
   height: 35px !important;
   width: 35px !important;
@@ -472,7 +472,7 @@ body {
   position: relative !important;
   bottom: 0 !important;
   left: 0 !important;
-}
+} */
 
 .viewer-canvas > img {
   border-radius: 12px !important;
