@@ -10,7 +10,12 @@ class TransactionController extends Controller
 {
   public function index()
   {
-    $query = Transaction::with('source')->where('user_id', auth()->id());
+    $query = Transaction::with('source')
+      ->where('user_id', auth()->id())
+      ->whereBetween('created_at', [
+        Carbon::parse(now())->subMonth(1)->format('Y-m-d'),
+        Carbon::parse(now())->format('Y-m-d'),
+      ]);
 
     if (request('type')) {
       $query->where('type', request('type'));
@@ -33,10 +38,16 @@ class TransactionController extends Controller
       });
 
     if (request()->ajax()) {
-      $view = view('frontend.transactions.transactions-data', compact('transactions'))->render();
-      return response()->json([
-        'html' => $view,
-      ]);
+      if (!$transactions->count()) {
+        return response()->json([
+          'html' => null,
+        ]);
+      } else {
+        $view = view('frontend.transactions.transactions-data', compact('transactions'))->render();
+        return response()->json([
+          'html' => $view,
+        ]);
+      }
     }
 
     return view('frontend.transactions.index', compact('transactions'));

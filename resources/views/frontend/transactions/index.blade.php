@@ -20,7 +20,8 @@
         <div class="search-date-wrapper">
           <label class="text-gray-500 text-sm mb-1 block">Range Date</label>
           <div class="search-date relative h-10 w-60">
-            <input type="text" class="range-date-picker form-control absolute w-full h-full" style="margin-top: 0;" />
+            <input type="text" class="range-date-picker form-control absolute w-full h-full" style="margin-top: 0;"
+              value="{{ request('start-date') && request('end-date') ? "request('start-date') - request('end-date')" : '' }}" />
             <div class="absolute right-2 text-gray-400" style="top: 50%;transform: translateY(-50%);">
               <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
@@ -106,23 +107,29 @@
 
   <x-slot name="js">
     <script>
-      const search_by_range = document.querySelector('#search-by-range');
-      const single_date_picker = document.querySelector('.single-date-picker');
-      const range_date_picker = document.querySelector('.range-date-picker');
-      const transactions_data = document.querySelector('#transactions-data');
-      const loading_wrapper = document.querySelector('#loading-wrapper');
-      const loading = document.querySelector('#loading');
-      const loading_text = document.querySelector('.loading-text');
-      const type = document.querySelector('#type');
-      let page = 1;
-      let data = true;
-
       $(document).ready(function() {
+        const search_by_range = document.querySelector('#search-by-range');
+        const single_date_picker = document.querySelector('.single-date-picker');
+        const range_date_picker = document.querySelector('.range-date-picker');
+        const transactions_data = document.querySelector('#transactions-data');
+        const loading_wrapper = document.querySelector('#loading-wrapper');
+        const loading = document.querySelector('#loading');
+        const loading_text = document.querySelector('.loading-text');
+        const type = document.querySelector('#type');
+        const start_date_from_url = '{{ request('start-date') }}' || null;
+        const end_date_from_url = '{{ request('end-date') }}' || null;
+        let page = 1;
+        let data = true;
+        let search_date = $('.range-date-picker').data('daterangepicker');
+
+        start_date_from_url && search_date.setStartDate(moment(start_date_from_url, 'YYYY/MM/DD'));
+        end_date_from_url && search_date.setEndDate(moment(end_date_from_url, 'YYYY/MM/DD'));
+
         $('#type').on('change', function(e) {
           page = 1;
           data = true;
-          const start_date = (range_date_picker.value.split('-')[0]).replaceAll('/', '-').trim();
-          const end_date = (range_date_picker.value.split('-')[1]).replaceAll('/', '-').trim();
+          const start_date = search_date.startDate.format('YYYY-MM-DD');
+          const end_date = search_date.endDate.format('YYYY-MM-DD');
           transactions_data.innerHTML = "";
           loading.style.display = "block";
           loading_text.style.display = 'none';
@@ -150,8 +157,8 @@
         $('.range-date-picker').on('apply.daterangepicker', function(ev, picker) {
           page = 1;
           data = true;
-          const start_date = (range_date_picker.value.split('-')[0]).replaceAll('/', '-').trim();
-          const end_date = (range_date_picker.value.split('-')[1]).replaceAll('/', '-').trim();
+          const start_date = picker.startDate.format('YYYY-MM-DD');
+          const end_date = picker.endDate.format('YYYY-MM-DD');
           transactions_data.innerHTML = "";
           loading.style.display = "block";
           loading_text.style.display = 'none';
@@ -175,39 +182,39 @@
             })
             .catch(err => console.error(err));
         })
+
+        window.onscroll = e => {
+          if ((window.innerHeight + window.pageYOffset) >= document.documentElement.offsetHeight) {
+            page++;
+            data && loadMoreTransactions(page);
+          }
+        }
+
+        function loadMoreTransactions(page) {
+          loading.style.display = "block";
+          const start_date = search_date.startDate.format('YYYY-MM-DD');
+          const end_date = search_date.endDate.format('YYYY-MM-DD');
+          let url = `?start-date=${start_date}&end-date=${end_date}&page=${page}`;
+          if (type.value) {
+            url = `?start-date=${start_date}&end-date=${end_date}&type=${type.value}&page=${page}`;
+          }
+          axios({
+              url,
+              method: 'GET'
+            }).then(res => {
+              if (!res.data) return;
+              loading.style.display = "none";
+              if (!res.data.html) {
+                data = false;
+                loading_text.style.display = 'block';
+                loading_text.textContent = 'No More Data...';
+              } else {
+                transactions_data.innerHTML += res.data.html;
+              }
+            })
+            .catch(err => console.error(err));
+        }
       })
-
-      window.onscroll = e => {
-        if ((window.innerHeight + window.pageYOffset) >= document.documentElement.offsetHeight) {
-          page++;
-          data && loadMoreTransactions(page);
-        }
-      }
-
-      function loadMoreTransactions(page) {
-        loading.style.display = "block";
-        const start_date = (range_date_picker.value.split('-')[0]).replaceAll('/', '-').trim();
-        const end_date = (range_date_picker.value.split('-')[1]).replaceAll('/', '-').trim();
-        let url = `?start-date=${start_date}&end-date=${end_date}&page=${page}`;
-        if (type.value) {
-          url = `?start-date=${start_date}&end-date=${end_date}&type=${type.value}&page=${page}`;
-        }
-        axios({
-            url,
-            method: 'GET'
-          }).then(res => {
-            if (!res.data) return;
-            loading.style.display = "none";
-            if (!res.data.html) {
-              data = false;
-              loading_text.style.display = 'block';
-              loading_text.textContent = 'No More Data...';
-            } else {
-              transactions_data.innerHTML += res.data.html;
-            }
-          })
-          .catch(err => console.error(err));
-      }
     </script>
   </x-slot>
 </x-app>

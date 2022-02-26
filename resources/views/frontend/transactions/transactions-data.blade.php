@@ -1,4 +1,4 @@
-@foreach ($transactions as $month => $transactions_data)
+@forelse ($transactions as $month => $transactions_data)
   <h1 class="text-gray-500 font-semibold">{{ $month }}</h1>
   @foreach ($transactions_data as $transaction)
     <x-card>
@@ -19,4 +19,6 @@
       </div>
     </x-card>
   @endforeach
-@endforeach
+@empty
+  <p class="text-center mt-4 text-sm text-gray-500">No Data Found...</p>
+@endforelse

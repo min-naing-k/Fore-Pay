@@ -120,7 +120,7 @@
         autoApply: true,
         opens: "center",
         showDropdowns: true,
-        startDate: moment().subtract(5, 'day'),
+        startDate: moment().subtract(1, 'month'),
         endDate: moment(),
         locale: {
           "format": "YYYY/MM/DD",
