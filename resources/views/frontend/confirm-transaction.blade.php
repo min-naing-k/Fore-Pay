@@ -21,7 +21,7 @@
       </section>
       @if ($description)
         <section class="mt-4">
-          <p class="text-gray-500 text-sm font-medium my-4 flex justify-between items-center">
+          <p class="text-gray-500 text-sm font-medium flex justify-between items-center">
             <span class="text-gray-700 text-base font-semibold mr-3">Description</span>
             <span class="text-right">{{ $description }}</span>
           </p>
@@ -42,6 +42,7 @@
     </x-card>
     <form action="{{ route('transfer.send') }}" method="POST" id="send-transaction-form">
       @csrf
+      <input type="hidden" name="hash_value" id="hash-value" value="{{ $hash_value }}" />
       <input type="hidden" name="phone" value="{{ $user->phone }}" />
       <input type="hidden" name="amount" value="{{ $amount }}" />
       <textarea hidden name="description">{{ $description }}</textarea>

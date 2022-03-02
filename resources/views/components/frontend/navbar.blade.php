@@ -9,7 +9,7 @@
         <div class="hidden sm:block sm:ml-6">
           <div class="flex space-x-4 h-16">
             <x-frontend.nav-link href="/" :active="request()->is('/')">Home</x-frontend.nav-link>
-            <x-frontend.nav-link href="#">Wallet</x-frontend.nav-link>
+            <x-frontend.nav-link href="{{ route('wallet') }}" :active="request()->is('wallet')">Wallet</x-frontend.nav-link>
             <x-frontend.nav-link href="{{ route('transactions.index') }}" :active="request()->routeIs('transactions.index')">Transition</x-frontend.nav-link>
             <x-frontend.nav-link href="{{ route('profile') }}" :active="request()->is('profile*')">Profile</x-frontend.nav-link>
           </div>

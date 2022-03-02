@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware(['auth', 'prevent_back_history'])->group(function () {
   Route::get('/', [PageController::class, 'home'])->name('home');
+  Route::get('wallet', [PageController::class, 'wallet'])->name('wallet');
 
   Route::get('profile', [ProfileController::class, 'profile'])->name('profile');
   Route::get('profile/edit', [ProfileController::class, 'profileEdit'])->name('profile.edit');
@@ -18,9 +19,15 @@ Route::middleware(['auth', 'prevent_back_history'])->group(function () {
   Route::get('find-user', [TransferController::class, 'findUser']);
   Route::get('transfer', [TransferController::class, 'transfer'])->name('transfer');
   Route::post('transfer', [TransferController::class, 'store'])->name('transfer.store');
+  Route::get('transfer-hash', [TransferController::class, 'transferHash']);
+  Route::get('transfer-confirm', [TransferController::class, 'transferConfirm'])->name('transfer.confirm');
   Route::post('check-password', [TransferController::class, 'checkPassword']);
   Route::post('send-transaction', [TransferController::class, 'sendTransaction'])->name('transfer.send');
   Route::get('success-transaction', [TransferController::class, 'successTransaction'])->name('transfer-successful');
 
   Route::resource('transactions', TransactionController::class)->only(['index', 'show']);
+
+  Route::get('qr-code', [PageController::class, 'qrcodeShow'])->name('qr-code');
+  Route::get('scan-and-pay', [PageController::class, 'scanAndPay'])->name('scan-and-pay');
+  Route::post('scan-and-pay', [PageController::class, 'redirestToTransfer'])->name('scan-and-pay.redirect-to-transfer');
 });

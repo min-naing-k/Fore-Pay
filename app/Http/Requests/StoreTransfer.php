@@ -8,6 +8,9 @@ use Illuminate\Validation\Rule;
 
 class StoreTransfer extends FormRequest
 {
+
+  protected $redirectRoute = 'transfer';
+
   /**
    * Determine if the user is authorized to make this request.
    *
@@ -25,6 +28,7 @@ class StoreTransfer extends FormRequest
    */
   public function rules()
   {
+    $max_amount = auth()->user()->wallet?->amount ?? 0;
     return [
       'phone' => [
         'required',
@@ -33,7 +37,7 @@ class StoreTransfer extends FormRequest
           return $query->where('phone', '!=', auth()->user()->phone ?? null);
         }),
       ],
-      'amount' => 'required|integer|min:100',
+      'amount' => 'required|integer|min:100|max:' . $max_amount,
     ];
   }
 
@@ -42,6 +46,7 @@ class StoreTransfer extends FormRequest
     return [
       'phone.exists' => '',
       'amount.min' => 'The amount must be at least 100 MMK',
+      'amount.max' => 'You do not have sufficient balance',
     ];
   }
 

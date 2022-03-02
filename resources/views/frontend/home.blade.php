@@ -1,7 +1,7 @@
 <x-app title="Home">
   <x-frontend.container>
     <section>
-      <x-card class="bg-theme relative flex flex-col justify-center overflow-hidden" style="height: 120px">
+      <x-card class="card bg-theme relative flex flex-col justify-center overflow-hidden m-shadow-lg" style="height: 120px">
         <img src="{{ asset('images/money.png') }}" alt="money" class="absolute money-image">
         <span class="text-lightblue text-xs mb-2">Total Balance</span>
         <h1 class="text-white text-2xl font-semibold relative flex flex-wrap items-end gap-1 leading-5" style="max-width: 185px">
@@ -19,7 +19,7 @@
         </a>
       </x-card>
       <x-card class="flex flex-1 flex-col items-center justify-center">
-        <a href="#" class="flex flex-col items-center">
+        <a href="{{ route('wallet') }}" class="flex flex-col items-center">
           <div class="icon-wrapper bg-lightred mb-2">
             <img src="{{ asset('images/bag.png') }}" alt="send" class="icon" style="margin-left: 1px" />
           </div>
@@ -37,7 +37,7 @@
     </section>
     <section class="flex flex-wrap gap-3 mt-4">
       <x-card class="flex-1">
-        <a href="#" class="flex items-center gap-3">
+        <a href="{{ route('scan-and-pay') }}" class="flex items-center gap-3">
           <div class="w-6 h-6 overflow-hidden">
             <img src="{{ asset('images/scan.png') }}" alt="scan" class="w-full h-full object-cover object-center">
           </div>
@@ -45,7 +45,7 @@
         </a>
       </x-card>
       <x-card class="flex-1">
-        <a href="#" class="flex items-center gap-3">
+        <a href="{{ route('qr-code') }}" class="flex items-center gap-3">
           <div class="w-6 h-6 overflow-hidden">
             <img src="{{ asset('images/qr-code.png') }}" alt="qr-code" class="w-full h-full object-cover object-center">
           </div>

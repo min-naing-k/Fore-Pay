@@ -15,8 +15,9 @@
         </div>
       </section>
       <section>
-        <form action="{{ route('transfer.store') }}" method="POST" class="space-y-4">
+        <form action="{{ route('transfer.store') }}" method="POST" id="transfer-form" class="space-y-4">
           @csrf
+          <input type="hidden" name="hash_value" id="hash-value" />
           <div style="margin-top: 0">
             <label for="phone" class="form-label">Phone <small class="message"></small></label>
             <div class="relative mt-1">
@@ -36,9 +37,17 @@
               <div class="hidden loading-icon absolute top-2/4 right-3 -translate-y-2/4">
                 <div class="spinner w-5 h-5 rounded-full border-2 border-t-gray-400 border-gray-200"></div>
               </div>
+              @php
+                $phone_number = null;
+                if (old('phone')) {
+                    $phone_number = old('phone');
+                } elseif ($phone ?? false) {
+                    $phone_number = $phone;
+                }
+              @endphp
               <input type="number" id="phone" class="form-control placeholder:text-sm @error('phone') error @enderror"
                 name="phone" autocomplete="off" style="margin-top: 0" placeholder="09..."
-                value="{{ old('phone', '09') }}" />
+                value="{{ $phone_number }}" />
             </div>
             @error('phone')
               <p class="error-phone-field text-red-500 text-xs mt-1">{{ $message }}</p>
@@ -65,7 +74,7 @@
             <textarea name="description" id="description" class="form-control"></textarea>
           </div>
           <div class="flex justify-end">
-            <button type="submit" class="btn-primary">Continue</button>
+            <button type="submit" id="continue-btn" class="btn-primary">Continue</button>
           </div>
         </form>
       </section>
@@ -83,10 +92,20 @@
         const amount_el = document.querySelector('#amount');
         const error_amount_field = document.querySelector('.error-amount-field');
         const show_description = document.querySelector('#show-description');
+        const description_el = document.querySelector('#description');
         const description_wrapper = document.querySelector('.description-wrapper');
+        const continue_btn = document.querySelector('#continue-btn');
+        const transfer_form = document.querySelector('#transfer-form');
+        const hash_value_el = document.querySelector('#hash-value');
         const session_status = "{{ session('status') }}";
         const session_data = "{{ session('data') }}";
 
+        if (!phone_el.value) {
+          phone_el.value = "09";
+        }
+        if ('{{ $phone ?? false }}') {
+          searchUser();
+        }
         phone_el.addEventListener('keyup', debounce(searchUser, 500));
 
         amount_el.addEventListener('keyup', e => {
@@ -94,15 +113,30 @@
           if (error_amount_field) error_amount_field.style.display = 'none';
         });
 
-        document.addEventListener('DOMContentLoaded', e => {
-          if (session_status == 'success') {
-            renderSuccessMessage(session_data);
-          }
+        if (session_status == 'success') {
+          renderSuccessMessage(session_data);
+        }
 
-          if (session_status == 'fail') {
-            renderErrorMessage(session_data);
+        if (session_status == 'fail') {
+          renderErrorMessage(session_data);
+        }
+
+        continue_btn.addEventListener('click', e => {
+          e.preventDefault();
+          let url = `/transfer-hash?phone=${phone_el.value}&amount=${amount_el.value}`;
+          if (description_el.value) {
+            url += `&description=${description_el.value}`;
           }
-        });
+          axios({
+            url,
+            method: 'GET'
+          }).then(res => {
+            if (res.data.status === 'success') {
+              hash_value_el.value = res.data.data;
+              transfer_form.submit();
+            }
+          }).catch(err => console.error(err));
+        })
 
         show_description.addEventListener('change', e => {
           if (show_description.checked) {

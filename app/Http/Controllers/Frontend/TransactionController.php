@@ -26,8 +26,8 @@ class TransactionController extends Controller
       ]);
     } else {
       $query->whereBetween('created_at', [
-        Carbon::parse(now())->subMonth(1)->format('Y-m-d'),
-        Carbon::parse(now())->format('Y-m-d'),
+        Carbon::parse(now())->subMonth(1)->format('Y-m-d H:i:s'),
+        Carbon::parse(now())->endOfDay()->format('Y-m-d H:i:s'),
       ]);
     }
 

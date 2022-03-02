@@ -52,18 +52,60 @@ class TransferController extends Controller
     return null;
   }
 
+  public function transferHash()
+  {
+    $str = request('phone') . request('amount') . request('description', null);
+    $hash_value = hash_hmac('sha256', $str, env('TRANSFER_KEY'));
+    return response()->json([
+      'status' => 'success',
+      'data' => $hash_value,
+    ]);
+  }
+
   public function store(StoreTransfer $request)
   {
-    if ($request->amount > auth()->user()->wallet->amount) {
-      return back()->withErrors(['amount' => "You don't have sufficence balance!"])->withInput();
+    $phone = $request->phone;
+    $amount = $request->amount;
+    $description = $request->description ?? null;
+    $hash_value_original = $request->hash_value;
+    $hash_value_new = hash_hmac('sha256', $phone . $amount . $description, env('TRANSFER_KEY'));
+
+    if ($hash_value_original !== $hash_value_new) {
+      return redirect()->route('transfer')->with('error', 'Invalid Data!');
     }
 
     $user = User::firstWhere('phone', $request->phone);
-    $amount = $request->amount;
-    $description = $request->description ?? null;
     $request->session()->forget(['status', 'data']);
 
-    return view('frontend.confirm-transaction', compact('user', 'amount', 'description'));
+    if (!$user) {
+      return redirect()->route('transfer')->with('error', 'Invalid Data!');
+    }
+
+    session(['transfer-data' => [
+      'hash_value' => $hash_value_original,
+      'user' => $user,
+      'amount' => $amount,
+      'description' => $description,
+    ]]);
+
+    return redirect()->route('transfer.confirm');
+  }
+
+  public function transferConfirm()
+  {
+    $data = null;
+    if (session()->has('transfer-data')) {
+      $data = session('transfer-data');
+    } else {
+      return redirect()->route('home');
+    }
+
+    $hash_value = $data['hash_value'];
+    $user = $data['user'];
+    $amount = $data['amount'];
+    $description = $data['description'];
+
+    return view('frontend.confirm-transaction', compact('hash_value', 'user', 'amount', 'description'));
   }
 
   public function checkPassword()
@@ -100,9 +142,17 @@ class TransferController extends Controller
   {
     $phone = $request->phone;
     $amount = $request->amount;
+    $description = $request->description ?? null;
+    $str = $phone . $amount . $description;
     $from_user = User::with('wallet')->findOrFail(request('id'));
     $to_user = User::with('wallet')->firstWhere('phone', $phone);
+    $hash_value_original = $request->hash_value;
+    $hash_value_new = hash_hmac('sha256', $str, env('TRANSFER_KEY'));
     $request->session()->forget(['status', 'data']);
+
+    if ($hash_value_original !== $hash_value_new) {
+      return redirect()->route('transfer')->with('error', 'Invalid Data!');
+    }
 
     if (!$from_user->wallet || !$to_user->wallet) {
       return redirect()->route('transfer')->with('error', 'Something went wrong with wallet!');
@@ -130,9 +180,9 @@ class TransferController extends Controller
         'type' => 1,
         'amount' => $amount,
       ];
-      if ($request->description) {
-        $from_user_transaction['description'] = $request->description;
-        $to_user_transaction['description'] = $request->description;
+      if ($description) {
+        $from_user_transaction['description'] = $description;
+        $to_user_transaction['description'] = $description;
       }
       Transaction::create($from_user_transaction);
       Transaction::create($to_user_transaction);
@@ -152,6 +202,7 @@ class TransferController extends Controller
   public function successTransaction()
   {
     $data = session('transfer-successful');
+    session()->forget('transfer-data');
 
     if (!$data) {
       return redirect()->route('home');
