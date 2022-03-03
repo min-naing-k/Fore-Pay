@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Frontend\NotificationController;
 use App\Http\Controllers\Frontend\PageController;
 use App\Http\Controllers\Frontend\ProfileController;
 use App\Http\Controllers\Frontend\TransactionController;
@@ -30,4 +31,11 @@ Route::middleware(['auth', 'prevent_back_history'])->group(function () {
   Route::get('qr-code', [PageController::class, 'qrcodeShow'])->name('qr-code');
   Route::get('scan-and-pay', [PageController::class, 'scanAndPay'])->name('scan-and-pay');
   Route::post('scan-and-pay', [PageController::class, 'redirestToTransfer'])->name('scan-and-pay.redirect-to-transfer');
+
+  Route::get('notification', [NotificationController::class, 'index'])->name('notification.index');
+  Route::get('notification/{id}', [NotificationController::class, 'show'])->name('notification.show');
+  Route::get('mark-as-read', [NotificationController::class, 'markAsRead']);
+  Route::get('mark-as-unread', [NotificationController::class, 'markAsUnRead']);
+  Route::delete('notification/{id}', [NotificationController::class, 'destroy']);
+  Route::get('mark-all-as-read', [NotificationController::class, 'markAllAsRead']);
 });

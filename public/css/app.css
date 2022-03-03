@@ -951,6 +951,14 @@ select{
   height: 2rem;
 }
 
+.h-1\.5{
+  height: 0.375rem;
+}
+
+.h-1{
+  height: 0.25rem;
+}
+
 .h-12{
   height: 3rem;
 }
@@ -975,12 +983,12 @@ select{
   width: 1.25rem;
 }
 
-.w-16{
-  width: 4rem;
-}
-
 .w-full{
   width: 100%;
+}
+
+.w-16{
+  width: 4rem;
 }
 
 .w-20{
@@ -1013,6 +1021,14 @@ select{
 
 .w-auto{
   width: auto;
+}
+
+.w-1\.5{
+  width: 0.375rem;
+}
+
+.w-1{
+  width: 0.25rem;
 }
 
 .w-48{
@@ -1414,6 +1430,11 @@ select{
 .bg-gray-50{
   --tw-bg-opacity: 1;
   background-color: rgb(249 250 251 / var(--tw-bg-opacity));
+}
+
+.bg-red-500{
+  --tw-bg-opacity: 1;
+  background-color: rgb(239 68 68 / var(--tw-bg-opacity));
 }
 
 .bg-lightgreen{

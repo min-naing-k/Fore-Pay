@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\UpdatePassword;
 use App\Http\Requests\UpdateProfile;
 use App\Models\User;
+use App\Notifications\GeneralNotification;
 use Illuminate\Support\Facades\Storage;
 
 class ProfileController extends Controller
@@ -74,6 +75,13 @@ class ProfileController extends Controller
     $user->update([
       'password' => $request->password,
     ]);
+
+    $title = "Password Change";
+    $message = "Your password has been changed!";
+    $sourceable_id = $user->id;
+    $sourceable_type = User::class;
+    $web_link = url('edit-password');
+    $user->notify(new GeneralNotification($title, $message, $sourceable_id, $sourceable_type, $web_link));
 
     return redirect()->route('profile')->with('update', 'Password is Change.');
   }

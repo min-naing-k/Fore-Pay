@@ -16,13 +16,19 @@
         </div>
       </div>
       <div class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-        <button type="button" class="p-1 mr-2 rounded-full text-gray-400 hover:text-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-indigo-500 focus:ring-white">
+        <a href="{{ route('notification.index') }}"
+          class="relative p-1 mr-2 rounded-full text-gray-400 hover:text-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-indigo-500 focus:ring-white">
           <!-- Heroicon name: outline/bell -->
           <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
               d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
           </svg>
-        </button>
+          @if ($unread_notifications)
+            <p class="absolute text-xs top-0 right-0 bg-red-500 text-white w-4 h-4 flex items-center justify-center rounded-full">
+              {{ $unread_notifications >= 9 ? '9+' : $unread_notifications }}
+            </p>
+          @endif
+        </a>
 
         <!-- Profile dropdown -->
         <x-dropdown2>
@@ -43,8 +49,8 @@
           </x-slot>
           <div class="px-4 py-2 flex flex-col border-b border-b-gray-200">
             <p class="font-medium text-gray-500 leading-5">
-              {{ auth()->user()->name }}
-              <small class="block text-gray-400">{{ auth()->user()->email }}</small>
+              {{ $auth_user_name }}
+              <small class="block text-gray-400">{{ $auth_user_email }}</small>
             </p>
           </div>
           <x-dropdown2-link href="{{ route('profile') }}" :active="request()->routeIs('profile')">Your Profile</x-dropdown2-link>

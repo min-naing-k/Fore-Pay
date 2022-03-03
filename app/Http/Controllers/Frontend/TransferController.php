@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreTransfer;
 use App\Models\Transaction;
 use App\Models\User;
+use App\Notifications\GeneralNotification;
 use Exception;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -184,10 +185,24 @@ class TransferController extends Controller
         $from_user_transaction['description'] = $description;
         $to_user_transaction['description'] = $description;
       }
-      Transaction::create($from_user_transaction);
-      Transaction::create($to_user_transaction);
+      $from_user_transaction_record = Transaction::create($from_user_transaction);
+      $to_user_transaction_record = Transaction::create($to_user_transaction);
 
       DB::commit();
+      $title = 'E-money Transfer';
+      $message = 'You transfer ' . number_format($amount) . 'MMK to ' . $to_user->name;
+      $sourceable_id = $from_user->id;
+      $sourceable_type = Transaction::class;
+      $web_link = url('transactions/' . $from_user_transaction_record->trx_id);
+      $from_user->notify((new GeneralNotification($title, $message, $sourceable_id, $sourceable_type, $web_link))->afterCommit());
+
+      $title = 'E-money Receive';
+      $message = 'You receive ' . number_format($amount) . 'MMK from ' . $from_user->name;
+      $sourceable_id = $to_user->id;
+      $sourceable_type = Transaction::class;
+      $web_link = url('transactions/' . $to_user_transaction_record->trx_id);
+      $to_user->notify((new GeneralNotification($title, $message, $sourceable_id, $sourceable_type, $web_link))->afterCommit());
+
       request()->session()->flash('transfer-successful', [
         'receive_user' => $to_user->name,
         'amount' => $amount,
