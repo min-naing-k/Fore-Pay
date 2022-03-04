@@ -56,7 +56,9 @@ class TransactionController extends Controller
 
   public function show($id)
   {
-    $transaction = Transaction::where('trx_id', $id)->where('user_id', auth()->id())->first();
+    $transaction = Transaction::where('trx_id', decodeToId($id, 16))
+      ->where('user_id', auth()->id())
+      ->first();
     if (!$transaction) {
       abort(404);
     }

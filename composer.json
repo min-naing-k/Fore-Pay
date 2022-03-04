@@ -8,6 +8,7 @@
         "php": "^7.3|^8.0",
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
+        "hashids/hashids": "^4.1",
         "itsgoingd/clockwork": "^5.1",
         "jenssegers/agent": "^2.6",
         "laravel/framework": "^8.75",
@@ -29,7 +30,10 @@
             "App\\": "app/",
             "Database\\Factories\\": "database/factories/",
             "Database\\Seeders\\": "database/seeders/"
-        }
+        },
+        "files": [
+          "App/Helpers/GlobalHelpers.php"
+        ]
     },
     "autoload-dev": {
         "psr-4": {

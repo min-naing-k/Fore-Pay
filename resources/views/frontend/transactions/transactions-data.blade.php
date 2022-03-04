@@ -4,7 +4,7 @@
     <x-card>
       <div class="flex justify-between items-center">
         <div>
-          <a href="{{ route('transactions.show', $transaction->trx_id) }}" class="hover:underline text-gray-700 text-sm font-semibold">#{{ $transaction->trx_id }}</a>
+          <a href="{{ route('transactions.show', encodeToHash($transaction->trx_id, 16)) }}" class="hover:underline text-gray-700 text-sm font-semibold">#{{ $transaction->trx_id }}</a>
           <p class="text-xs text-gray-400">
             {{ $transaction->type == 1 ? 'Receive From' : 'Transfer To' }}
             <span class="text-semibold">{{ $transaction->source ? $transaction->source->name : '-' }}</span>

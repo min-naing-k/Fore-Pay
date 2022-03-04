@@ -46,7 +46,7 @@
       <input type="hidden" name="phone" value="{{ $user->phone }}" />
       <input type="hidden" name="amount" value="{{ $amount }}" />
       <textarea hidden name="description">{{ $description }}</textarea>
-      <input type="hidden" name="id" value="{{ auth()->id() }}" />
+      <input type="hidden" name="id" value="{{ encodeToHash(auth()->id(), 16) }}" />
     </form>
     </x-frontend.contain>
 

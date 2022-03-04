@@ -10,5 +10,5 @@ Todo:
   ✔ delete all notifications @done(22-03-04 18:46)
   ✔ login with phone @done(22-03-04 20:13)
   ✔ add registration features @done(22-03-04 20:13)
+  ✔ use hashids for transaction's detail page and mark as read/delete noti @done(22-03-04 20:45)
   ☐ design login/register
-  ☐ use hashids for transaction's detail page and mark as read/delete noti

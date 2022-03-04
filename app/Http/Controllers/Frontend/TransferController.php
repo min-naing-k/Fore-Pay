@@ -145,7 +145,7 @@ class TransferController extends Controller
     $amount = $request->amount;
     $description = $request->description ?? null;
     $str = $phone . $amount . $description;
-    $from_user = User::with('wallet')->findOrFail(request('id'));
+    $from_user = User::with('wallet')->findOrFail(decodeToId(request('id'), 16));
     $to_user = User::with('wallet')->firstWhere('phone', $phone);
     $hash_value_original = $request->hash_value;
     $hash_value_new = hash_hmac('sha256', $str, env('TRANSFER_KEY'));
