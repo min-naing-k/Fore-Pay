@@ -9,6 +9,12 @@
     <!-- Validation Errors -->
     <x-auth-validation-errors class="mb-4" :errors="$errors" />
 
+    @if (session('fail'))
+      <div class="p-4 mb-4 text-sm text-red-700 bg-red-100 rounded-lg dark:bg-red-200 dark:text-red-800" role="alert">
+        <span class="font-medium">Fail!</span> {{ session('fail') }}.
+      </div>
+    @endif
+
     <form method="POST" action="{{ route('register') }}">
       @csrf
 
@@ -24,6 +30,13 @@
         <x-label for="email" :value="__('Email')" />
 
         <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required />
+      </div>
+
+      <!-- Phone -->
+      <div class="mt-4">
+        <x-label for="phone" :value="__('Phone Number')" />
+
+        <x-input id="phone" class="block mt-1 w-full" type="number" name="phone" :value="old('phone')" required />
       </div>
 
       <!-- Password -->

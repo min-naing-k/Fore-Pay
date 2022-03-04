@@ -29,5 +29,5 @@
     </a>
   </x-card>
 @empty
-  <p class="text-center mt-4 text-sm text-gray-500">No Data Found...</p>
+  <p class="text-center mt-4 text-sm text-gray-500">There is no notification yet...</p>
 @endforelse

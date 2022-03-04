@@ -38,4 +38,5 @@ Route::middleware(['auth', 'prevent_back_history'])->group(function () {
   Route::get('mark-as-unread', [NotificationController::class, 'markAsUnRead']);
   Route::delete('notification/{id}', [NotificationController::class, 'destroy']);
   Route::get('mark-all-as-read', [NotificationController::class, 'markAllAsRead']);
+  Route::get('delete-all-notifications', [NotificationController::class, 'deleteAllNotifications']);
 });

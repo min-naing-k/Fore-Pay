@@ -109,4 +109,12 @@ class NotificationController extends Controller
       'data' => $view,
     ]);
   }
+
+  public function deleteAllNotifications()
+  {
+    auth()->user()->notifications()->delete();
+    return response()->json([
+      'status' => 'success',
+    ]);
+  }
 }

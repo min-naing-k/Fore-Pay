@@ -7,4 +7,8 @@ Todo:
   ✔ update ip, user_agent when user login @done(22-02-13 15:52)
   ✔ mark as read @done(22-03-03 12:48)
   ✔ make noti when transfer money @done(22-03-03 17:53)
+  ✔ delete all notifications @done(22-03-04 18:46)
+  ✔ login with phone @done(22-03-04 20:13)
+  ✔ add registration features @done(22-03-04 20:13)
+  ☐ design login/register
   ☐ use hashids for transaction's detail page and mark as read/delete noti

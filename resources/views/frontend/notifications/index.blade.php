@@ -13,7 +13,7 @@
           </x-slot>
 
           <x-dropdown2-link tag="button" id="mark-as-all-read-btn">Mark all as read</x-dropdown2-link>
-          <x-dropdown2-link tag="button">Delete all</x-dropdown2-link>
+          <x-dropdown2-link tag="button" id="delete-all-noti-btn">Delete all</x-dropdown2-link>
         </x-dropdown2>
       </div>
     </div>
@@ -96,6 +96,7 @@
       const loading = document.querySelector('#loading');
       const loading_text = document.querySelector('.loading-text');
       const mark_as_all_read_btn = document.querySelector('#mark-as-all-read-btn');
+      const delete_all_noti_btn = document.querySelector('#delete-all-noti-btn');
       let data = true;
       let page = 1;
 
@@ -108,6 +109,22 @@
             notifications_data.innerHTML = res.data.data;
           }
         }).catch(err => console.error(err));
+      });
+
+      delete_all_noti_btn.addEventListener('click', e => {
+        if ({{ $notifications->count() }} && data) {
+          axios({
+            url: '/delete-all-notifications',
+            method: 'GET'
+          }).then(res => {
+            if (res.data.status === 'success') {
+              data = false;
+              notifications_data.innerHTML = "";
+              loading_text.style.display = "block";
+              loading_text.textContent = "There is no notification yet."
+            }
+          }).catch(err => console.error(err));
+        }
       })
 
       document.addEventListener('click', e => {
