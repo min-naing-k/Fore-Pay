@@ -75,7 +75,7 @@
                   }
                 }).then(res => {
                   if (!res.data) return;
-                  if (res.data.status == 'success') {
+                  if (res.data.status === 'success') {
                     send_transaction_form.submit();
                   }
                   if (res.data.status == 'fail') {

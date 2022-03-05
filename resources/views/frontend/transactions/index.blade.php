@@ -20,9 +20,9 @@
         <div class="search-date-wrapper">
           <label class="text-gray-500 text-sm mb-1 block">Range Date</label>
           <div class="search-date relative h-10 w-60">
-            <input type="text" class="range-date-picker form-control absolute w-full h-full" style="margin-top: 0;"
-              value="{{ request('start-date') && request('end-date') ? "request('start-date') - request('end-date')" : '' }}" />
-            <div class="absolute right-2 text-gray-400" style="top: 50%;transform: translateY(-50%);">
+            <input type="text" class="transactions-range-date-picker form-control absolute w-full h-full" style="margin-top: 0;"
+              placeholder="Search Specific Date.." />
+            <div class="absolute right-2 text-gray-400 pointer-events-none" style="top: 50%;transform: translateY(-50%);">
               <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
               </svg>
@@ -110,7 +110,6 @@
       $(document).ready(function() {
         const search_by_range = document.querySelector('#search-by-range');
         const single_date_picker = document.querySelector('.single-date-picker');
-        const range_date_picker = document.querySelector('.range-date-picker');
         const transactions_data = document.querySelector('#transactions-data');
         const loading_wrapper = document.querySelector('#loading-wrapper');
         const loading = document.querySelector('#loading');
@@ -118,69 +117,48 @@
         const type = document.querySelector('#type');
         const start_date_from_url = '{{ request('start-date') }}' || null;
         const end_date_from_url = '{{ request('end-date') }}' || null;
+        let start_date = null;
+        let end_date = null;
         let page = 1;
         let data = true;
-        let search_date = $('.range-date-picker').data('daterangepicker');
-
+        let date_range_picker = $('.transactions-range-date-picker').daterangepicker({
+          autoApply: false,
+          autoUpdateInput: false,
+          showDropdowns: true,
+          local: {
+            format: "YYYY/MM/DD"
+          }
+        });
+        let search_date = $('.transactions-range-date-picker').data('daterangepicker');
         start_date_from_url && search_date.setStartDate(moment(start_date_from_url, 'YYYY/MM/DD'));
         end_date_from_url && search_date.setEndDate(moment(end_date_from_url, 'YYYY/MM/DD'));
 
-        $('#type').on('change', function(e) {
-          page = 1;
-          data = true;
-          const start_date = search_date.startDate.format('YYYY-MM-DD');
-          const end_date = search_date.endDate.format('YYYY-MM-DD');
-          transactions_data.innerHTML = "";
-          loading.style.display = "block";
-          loading_text.style.display = 'none';
-          if (type.value) {
-            history.pushState(null, '', `?type=${type.value}&start-date=${start_date}&end-date=${end_date}`);
-          } else {
-            history.pushState(null, '', `?start-date=${start_date}&end-date=${end_date}`);
-          }
-          axios({
-              url: `?type=${e.target.value}&start-date=${start_date}&end-date=${end_date}`,
-              method: 'GET'
-            }).then(res => {
-              if (!res.data) return;
-              loading.style.display = "none";
-              if (!res.data.html) {
-                loading_text.style.display = 'block';
-                loading_text.textContent = 'No Data Found...';
-              } else {
-                transactions_data.innerHTML = res.data.html;
-              }
-            })
-            .catch(err => console.error(err));
+        if (start_date_from_url && end_date_from_url) {
+          $('.transactions-range-date-picker').val(`${search_date.startDate.format('YYYY/MM/DD')} - ${search_date.endDate.format('YYYY/MM/DD')}`);
+        }
+
+        $('#type').on('change', function() {
+          renderTransaction({
+            start_date: start_date ? formatDate(start_date) : null,
+            end_date: end_date ? formatDate(end_date) : null,
+          });
         });
 
-        $('.range-date-picker').on('apply.daterangepicker', function(ev, picker) {
-          page = 1;
-          data = true;
-          const start_date = picker.startDate.format('YYYY-MM-DD');
-          const end_date = picker.endDate.format('YYYY-MM-DD');
-          transactions_data.innerHTML = "";
-          loading.style.display = "block";
-          loading_text.style.display = 'none';
-          let url = `?start-date=${start_date}&end-date=${end_date}`;
-          if (type.value) {
-            url = `?type=${type.value}&start-date=${start_date}&end-date=${end_date}`;
-          }
-          history.pushState(null, '', url);
-          axios({
-              url,
-              method: 'GET'
-            }).then(res => {
-              if (!res.data) return;
-              loading.style.display = "none";
-              if (!res.data.html) {
-                loading_text.style.display = 'block';
-                loading_text.textContent = 'No Data Found...';
-              } else {
-                transactions_data.innerHTML = res.data.html;
-              }
-            })
-            .catch(err => console.error(err));
+        $('.transactions-range-date-picker').on('apply.daterangepicker', function(ev, picker) {
+          $(this).val(picker.startDate.format('YYYY/MM/DD') + " - " + picker.endDate.format('YYYY/MM/DD'));
+          start_date = formatDate(picker.startDate);
+          end_date = formatDate(picker.endDate);
+          renderTransaction({
+            start_date,
+            end_date
+          });
+        });
+
+        $('.transactions-range-date-picker').on('cancel.daterangepicker', function(ev, picker) {
+          $(this).val('');
+          start_date = null;
+          end_date = null;
+          renderTransaction();
         })
 
         window.onscroll = e => {
@@ -192,12 +170,78 @@
 
         function loadMoreTransactions(page) {
           loading.style.display = "block";
-          const start_date = search_date.startDate.format('YYYY-MM-DD');
-          const end_date = search_date.endDate.format('YYYY-MM-DD');
-          let url = `?start-date=${start_date}&end-date=${end_date}&page=${page}`;
-          if (type.value) {
-            url = `?start-date=${start_date}&end-date=${end_date}&type=${type.value}&page=${page}`;
+          let url = '';
+          if (type.value || start_date || end_date) {
+            if (start_date && end_date) {
+              if (type.value) {
+                url = `?type=${type.value}&start-date=${start_date}&end-date=${end_date}&page=${page}`;
+              } else {
+                url = `?start-date=${start_date}&end-date=${end_date}&page=${page}`
+              }
+            }
+
+            if (type.value) {
+              if (start_date && end_date) {
+                url = `?type=${type.value}&start-date=${start_date}&end-date=${end_date}&page=${page}`;
+              } else {
+                url = `?type=${type.value}&page=${page}`;
+              }
+            }
+          } else {
+            url = `?page=${page}`;
           }
+          if (data) {
+            axios({
+                url,
+                method: 'GET'
+              }).then(res => {
+                if (!res.data) return;
+                loading.style.display = "none";
+                if (!res.data.html) {
+                  data = false;
+                  loading_text.style.display = 'block';
+                  loading_text.textContent = 'No More Data...';
+                } else {
+                  transactions_data.innerHTML += res.data.html;
+                }
+              })
+              .catch(err => console.error(err));
+          }
+        }
+
+        function renderTransaction({
+          start_date = null,
+          end_date = null
+        } = {}) {
+          page = 1;
+          data = true;
+          let url = '';
+          transactions_data.innerHTML = "";
+          loading.style.display = "block";
+          loading_text.style.display = 'none';
+          if (type.value || start_date || end_date) {
+            if (type.value) {
+              if (start_date && end_date) {
+                url += `?type=${type.value}&start-date=${start_date}&end-date=${end_date}`;
+                history.pushState(null, '', `?type=${type.value}&start-date=${start_date}&end-date=${end_date}`);
+              } else {
+                url += `?type=${type.value}`;
+                history.pushState(null, '', `?type=${type.value}`);
+              }
+            }
+            if (start_date && end_date) {
+              if (type.value) {
+                url += `?type=${type.value}&start-date=${start_date}&end-date=${end_date}`;
+                history.pushState(null, '', `?type=${type.value}&start-date=${start_date}&end-date=${end_date}`);
+              } else {
+                url += `?start-date=${start_date}&end-date=${end_date}`;
+                history.pushState(null, '', `?start-date=${start_date}&end-date=${end_date}`);
+              }
+            }
+          } else {
+            history.pushState(null, '', '?');
+          }
+
           axios({
               url,
               method: 'GET'
@@ -205,14 +249,17 @@
               if (!res.data) return;
               loading.style.display = "none";
               if (!res.data.html) {
-                data = false;
                 loading_text.style.display = 'block';
-                loading_text.textContent = 'No More Data...';
+                loading_text.textContent = 'No Data Found...';
               } else {
-                transactions_data.innerHTML += res.data.html;
+                transactions_data.innerHTML = res.data.html;
               }
             })
             .catch(err => console.error(err));
+        }
+
+        function formatDate(date) {
+          return moment(date).format('YYYY-MM-DD');
         }
       })
     </script>

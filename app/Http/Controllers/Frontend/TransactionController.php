@@ -24,11 +24,6 @@ class TransactionController extends Controller
         $start_date,
         Carbon::parse($end_date)->endOfDay(),
       ]);
-    } else {
-      $query->whereBetween('created_at', [
-        Carbon::parse(now())->subMonth(1)->format('Y-m-d H:i:s'),
-        Carbon::parse(now())->endOfDay()->format('Y-m-d H:i:s'),
-      ]);
     }
 
     $transactions = $query->orderByDesc('created_at')
