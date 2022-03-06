@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Auth\LoginRequest;
+use App\Http\Requests\Auth\AdminLoginRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -14,9 +14,9 @@ class AdminSessionController extends Controller
     return view('auth.admin_login');
   }
 
-  public function store(LoginRequest $request)
+  public function store(AdminLoginRequest $request)
   {
-    $request->authenticate('admin');
+    $request->authenticate();
 
     $admin = auth()->guard('admin')->user();
     $admin->ip = $request->ip();

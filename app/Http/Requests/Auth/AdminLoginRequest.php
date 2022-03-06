@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests\Auth;
 
-use App\Models\User;
+use App\Models\Admin;
 use Illuminate\Auth\Events\Lockout;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 
-class LoginRequest extends FormRequest
+class AdminLoginRequest extends FormRequest
 {
   /**
    * Determine if the user is authorized to make this request.
@@ -31,8 +31,8 @@ class LoginRequest extends FormRequest
   public function rules()
   {
     return [
-      'login' => ['required', 'string'],
-      'password' => ['required', 'string'],
+      'login' => 'required',
+      'password' => 'required|string|min:6',
     ];
   }
 
@@ -47,18 +47,11 @@ class LoginRequest extends FormRequest
   {
     $this->ensureIsNotRateLimited();
 
-    // if (!Auth::guard($guard)->attempt($this->only('email', 'password'), $this->boolean('remember'))) {
-    //   RateLimiter::hit($this->throttleKey());
-
-    //   throw ValidationException::withMessages([
-    //     'email' => __('auth.failed'),
-    //   ]);
-    // }
-    $user = User::where('email', $this->login)
+    $admin = Admin::where('email', $this->login)
       ->orWhere('phone', $this->login)
       ->first();
 
-    if (!$user || !Hash::check($this->password, $user->password)) {
+    if (!$admin || !Hash::check($this->password, $admin->password)) {
       RateLimiter::hit($this->throttleKey());
 
       throw ValidationException::withMessages([
@@ -66,7 +59,7 @@ class LoginRequest extends FormRequest
       ]);
     }
 
-    Auth::login($user);
+    Auth::guard('admin')->login($admin);
     RateLimiter::clear($this->throttleKey());
   }
 
